@@ -56,6 +56,7 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
+##－－－－－－↓ デプロイのために追加したGem ↓－－－－－－##
 # プロジェクトごとにファイルベースで環境変数を管理することができるGem
 gem 'dotenv-rails'
 group :production do
@@ -65,3 +66,11 @@ end
 gem "net-smtp"
 gem "net-pop"
 gem "net-imap"
+##－－－－－－↑ デプロイのために追加したGem ↑－－－－－－##
+
+# devise
+gem 'devise'
+# kaminari
+gem 'kaminari','~> 1.2.1'
+# デバッグ用
+gem 'pry-rails'
