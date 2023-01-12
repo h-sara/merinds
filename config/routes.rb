@@ -1,64 +1,59 @@
 Rails.application.routes.draw do
+
+  # 管理者用（skipオプションを使用し不要なルーティングを削除している）
+  # URL /admin/sign_in ...
+  devise_for :admin, skip: [:registrations, :passwords] ,controllers: {
+    sessions: "admin/sessions"
+  }
+
   namespace :admin do
-    get 'post_comments/show'
-    get 'post_comments/edit'
-    get 'post_comments/update'
+    get "top" => "homes#top", as: "top"
+    resources :members, only: [:show, :edit, :update]
+    resources :posts, only: [:index, :show, :edit, :update] do
+      resources :post_comments, only: [:show, :edit, :update]
+    end
   end
-  namespace :admin do
-    get 'posts/index'
-    get 'posts/show'
-    get 'posts/edit'
-    get 'posts/update'
+
+
+
+  # 顧客用（skipオプションを使用し不要なルーティングを削除している）
+  # URL /members/sign_in ...
+  devise_for :members,skip: [:passwords], controllers: {
+    registrations: "public/registrations",
+    sessions: 'public/sessions'
+  }
+
+  scope module: :public do
+    root "homes#top"
+    get "about" => "homes#about"
+
+    resource :members, only: [] do
+      get "/", action: "index"
+      get "my_page", action: "show"
+      get "information/edit", action: "edit"
+      patch "update", action: "update"
+      get "check_withdrawal", action: "check"
+      patch "withdraw_member", action: "withdraw"
+      get ":nickname", action: "show_your"
+      resource :relationships, only: [:create, :destroy] do
+        member do
+          get "followings"
+          get "followers"
+        end
+      end
+    end
+
+    resources :posts, only: [:index, :show, :edit, :update, :destroy] do
+      collection do
+        get "index_your"
+      end
+      member do
+        get "show_your"
+        resource :favorites, only: [:create, :destroy]
+        resources :post_comments, only: [:create, :destroy]
+      end
+    end
+
+    get "searches/search" => "searches#search"
   end
-  namespace :admin do
-    get 'members/show'
-    get 'members/edit'
-    get 'members/update'
-  end
-  namespace :admin do
-    get 'homes/top'
-  end
-  namespace :public do
-    get 'searches/search'
-  end
-  namespace :public do
-    get 'favorites/create'
-    get 'favorites/destroy'
-  end
-  namespace :public do
-    get 'post_comments/create'
-    get 'post_comments/destroy'
-  end
-  namespace :public do
-    get 'posts/index'
-    get 'posts/show'
-    get 'posts/edit'
-    get 'posts/update'
-    get 'posts/destroy'
-    get 'posts/index_your'
-    get 'posts/show_your'
-  end
-  namespace :public do
-    get 'relationships/create'
-    get 'relationships/destroy'
-    get 'relationships/followings'
-    get 'relationships/followers'
-  end
-  namespace :public do
-    get 'members/top'
-    get 'members/index'
-    get 'members/show'
-    get 'members/show_your'
-    get 'members/edit'
-    get 'members/update'
-    get 'members/check'
-    get 'members/withdraw'
-  end
-  namespace :public do
-    get 'homes/top'
-    get 'homes/about'
-  end
-  devise_for :admins
-  devise_for :members
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
