@@ -1,0 +1,33 @@
+<header class="border-bottom border-dark">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <%= link_to root_path, class: "btn" do %>
+          <%= image_tag "logo.png", size: "100x50" %>
+        <% end %>
+      </div>
+      <div class="col py-2">
+        <div class="header_link">
+          <div class="d-grid gap-2 d-md-block">
+            <% if member_signed_in? %><!--メンバーでログインしている場合-->
+              <%= link_to "投稿一覧", index_your_posts_path, class: "btn btn-outline-dark" %>
+              <%= link_to "会員一覧", members_path, class: "btn btn-outline-dark" %>
+              <%= link_to "グループ一覧(未)", class: "btn btn-outline-dark" %>
+              <%= link_to "ログアウト", destroy_member_session_path, class: "btn btn-outline-dark" %>
+            <% elsif admin_signed_in? %><!--管理者でログインしている場合-->
+              <%= link_to "投稿一覧", admin_posts_path, class: "btn btn-outline-dark" %>
+              <%= link_to "会員一覧", admin_top_path, class: "btn btn-outline-dark" %>
+              <%= link_to "グループ一覧(未)", class: "btn btn-outline-dark" %>
+              <%= link_to "ログアウト", destroy_admin_session_path, class: "btn btn-outline-dark" %>
+            <% else %><!--ログインしていない場合-->
+              <%= link_to "About", about_path, class: "btn btn-outline-dark" %>
+              <%= link_to "新規登録", new_member_registration_path, class: "btn btn-outline-dark" %>
+              <%= link_to "ログイン", new_member_session_path, class: "btn btn-outline-dark" %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="botder border-dark"></span>
+</header>
