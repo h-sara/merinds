@@ -70,11 +70,12 @@ ActiveRecord::Schema.define(version: 2023_01_12_071551) do
     t.string "first_name_kana", null: false
     t.string "last_name_kana", null: false
     t.string "nickname", null: false
-    t.text "introduction", null: false
+    t.text "introduction"
     t.boolean "is_deleted", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["email"], name: "index_members_on_email", unique: true
+    t.index ["nickname"], name: "index_members_on_nickname", unique: true
     t.index ["reset_password_token"], name: "index_members_on_reset_password_token", unique: true
   end
 
