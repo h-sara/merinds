@@ -14,14 +14,14 @@
                   <%= link_to "投稿一覧", index_your_posts_path, class: "btn btn-outline-dark" %>
                   <%= link_to "会員一覧", members_path, class: "btn btn-outline-dark" %>
                   <%= link_to "グループ一覧(未)", class: "btn btn-outline-dark" %>
-                  <%= link_to "ログアウト", destroy_member_session_path, class: "btn btn-outline-dark" %>
+                  <%= link_to "ログアウト", destroy_member_session_path, method: :delete, class: "btn btn-outline-dark" %>
                 <% elsif admin_signed_in? %>
                 <!--管理者でログインしている場合-->
                 <span class="text-danger">管理者ログイン中</span>
                   <%= link_to "投稿一覧", admin_posts_path, class: "btn btn-outline-dark" %>
                   <%= link_to "会員一覧", admin_top_path, class: "btn btn-outline-dark" %>
                   <%= link_to "グループ一覧(未)", root_path, class: "btn btn-outline-dark" %>
-                  <%= link_to "ログアウト", destroy_admin_session_path, class: "btn btn-outline-dark" %>
+                  <%= link_to "ログアウト", destroy_admin_session_path, method: :delete, class: "btn btn-outline-dark" %>
                 <% else %>
                 <!--ログインしていない場合-->
                   <%= link_to "About", about_path, class: "btn btn-outline-dark mr-2" %>
