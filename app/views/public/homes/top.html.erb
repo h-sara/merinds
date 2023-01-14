@@ -1,2 +1,23 @@
-<h1>Public::Homes#top</h1>
-<p>Find me in app/views/public/homes/top.html.erb</p>
+<div class="container">
+  <h1 class="mb-4 text-center">Welcome to merinds</h1>
+  <div class="row justify-content-center">
+    <div class="text-center">
+      <% if member_signed_in? && current_member.email == "guest@example.com" %>
+      <!--ゲストでログインしている場合-->
+      <b class="text-danger">
+        ※新規登録・メンバーでログインする場合は、一旦ログアウトする必要があります。
+      </b><br>
+      <%= link_to "ログアウト", destroy_member_session_path, method: :delete, class: "btn btn-outline-dark mt-2" %>
+      <% elsif member_signed_in? %>
+      <!--メンバーでログインしている場合-->
+      <%= link_to "ログアウト", destroy_member_session_path, method: :delete, class: "btn btn-outline-dark mt-2" %>
+      <%= link_to "マイページ", my_page_members_path, class: "btn btn-outline-dark" %>
+      <%= link_to "○○さんの投稿一覧", posts_path, class: "btn btn-outline-dark" %>
+      <% else %>
+        <%= link_to "ゲストログイン(閲覧用)", members_guest_sign_in_path, method: :post, class: "btn btn-secondary mb-3", style: "width:300px" %><br>
+        <%= link_to "ログイン", member_session_path, class: "btn btn-secondary mb-3", style: "width:300px" %><br>
+        <%= link_to "新規登録", new_member_registration_path, class: "btn btn-secondary", style: "width:300px" %>
+      <% end %>
+    </div>
+  </div>
+</div>
