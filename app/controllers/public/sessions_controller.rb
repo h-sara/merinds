@@ -25,6 +25,11 @@ class Public::SessionsController < Devise::SessionsController
   #   devise_parameter_sanitizer.permit(:sign_in, keys: [:attribute])
   # end
 
+  #サインイン後の遷移先
+  def after_sign_in_path_for(resource)
+    my_page_members_path
+  end
+
   # ゲストログイン機能
   def guest_sign_in
     member = Member.guest
