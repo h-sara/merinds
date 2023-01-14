@@ -9,11 +9,17 @@
           <div class="header_link">
             <div class="d-grid gap-2 d-md-block">
               <div class="float-right"><!--右寄せ-->
-                <% if member_signed_in? %>
+                <% if member_signed_in? && current_member.email == "guest@example.com" %>
+                  <!--ゲストでログインしている場合-->
+                  <%= link_to "About", about_path, class: "btn btn-outline-dark mr-2" %>
+                  <%= link_to "投稿一覧", index_your_posts_path, class: "btn btn-outline-dark" %>
+                  <%= link_to "グループ一覧(未)",root_path, class: "btn btn-outline-dark" %>
+                  <%= link_to "ログアウト", destroy_member_session_path, method: :delete, class: "btn btn-outline-dark" %>
+                <% elsif member_signed_in? %>
                 <!--メンバーでログインしている場合-->
                   <%= link_to "投稿一覧", index_your_posts_path, class: "btn btn-outline-dark" %>
                   <%= link_to "会員一覧", members_path, class: "btn btn-outline-dark" %>
-                  <%= link_to "グループ一覧(未)", class: "btn btn-outline-dark" %>
+                  <%= link_to "グループ一覧(未)",root_path, class: "btn btn-outline-dark" %>
                   <%= link_to "ログアウト", destroy_member_session_path, method: :delete, class: "btn btn-outline-dark" %>
                 <% elsif admin_signed_in? %>
                 <!--管理者でログインしている場合-->

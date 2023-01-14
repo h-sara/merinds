@@ -12,7 +12,8 @@
 
   <body>
     <%= render "layouts/header" %>
-    <main class="py-4" style="min-height: 70vh">
+    <main class="pb-4" style="min-height: 70vh">
+      <%= notice %>
       <%= yield %>
     </main>
     <%= render "layouts/footer" %>
