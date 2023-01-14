@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
 
+  # ゲスト用
+  devise_scope :member do
+    post 'members/guest_sign_in', to: 'public/sessions#guest_sign_in'
+  end
+
+
   # 管理者用（skipオプションを使用し不要なルーティングを削除している）
   # URL /admin/sign_in ...
   devise_for :admin, skip: [:registrations, :passwords] ,controllers: {

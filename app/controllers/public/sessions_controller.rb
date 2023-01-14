@@ -24,4 +24,12 @@ class Public::SessionsController < Devise::SessionsController
   # def configure_sign_in_params
   #   devise_parameter_sanitizer.permit(:sign_in, keys: [:attribute])
   # end
+
+  # ゲストログイン機能
+  def guest_sign_in
+    member = Member.guest
+    sign_in member
+    redirect_to index_your_posts_path, notice: 'ゲストでログインしました。'
+  end
+
 end
