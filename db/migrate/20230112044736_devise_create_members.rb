@@ -43,16 +43,18 @@ class DeviseCreateMembers < ActiveRecord::Migration[6.1]
       t.string :last_name_kana, null: false
       ## ニックネーム／string型／NOTNULL
       t.string :nickname, null: false
-      ## 自己紹介文／text型／NOTNULL
-      t.text :introduction, null: false
+      ## 自己紹介文／text型
+      t.text :introduction
       ## 退会フラグ／boolean型／NOTNULL／default:false
       t.boolean :is_deleted, null: false, default: false
 
       t.timestamps null: false
     end
 
+    # 一意制約
     add_index :members, :email,                unique: true
     add_index :members, :reset_password_token, unique: true
+    add_index :members, :nickname,             unique: true
     # add_index :members, :confirmation_token,   unique: true
     # add_index :members, :unlock_token,         unique: true
   end
