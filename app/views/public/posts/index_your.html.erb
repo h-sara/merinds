@@ -1,2 +1,17 @@
-<h1>Public::Posts#index_your</h1>
-<p>Find me in app/views/public/posts/index_your.html.erb</p>
+<div class="container-fluid" style="width:60%">
+  <div class="row">
+    <div class="col">
+      <div class="row">
+        <% @index_yours.each do |member| %>
+        <div class="col-1">
+          <%= image_tag member.get_member_image(100,100) %>
+        </div>
+        <div class="col-3">
+          ddd
+          <%= member.nickname %>
+        </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

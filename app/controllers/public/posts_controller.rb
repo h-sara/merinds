@@ -15,6 +15,8 @@ class Public::PostsController < ApplicationController
   end
 
   def index_your
+    @index_yours = Post.all
+
   end
 
   def show_your
