@@ -4,18 +4,43 @@
       画面左側
     </div>
     <div class="col-8">
-      <div class="row">
-        <div class="col-4">
-          <%= image_tag @member.get_member_image(100,100) %>
+      <div class="row" style="width:90%">
+        <h4 class="mt-2 mb-4">マイページ</h4>
+        <table class="table table-bordered">
+          <tr>
+            <th style="width: 25%">アイコン</th>
+            <td style="width: 75%"><%= image_tag @member.get_member_image(100,100) %></td>
+          </tr>
+          <tr>
+            <th>名前</th>
+            <td><%= @member.first_name %>　<%= @member.last_name %></td>
+          </tr>
+          <tr>
+            <th>フリガナ</th>
+            <td><%= @member.first_name_kana %>　<%= @member.last_name_kana %></td>
+          </tr>
+          <tr>
+            <th>メールアドレス</th>
+            <td><%= @member.email %></td>
+          </tr>
+          <tr>
+            <th>ニックネーム</th>
+            <td><%= @member.nickname %></td>
+          </tr>
+          <tr>
+            <th>自己紹介文</th>
+            <td><%= @member.introduction %></td>
+          </tr>
+        </table>
+        <div class="mx-auto mt-3">
+          <%= link_to "メンバー情報編集", information_edit_members_path, class: "btn btn-success" %>
         </div>
-        <div class="col-8">
-          <div class="row">
-            <div class="col-4">
-              <%= @member.nickname %>
-            </div>
-          </div>
-        </div>
-
+      </div>
+      <div class="row mt-5">
+        <h4>
+          退会希望の方は
+          <u><%= link_to "こちら", check_withdrawal_members_path , class: "text-primary" %></u>
+        </h4>
       </div>
     </div>
   </div>

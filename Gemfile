@@ -76,3 +76,5 @@ gem "net-imap"
 gem 'devise'
 # kaminari
 gem 'kaminari','~> 1.2.1'
+# ActiveStrage
+gem 'image_processing', '~> 1.2'
