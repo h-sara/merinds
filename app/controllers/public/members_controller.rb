@@ -6,6 +6,7 @@ class Public::MembersController < ApplicationController
   end
 
   def show
+    @member = current_member
   end
 
   def show_your
@@ -21,5 +22,19 @@ class Public::MembersController < ApplicationController
   end
 
   def withdraw
+  end
+
+  private
+
+  def member_params
+    params.require(:member).permit(
+      :first_name,
+      :last_name,
+      :first_name_kana,
+      :last_name_kana,
+      :nickname,
+      :introduction,
+      :is_deleted,
+    )
   end
 end
