@@ -1,2 +1,22 @@
-<h1>Public::Members#show</h1>
-<p>Find me in app/views/public/members/show.html.erb</p>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-4">
+      画面左側
+    </div>
+    <div class="col-8">
+      <div class="row">
+        <div class="col-4">
+          <%= image_tag @member.get_member_image(100,100) %>
+        </div>
+        <div class="col-8">
+          <div class="row">
+            <div class="col-4">
+              <%= @member.nickname %>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
