@@ -49,7 +49,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :posts, only: [:index, :show, :edit, :update, :destroy] do
+    resources :posts, only: [:create, :index, :show, :edit, :update, :destroy] do
       collection do
         get "index_your"
       end

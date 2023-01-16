@@ -91,7 +91,7 @@ ActiveRecord::Schema.define(version: 2023_01_12_071551) do
   create_table "posts", force: :cascade do |t|
     t.integer "member_id", null: false
     t.text "sentence", null: false
-    t.integer "image_id", null: false
+    t.integer "image_id"
     t.boolean "is_edited", default: false, null: false
     t.boolean "is_hidden", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
