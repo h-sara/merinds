@@ -13,8 +13,7 @@ class Public::MembersController < ApplicationController
     @post = Post.new
     # ゲストメンバー以外のメンバー情報を全て格納
     @members = Member.where.not(email: "guest@example.com")
-    @show_your = @members.find_by(params[:nickname])
-    binding.pry
+    @show_your = Member.find_by(params[:nickname])
   end
 
   def show

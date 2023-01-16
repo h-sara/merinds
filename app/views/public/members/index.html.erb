@@ -20,18 +20,20 @@
             <tr>
               <td>
                 <%= link_to withdraw_member_members_path do %>
-                  <%= image_tag member.get_member_image(100,100) %>
+                  <%= image_tag member.get_member_image(50,50) %>
                 <% end %>
               </td>
               <td>
-                <%= link_to member_mypage_path(@show_your) do %>
-                  <%= member.nickname %>
-                <% end %>
+                <%= member.nickname %>
               </td>
               <td></td>
               <td></td>
               <td></td>
-              <td></td>
+              <td>
+                <%= link_to posts_path do %>
+                  <%= @posts.count %>
+                <% end %>
+              </td>
             </tr>
             <% end %>
           </tbody>
