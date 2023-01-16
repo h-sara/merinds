@@ -29,9 +29,21 @@ class Public::MembersController < ApplicationController
   end
 
   def edit
+    # 現メンバー情報を@memberに格納
+    @member = current_member
+    # 現メンバーの投稿情報を@postsに格納
+    @posts = Post.where(member_id: "current_member.id")
+    # # 投稿の作成
+    @post = Post.new
   end
 
   def update
+    @member = current_member
+    if @member.update(member_params)
+      redirect_to my_page_members_path
+    else
+      render :edit
+    end
   end
 
   def check
