@@ -1,2 +1,42 @@
-<h1>Public::Members#index</h1>
-<p>Find me in app/views/public/members/index.html.erb</p>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-4">
+      <%= render "public/shared/left_screen", member: @member, posts: @posts, post: @post %>
+    </div>
+    <div class="col-8">
+      <div class="row" style="width:90%">
+        <h4 class="mt-2 mb-4">会員一覧</h4>
+        <table class="table">
+          <thead>
+            <th>アイコン</th>
+            <th>ニックネーム</th>
+            <th>フォロー数</th>
+            <th>フォロワー数</th>
+            <th>グループ</th>
+            <th>投稿数</th>
+          </thead>
+          <tbody>
+            <% @members.each do |member| %>
+            <tr>
+              <td>
+                <%= link_to withdraw_member_members_path do %>
+                  <%= image_tag member.get_member_image(100,100) %>
+                <% end %>
+              </td>
+              <td>
+                <%= link_to member_mypage_path(@show_your) do %>
+                  <%= member.nickname %>
+                <% end %>
+              </td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
