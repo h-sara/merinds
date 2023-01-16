@@ -36,4 +36,9 @@ class Member < ApplicationRecord
       member.nickname = "merindsゲスト"
     end
   end
+
+  # リンク先指定のため記述
+  def to_param
+    return nickname
+  end
 end
