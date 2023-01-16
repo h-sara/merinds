@@ -33,16 +33,15 @@ Rails.application.routes.draw do
     root "homes#top"
     get "about" => "homes#about"
 
-    resources :members, only: [] do
-      get "/:nickname", to: "members#show_your", as: "mypage"
+    resources :members, only: [:update] do
       collection do
         get "/", action: "index"
         get "my_page", action: "show"
         get "information/edit", action: "edit"
-        patch "update", action: "update"
         get "check_withdrawal", action: "check"
         patch "withdraw_member", action: "withdraw"
       end
+      get "/:nickname", to: "members#show_your", as: "mypage"
       resources :relationships, only: [:create, :destroy] do
         get "followings"
         get "followers"
