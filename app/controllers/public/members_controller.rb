@@ -47,6 +47,10 @@ class Public::MembersController < ApplicationController
   end
 
   def check
+    # 現メンバー情報を@memberに格納
+    @member = current_member
+    # 現メンバーの投稿情報を@postsに格納
+    @posts = Post.where(member_id: "current_member.id")
   end
 
   def withdraw

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Public::SessionsController < Devise::SessionsController
+  before_action :member_state, only: [:create]
+
   # before_action :configure_sign_in_params, only: [:create]
 
   # GET /resource/sign_in
@@ -37,4 +39,20 @@ class Public::SessionsController < Devise::SessionsController
     redirect_to index_your_posts_path, notice: 'ゲストでログインしました。'
   end
 
+  protected
+  # 退会しているか判断するメソッド
+  def member_state
+    # 入力されたemaiからアカウントを1件取得
+    @member = Member.find_by(email: params[:member][:email])
+    # アカウントを取得できなかった場合、このメソッドを終了する
+    return if !@member
+    # 取得したアカウントのパスワードと入力されたパスワードが一致してるかを判別
+    if @member.valid_password?(params[:member][:password])
+      # 取得したアカウントのis_deletedカラムがtrueだった場合、
+      ## 退会しているためサインアップ画面に遷移する
+      if @member.is_deleted == true
+        redirect_to new_member_registration_path
+      end
+    end
+  end
 end
