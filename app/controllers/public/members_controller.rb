@@ -11,8 +11,9 @@ class Public::MembersController < ApplicationController
     @posts = Post.where(member_id: "current_member.id")
     # # 投稿の作成
     @post = Post.new
-    # ゲストメンバー以外のメンバー情報を全て格納
-    @members = Member.where.not(email: "guest@example.com")
+    # ゲスト、退会済み以外のメンバーのレコードをすべて取得
+    @members = Member.where.not("email = ? or is_deleted = ?", "guest@example.com", true)
+    # binding.pry
     @show_your = Member.find_by(params[:nickname])
   end
 
