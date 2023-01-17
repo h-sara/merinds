@@ -9,12 +9,10 @@ class Public::MembersController < ApplicationController
     @member = current_member
     # 現メンバーの投稿情報を@postsに格納
     @posts = Post.where(member_id: "current_member.id")
-    # # 投稿の作成
+    # 投稿の作成
     @post = Post.new
     # ゲスト、退会済み以外のメンバーのレコードをすべて取得
     @members = Member.where.not("email = ? or is_deleted = ?", "guest@example.com", true)
-    # binding.pry
-    @show_your = Member.find_by(params[:nickname])
   end
 
   def show
