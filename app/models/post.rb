@@ -1,5 +1,5 @@
 class Post < ApplicationRecord
-  belongs_to :members
+  belongs_to :members, optional: true
   has_many :post_comments, dependent: :destroy
 
   # 投稿の添付画像の設定
