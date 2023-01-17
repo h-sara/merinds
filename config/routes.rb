@@ -45,7 +45,7 @@ Rails.application.routes.draw do
     # リレーションシップのルーティング
     get "members/my_page/followings" => "relationships#followings", as: "members_followings"
     get "members/my_page/followers" => "relationships#followers", as: "members_followers"
-    post "members/:id/relationships" => "relationships#create"
+    post "members/:id/relationships" => "relationships#create"#, as: "members_relationships"
     delete "members/:id/relationships" => "relationships#destroy"
 
     # 投稿のルーティング
