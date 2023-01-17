@@ -54,6 +54,11 @@ class Public::MembersController < ApplicationController
   end
 
   def withdraw
+    @member = current_member
+    # is_deletedカラムをtrueに変更
+    @member.update(is_deleted: true)
+    reset_session
+    redirect_to root_path, notice: "退会を実行しました。"
   end
 
   private
