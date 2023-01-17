@@ -3,8 +3,8 @@
     <div class="col-4">
       <%= render "public/shared/left_screen", member: @member, post: @post %>
     </div>
-    <div class="col-8">
-      <div class="row" style="width:90%">
+    <div class="col-8 pr-5">
+      <div class="row">
         <h4 class="mt-2 mb-4">会員一覧</h4>
         <table class="table">
           <thead class="text-center">
@@ -16,22 +16,37 @@
             <th>投稿数</th>
           </thead>
           <tbody class="text-center">
+            <!--自分のメンバー情報では遷移できないようにする-->
             <% @members.each do |member| %>
             <tr>
               <td class="align-middle">
-                <%= link_to your_page_path(member.nickname) do %>
+                <% if member == current_member %>
                   <%= image_tag member.get_member_image(50,50) %>
+                <% else %>
+                  <%= link_to your_page_path(member.nickname) do %>
+                    <%= image_tag member.get_member_image(50,50) %>
+                  <% end %>
                 <% end %>
               </td>
               <td class="align-middle">
-                <%= member.nickname %>
+                <% if member == current_member %>
+                  <%= member.nickname %>
+                <% else %>
+                  <%= link_to your_page_path(member.nickname) do %>
+                    <%= member.nickname %>
+                  <% end %>
+                <% end %>
               </td>
               <td class="align-middle"></td>
               <td class="align-middle"></td>
               <td class="align-middle">未所属</td>
               <td class="align-middle">
-                <%= link_to your_posts_path do %>
+                <% if member == current_member %>
                   <%= member.posts.count %>
+                <% else %>
+                  <%= link_to your_posts_path do %>
+                    <%= member.posts.count %>
+                  <% end %>
                 <% end %>
               </td>
             </tr>
