@@ -1,2 +1,38 @@
-<h1>Public::Members#show_your</h1>
-<p>Find me in app/views/public/members/show_your.html.erb</p>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-4">
+      <%= render "public/shared/left_screen", member: @member, posts: @posts, post: @post %>
+    </div>
+    <div class="col-8">
+      <div class="row" style="width:90%">
+        <div class="col">
+          <div class="row">
+            <div class="col"><%= image_tag @show_your.get_member_image(100,100) %></div>
+            <div class="col">
+              <div class="row">
+                <div class="col"><%= @show_your.nickname %></div>
+                <div class="col">
+                  フォロー中
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  フォロー：
+                </div>
+                <div class="col">
+                  フォロワー：
+                </div>
+                <div class="col">
+                  投稿数：
+                  <%= link_to your_posts_path do %>
+                    <%= @show_your.posts.count %>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
