@@ -12,7 +12,7 @@
       <!--メンバーでログインしている場合-->
       <%= link_to "ログアウト", destroy_member_session_path, method: :delete, class: "btn btn-outline-dark mt-2" %><br>
       <%= link_to "マイページ", my_page_path, class: "btn btn-outline-dark mt-3" %><br>
-      <%= link_to posts_path, class: "btn btn-outline-dark mt-3" do %>
+      <%= link_to my_posts_path, class: "btn btn-outline-dark mt-3" do %>
         <%=current_member.nickname %>さんの投稿一覧
       <% end %>
       <% else %>

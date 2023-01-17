@@ -10,8 +10,8 @@
             <li class="mb-2"><%= member.nickname %></li>
             <li>
               投稿数：
-              <%= link_to posts_path do %>
-                <%= posts.count %>
+              <%= link_to my_posts_path do %>
+                <%= member.posts.count %>
               <% end %>
             </li>
           </ul>

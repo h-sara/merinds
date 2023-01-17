@@ -1,7 +1,7 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-4">
-      <%= render "public/shared/left_screen", member: @member, posts: @posts, post: @post %>
+      <%= render "public/shared/left_screen", member: @member, post: @post %>
     </div>
     <div class="col-8">
       <div class="row" style="width:90%">
@@ -30,8 +30,8 @@
               <td class="align-middle"></td>
               <td class="align-middle">未所属</td>
               <td class="align-middle">
-                <%= link_to posts_path do %>
-                  <%= @posts.count %>
+                <%= link_to your_posts_path do %>
+                  <%= member.posts.count %>
                 <% end %>
               </td>
             </tr>
