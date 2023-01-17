@@ -7,6 +7,8 @@ class Public::MembersController < ApplicationController
   def index
     # 現メンバー情報を@memberに格納
     @member = current_member
+    # 現メンバーの投稿情報を@postsに格納
+    @posts = Post.where(member_id: "current_member.id")
     # 投稿の作成
     @post = Post.new
     # ゲスト、退会済み以外のメンバーのレコードをすべて取得
@@ -16,6 +18,8 @@ class Public::MembersController < ApplicationController
   def show
     # 現メンバー情報を@memberに格納
     @member = current_member
+    # 現メンバーの投稿情報を@postsに格納
+    @posts = Post.where(member_id: "current_member.id")
     # 投稿の作成
     @post = Post.new
   end
@@ -34,7 +38,9 @@ class Public::MembersController < ApplicationController
   def edit
     # 現メンバー情報を@memberに格納
     @member = current_member
-    # # 投稿の作成
+    # 現メンバーの投稿情報を@postsに格納
+    @posts = Post.where(member_id: "current_member.id")
+    # 投稿の作成
     @post = Post.new
   end
 
@@ -50,6 +56,10 @@ class Public::MembersController < ApplicationController
   def check
     # 現メンバー情報を@memberに格納
     @member = current_member
+    # 現メンバーの投稿情報を@postsに格納
+    @posts = Post.where(member_id: "current_member.id")
+    # 投稿の作成
+    @post = Post.new
   end
 
   def withdraw
@@ -71,7 +81,7 @@ class Public::MembersController < ApplicationController
       :last_name_kana,
       :nickname,
       :introduction,
-      :is_deleted,
+      :is_deleted
     )
   end
 end
