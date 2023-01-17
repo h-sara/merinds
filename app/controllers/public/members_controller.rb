@@ -1,9 +1,6 @@
 class Public::MembersController < ApplicationController
 
   # 現メンバー == current_member
-  def top
-  end
-
   def index
     # 現メンバー情報を@memberに格納
     @member = current_member
