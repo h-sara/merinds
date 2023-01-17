@@ -33,20 +33,20 @@ Rails.application.routes.draw do
     root "homes#top"
     get "about" => "homes#about"
 
-    resources :members, only: [:update] do
-      collection do
-        get "/", action: "index"
-        get "my_page", action: "show"
-        get "information/edit", action: "edit"
-        get "check_withdrawal", action: "check"
-        patch "withdraw_member", action: "withdraw"
-      end
-      get "/:nickname", to: "members#show_your", as: "mypage"
-      resources :relationships, only: [:create, :destroy] do
-        get "followings"
-        get "followers"
-      end
-    end
+    # メンバーのルーティング
+    get "members" => "members#index"
+    get "members/my_page" => "members#show", as: "my_page"
+    get "members/:nickname" => "members#show_your", as: "your_page"
+    get "members/information/edit" => "members#edit", as: "members_edit"
+    patch "members/update" => "members#update", as: "members_update"
+    get "members/check" => "members#check", as: "members_check"
+    patch "members/withdraw" => "members#withdraw", as: "members_withdraw"
+
+    # リレーションシップのルーティング
+    get "members/my_page/followings" => "relationships#followings", as: "members_followings"
+    get "members/my_page/followers" => "relationships#followers", as: "members_followers"
+    post "members/:id/relationships" => "relationships#create"
+    delete "members/:id/relationships" => "relationships#destroy"
 
     resources :posts, only: [:create, :index, :show, :edit, :update, :destroy] do
       collection do
