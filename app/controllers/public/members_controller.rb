@@ -47,9 +47,18 @@ class Public::MembersController < ApplicationController
   end
 
   def check
+    # 現メンバー情報を@memberに格納
+    @member = current_member
+    # 現メンバーの投稿情報を@postsに格納
+    @posts = Post.where(member_id: "current_member.id")
   end
 
   def withdraw
+    @member = current_member
+    # is_deletedカラムをtrueに変更
+    @member.update(is_deleted: true)
+    reset_session
+    redirect_to root_path, notice: "退会を実行しました。"
   end
 
   private
