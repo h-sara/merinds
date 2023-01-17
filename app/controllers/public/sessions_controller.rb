@@ -36,7 +36,7 @@ class Public::SessionsController < Devise::SessionsController
   def guest_sign_in
     member = Member.guest
     sign_in member
-    redirect_to index_your_posts_path, notice: 'ゲストでログインしました。'
+    redirect_to your_posts_path, notice: 'ゲストでログインしました。'
   end
 
   protected
