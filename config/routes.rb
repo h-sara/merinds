@@ -59,6 +59,7 @@ Rails.application.routes.draw do
     delete "posts/my_posts/:id" => "posts#destroy"
 
     # いいねのルーティング
+    get "/members/my_page/favorited_posts" => "favorites#index", as: "my_favorited_posts"
     post "posts/:post_id/favorites" => "favorites#create"
     delete "posts/:post_id/favorites" => "favorites#destroy"
 
