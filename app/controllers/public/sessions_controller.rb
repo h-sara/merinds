@@ -27,7 +27,7 @@ class Public::SessionsController < Devise::SessionsController
 
   #サインイン後の遷移先
   def after_sign_in_path_for(resource)
-    my_page_members_path
+    my_page_path
   end
 
   # ゲストログイン機能
