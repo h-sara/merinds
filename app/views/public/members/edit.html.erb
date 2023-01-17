@@ -7,7 +7,7 @@
       <div class="row">
         <h4 class="mt-2 mb-4">会員情報編集</h4>
       </div>
-      <%= form_with model: @member, url: member_path(@member.id), method: :patch do |f| %>
+      <%= form_with model: @member, url: members_update_path(@member.id), method: :patch do |f| %>
       <div class="row">
         <div class="col">
           <div class="row mb-3">
