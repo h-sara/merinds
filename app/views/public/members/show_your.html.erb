@@ -4,34 +4,76 @@
       <%= render "public/shared/left_screen", member: @member, posts: @posts, post: @post %>
     </div>
     <div class="col-8">
-      <div class="row" style="width:90%">
+      <div class="row mt-2 mr-2">
         <div class="col">
-          <div class="row">
-            <div class="col"><%= image_tag @show_your.get_member_image(100,100) %></div>
+          <div class="row border">
             <div class="col">
-              <div class="row">
-                <div class="col"><%= @show_your.nickname %></div>
-                <div class="col">
-                  フォロー中
+              <div class="row px-4 pt-4 mt-2">
+                <div class="col-3"><%= image_tag @show_your.get_member_image(100,100) %></div>
+                <div class="col-9">
+                  <div class="row lead mb-3">
+                    <div class="col"><%= @show_your.nickname %></div>
+                    <div class="col">
+                      フォロー中
+                    </div>
+                    <div class="col"></div>
+                  </div>
+                  <div class="row">
+                    <div class="col">
+                      フォロー：
+                    </div>
+                    <div class="col">
+                      フォロワー：
+                    </div>
+                    <div class="col">
+                      投稿数：
+                      <%= link_to your_posts_path do %>
+                        <%= @show_your.posts.count %>
+                      <% end %>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col">グループ：未所属</div>
+                  </div>
                 </div>
               </div>
-              <div class="row">
+              <div class="row p-4">
+                <p class="lead">自己紹介</p><br>
+                <%= @show_your.introduction %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-2 mr-2">
+        <div class="col">
+          <div class="row border">
+            <div class="col">
+              <h4>投稿一覧</h4>
+              投稿を表示させるためのeach文挿入
+              <div class="row px-4 pb-2">
                 <div class="col">
-                  フォロー：
-                </div>
-                <div class="col">
-                  フォロワー：
-                </div>
-                <div class="col">
-                  投稿数：
-                  <%= link_to your_posts_path do %>
-                    <%= @show_your.posts.count %>
-                  <% end %>
+                  <div class="row border">
+                    <div class="col">
+                      <div class="row">
+                        <div class="col">
+                          ♡０
+                        </div>
+                        <div class="col">
+                          コメント数：
+                        </div>
+                      </div>
+                      <div class="row px-4 pt-2 pb-3">
+                        @show_your.post.sentence
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+
       </div>
     </div>
   </div>
