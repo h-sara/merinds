@@ -19,7 +19,7 @@
             <% @members.each do |member| %>
             <tr>
               <td>
-                <%= link_to withdraw_member_members_path do %>
+                <%= link_to your_page_path(member.nickname) do %>
                   <%= image_tag member.get_member_image(50,50) %>
                 <% end %>
               </td>

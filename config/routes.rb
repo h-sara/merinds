@@ -36,11 +36,11 @@ Rails.application.routes.draw do
     # メンバーのルーティング
     get "members" => "members#index"
     get "members/my_page" => "members#show", as: "my_page"
-    get "members/:nickname" => "members#show_your", as: "your_page"
     get "members/information/edit" => "members#edit", as: "members_edit"
     patch "members/update" => "members#update", as: "members_update"
     get "members/check" => "members#check", as: "members_check"
     patch "members/withdraw" => "members#withdraw", as: "members_withdraw"
+    get "members/:nickname" => "members#show_your", as: "your_page"
 
     # リレーションシップのルーティング
     get "members/my_page/followings" => "relationships#followings", as: "members_followings"
@@ -48,16 +48,23 @@ Rails.application.routes.draw do
     post "members/:id/relationships" => "relationships#create"
     delete "members/:id/relationships" => "relationships#destroy"
 
-    resources :posts, only: [:create, :index, :show, :edit, :update, :destroy] do
-      collection do
-        get "index_your"
-      end
-      member do
-        get "show_your"
-        resource :favorites, only: [:create, :destroy]
-        resources :post_comments, only: [:create, :destroy]
-      end
-    end
+    # 投稿のルーティング
+    get "posts/my_posts" => "posts#index", as: "my_posts"
+    get "posts/my_posts/:id" => "posts#show", as: "my_post"
+    get "posts/my_posts/:id/edit" => "posts#edit", as: "posts_edit"
+    patch "posts/my_posts/:id" => "posts#update", as: "posts_update"
+    get "posts" => "posts#index_your", as: "your_posts"
+    get "posts/:id" => "posts#show_your", as: "your_post"
+    post "posts" => "posts#create"
+    delete "posts/my_posts/:id" => "posts#destroy"
+
+    # いいねのルーティング
+    post "posts/:post_id/favorites" => "favorites#create"
+    delete "posts/:post_id/favorites" => "favorites#destroy"
+
+    # 投稿コメントのルーティング
+    post "posts/:post_id/post_comments" => "post_comments#create"
+    delete "posts/:post_id/post_comments" => "post_comments#destroy"
 
     get "searches/search" => "searches#search"
   end

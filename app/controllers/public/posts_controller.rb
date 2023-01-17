@@ -6,10 +6,10 @@ class Public::PostsController < ApplicationController
   def show
   end
 
-  def create
+  def create #投稿作成
     @post = Post.new(post_params)
     @post.save
-    redirect_to post_path(@post.id)
+    redirect_to my_post_path(@post.id)
   end
 
   def edit
@@ -31,6 +31,7 @@ class Public::PostsController < ApplicationController
 
   def post_params
     params.require(:post).permit(
+      :member_id,
       :sentence,
       :image_id,
       :is_edited,
