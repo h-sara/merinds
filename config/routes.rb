@@ -36,11 +36,11 @@ Rails.application.routes.draw do
     # メンバーのルーティング
     get "members" => "members#index"
     get "members/my_page" => "members#show", as: "my_page"
-    get "members/:nickname" => "members#show_your", as: "your_page"
     get "members/information/edit" => "members#edit", as: "members_edit"
     patch "members/update" => "members#update", as: "members_update"
     get "members/check" => "members#check", as: "members_check"
     patch "members/withdraw" => "members#withdraw", as: "members_withdraw"
+    get "members/:nickname" => "members#show_your", as: "your_page"
 
     # リレーションシップのルーティング
     get "members/my_page/followings" => "relationships#followings", as: "members_followings"
@@ -50,7 +50,7 @@ Rails.application.routes.draw do
 
     # 投稿のルーティング
     get "posts/my_posts" => "posts#index", as: "my_posts"
-    get "posts/my_posts/:id" => "posts#ishow", as: "my_post"
+    get "posts/my_posts/:id" => "posts#show", as: "my_post"
     get "posts/my_posts/:id/edit" => "posts#edit", as: "posts_edit"
     patch "posts/my_posts/:id" => "posts#update", as: "posts_update"
     get "posts" => "posts#index_your", as: "your_posts"
