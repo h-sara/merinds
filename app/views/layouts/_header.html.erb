@@ -31,7 +31,7 @@
                   <%= link_to "ログアウト", destroy_admin_session_path, method: :delete, class: "btn btn-dark" %>
                 <% else %>
                 <!--ログインしていない場合-->
-                  <%= link_to "About", about_path, class: "btn btn-outline-dark mr-2" %>
+                  <%= link_to "About", about_path, class: "btn btn-dark mr-2" %>
                   <%= link_to "新規登録", new_member_registration_path, class: "btn btn-dark mr-2" %>
                   <%= link_to "ログイン", new_member_session_path, class: "btn btn-dark" %>
                 <% end %><br>
