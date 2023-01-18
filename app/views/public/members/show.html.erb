@@ -1,7 +1,7 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-4">
-      <%= render "public/shared/left_screen", member: @member, posts: @posts, post: @post %>
+      <%= render "public/shared/left_screen", member: @member, post: @post %>
     </div>
     <div class="col-8">
       <div class="row" style="width:90%">
@@ -33,13 +33,13 @@
           </tr>
         </table>
         <div class="mx-auto mt-3">
-          <%= link_to "メンバー情報編集", information_edit_members_path, class: "btn btn-success" %>
+          <%= link_to "メンバー情報編集", members_edit_path, class: "btn btn-success" %>
         </div>
       </div>
       <div class="row mt-5">
         <h4>
           退会希望の方は
-          <u><%= link_to "こちら", check_withdrawal_members_path , class: "text-primary" %></u>
+          <u><%= link_to "こちら", members_check_path , class: "text-primary" %></u>
         </h4>
       </div>
     </div>

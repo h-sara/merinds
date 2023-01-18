@@ -17,7 +17,7 @@ class Member < ApplicationRecord
 
   # メンバーのアイコン画像の設定
   def get_member_image(width, height)
-    # アイコン画像がない場合
+    ## アイコン画像がない場合
     unless member_image.attached?
       file_path = Rails.root.join('app/assets/images/no_image.jpg')
       member_image.attach(io: File.open(file_path), filename: 'default-image.jpg', content_type: 'image/jpeg')
@@ -35,5 +35,10 @@ class Member < ApplicationRecord
       member.last_name_kana = "メンバー"
       member.nickname = "merindsゲスト"
     end
+  end
+
+  # リンク先指定のため記述
+  def to_param
+    return nickname
   end
 end

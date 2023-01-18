@@ -1,2 +1,10 @@
-<h1>Public::Posts#index</h1>
-<p>Find me in app/views/public/posts/index.html.erb</p>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-4">
+      <%= render "public/shared/left_screen", member: @member, post: @post %>
+    </div>
+    <div class="col-8">
+      <%= render "public/posts/index", member: @member, posts: @posts %>
+    </div>
+  </div>
+</div>
