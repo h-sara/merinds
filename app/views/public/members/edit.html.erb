@@ -1,7 +1,7 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-4">
-      <%= render "public/shared/left_screen", member: @member, posts: @posts, post: @post %>
+      <%= render "public/shared/left_screen", member: @member, post: @post %>
     </div>
     <div class="col-8">
       <div class="row">
@@ -13,7 +13,7 @@
           <div class="row mb-3">
             <div class="col-2">アイコン</div>
             <div class="col offset-1">
-              <%= f.file_field :item_image, accept: "image/*"%>
+              <%= f.file_field :member_image, accept: "image/*" %>
             </div>
           </div>
           <div class="row mb-3">

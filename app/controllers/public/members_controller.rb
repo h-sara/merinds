@@ -1,39 +1,35 @@
 class Public::MembersController < ApplicationController
 
   # 現メンバー == current_member
-  def top
-  end
-
   def index
     # 現メンバー情報を@memberに格納
     @member = current_member
-    # 現メンバーの投稿情報を@postsに格納
-    @posts = Post.where(member_id: "current_member.id")
-    # # 投稿の作成
+    # 投稿の作成
     @post = Post.new
-    # ゲストメンバー以外のメンバー情報を全て格納
-    @members = Member.where.not(email: "guest@example.com")
-    @show_your = Member.find_by(params[:nickname])
+    # ゲスト、退会済み以外のメンバーのレコードをすべて取得
+    @members = Member.where.not("email = ? or is_deleted = ?", "guest@example.com", true)
   end
 
   def show
     # 現メンバー情報を@memberに格納
     @member = current_member
-    # 現メンバーの投稿情報を@postsに格納
-    @posts = Post.where(member_id: "current_member.id")
     # 投稿の作成
     @post = Post.new
   end
 
   def show_your
+    # 現メンバー情報を@memberに格納
+    @member = current_member
+    # 投稿の作成
+    @post = Post.new
+
+    @show_your = Member.find_by(nickname: params[:nickname])
   end
 
   def edit
     # 現メンバー情報を@memberに格納
     @member = current_member
-    # 現メンバーの投稿情報を@postsに格納
-    @posts = Post.where(member_id: "current_member.id")
-    # # 投稿の作成
+    # 投稿の作成
     @post = Post.new
   end
 
@@ -49,8 +45,8 @@ class Public::MembersController < ApplicationController
   def check
     # 現メンバー情報を@memberに格納
     @member = current_member
-    # 現メンバーの投稿情報を@postsに格納
-    @posts = Post.where(member_id: "current_member.id")
+    # 投稿の作成
+    @post = Post.new
   end
 
   def withdraw
@@ -65,13 +61,14 @@ class Public::MembersController < ApplicationController
 
   def member_params
     params.require(:member).permit(
+      :member_image,
       :first_name,
       :last_name,
       :first_name_kana,
       :last_name_kana,
       :nickname,
       :introduction,
-      :is_deleted,
+      :is_deleted
     )
   end
 end

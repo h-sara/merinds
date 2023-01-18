@@ -1,13 +1,13 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-4">
-      <%= render "public/shared/left_screen", member: @member, posts: @posts, post: @post %>
+      <%= render "public/shared/left_screen", member: @member, post: @post %>
     </div>
-    <div class="col-8">
-      <div class="row" style="width:90%">
+    <div class="col-8 pr-5">
+      <div class="row">
         <h4 class="mt-2 mb-4">会員一覧</h4>
         <table class="table">
-          <thead>
+          <thead class="text-center">
             <th>アイコン</th>
             <th>ニックネーム</th>
             <th>フォロー数</th>
@@ -15,23 +15,38 @@
             <th>グループ</th>
             <th>投稿数</th>
           </thead>
-          <tbody>
+          <tbody class="text-center">
+            <!--自分のメンバー情報では遷移できないようにする-->
             <% @members.each do |member| %>
             <tr>
-              <td>
-                <%= link_to your_page_path(member.nickname) do %>
+              <td class="align-middle">
+                <% if member == current_member %>
                   <%= image_tag member.get_member_image(50,50) %>
+                <% else %>
+                  <%= link_to your_page_path(member.nickname) do %>
+                    <%= image_tag member.get_member_image(50,50) %>
+                  <% end %>
                 <% end %>
               </td>
-              <td>
-                <%= member.nickname %>
+              <td class="align-middle">
+                <% if member == current_member %>
+                  <%= member.nickname %>
+                <% else %>
+                  <%= link_to your_page_path(member.nickname) do %>
+                    <%= member.nickname %>
+                  <% end %>
+                <% end %>
               </td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td>
-                <%= link_to posts_path do %>
-                  <%= @posts.count %>
+              <td class="align-middle"></td>
+              <td class="align-middle"></td>
+              <td class="align-middle">未所属</td>
+              <td class="align-middle">
+                <% if member == current_member %>
+                  <%= member.posts.count %>
+                <% else %>
+                  <%= link_to your_posts_path do %>
+                    <%= member.posts.count %>
+                  <% end %>
                 <% end %>
               </td>
             </tr>

@@ -1,9 +1,19 @@
 class Public::PostsController < ApplicationController
 
   def index
+    # 現メンバー情報を@memberに格納
+    @member = current_member
+    # 投稿の作成
+    @post = Post.new
+    # 選択したメンバーの情報を@postsに格納
+    @posts = Post.where(params[:id])
   end
 
   def show
+    # 現メンバー情報を@memberに格納
+    @member = current_member
+    # 投稿の作成
+    @post = Post.new
   end
 
   def create #投稿作成
