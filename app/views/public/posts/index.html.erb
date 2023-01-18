@@ -4,7 +4,12 @@
       <%= render "public/shared/left_screen", member: @member, post: @post %>
     </div>
     <div class="col-8">
-      <%= render "public/posts/index", member: @member, posts: @posts %>
+      <div class="row mt-2 mr-2">
+        <div class="col">
+          <h3><%= @member.nickname %>さんの投稿一覧</h3>
+          <%= render "public/posts/index", member: @member, posts: @posts %>
+        </div>
+      </div>
     </div>
   </div>
 </div>
