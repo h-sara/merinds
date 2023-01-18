@@ -14,7 +14,7 @@ class Public::PostsController < ApplicationController
     @member = current_member
     # 投稿の作成
     @post = Post.new
-
+    # 選択した投稿の情報を@post_showに格納
     @post_show = Post.find(params[:id])
   end
 
@@ -25,9 +25,25 @@ class Public::PostsController < ApplicationController
   end
 
   def edit
+    # 現メンバー情報を@memberに格納
+    @member = current_member
+    # 投稿の作成
+    @post = Post.new
+    # 選択した投稿の情報を@post_showに格納
+    @post_show = Post.find(params[:id])
   end
 
   def update
+    # 選択した投稿の情報を@post_showに格納
+    @post_show = Post.find(params[:id])
+    # 現メンバー情報を@memberに格納
+    if @post_show.update(post_params)
+      # 編集した場合、is_editedカラムをtrueにする
+      @post_show.update(is_edited: true)
+      redirect_to my_post_path(@post_show)
+    else
+      render :edit
+    end
   end
 
   def destroy
