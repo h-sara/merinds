@@ -16,6 +16,8 @@ class Public::PostsController < ApplicationController
     @post = Post.new
     # 選択した投稿の情報を@post_showに格納
     @post_show = Post.find(params[:id])
+    # コメントの作成
+    @post_comment = PostComment.new
   end
 
   def create #投稿作成
@@ -70,6 +72,8 @@ class Public::PostsController < ApplicationController
     @post = Post.new
     # 選択した投稿の情報を@post_showに格納
     @post_show = Post.find(params[:id])
+    # コメントの作成
+    @post_comment = PostComment.new
   end
 
   private
