@@ -5,8 +5,8 @@ class Public::PostsController < ApplicationController
     @member = current_member
     # 投稿の作成
     @post = Post.new
-    # 選択したメンバーの情報を@postsに格納
-    @posts = Post.where(params[:id])
+    # 現メンバーが投稿した投稿情報を@postsに格納
+    @posts = Post.where(member_id: @member.id)
   end
 
   def show
