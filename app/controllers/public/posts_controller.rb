@@ -50,6 +50,13 @@ class Public::PostsController < ApplicationController
   end
 
   def index_your
+    # 現メンバー情報を@memberに格納
+    @member = current_member
+    # 投稿の作成
+    @post = Post.new
+    # すべての投稿を@postsに格納
+    @posts = Post.all
+    # binding.pry
   end
 
   def show_your

@@ -1,65 +1,60 @@
-<div class="row mt-2 mr-2">
+<% posts.each do |post| %>
+<div class="row border mb-3">
   <div class="col">
-    <h3><%= member.nickname %>さんの投稿一覧</h3>
-    <% posts.each do |post| %>
-    <div class="row border mb-3">
+    <div class="row p-2 border m-2">
       <div class="col">
-        <div class="row p-2 border m-2">
-          <div class="col">
-            <div class="row">
-              <span class="mr-4">
-                <%= link_to root_path do %>
-                  ♡0
-                <% end %>
-              </span>
-              <span>
-                コメント数：
-                <%= link_to root_path do %>
-                  0
-                <% end %>
-              </span>
-            </div>
-            <div class="row">
-              <div class="col px-4 pt-2">
-                <%= post.sentence %>
-                <% if post.is_edited == true %>
-                  <p class="text-right">(編集済み)</p>
-                <% end %>
+        <div class="row">
+          <span class="mr-4">
+            <%= link_to root_path do %>
+              ♡0
+            <% end %>
+          </span>
+          <span>
+            コメント数：
+            <%= link_to root_path do %>
+              0
+            <% end %>
+          </span>
+        </div>
+        <div class="row">
+          <div class="col px-4 pt-2">
+            <%= post.sentence %>
+            <% if post.is_edited == true %>
+              <p class="text-right">(編集済み)</p>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+    each文を記述
+    <h4>コメント</h4>
+      <div class="row">
+        <div class="col p-2">
+          <div class="row border ml-3 mr-1 p-2">
+            <div class="col">
+              <div class="row d-flex align-items-center">
+                <!--コメント機能実装時に修正-->
+                <span class="mr-3"><%= image_tag member.get_member_image(50,50) %></span>
+                <span>コメントをした人</span>
               </div>
+              <div class="row pt-3 pl-2">
+                投稿のコメント
+              </div>
+            </div>
+          </div>
+          <div class="row border mt-2 ml-3 mr-1">
+            <div class="col p-2 text-right">
+              <!--自分の投稿かどうかを判別-->
+              <% if member == current_member %>
+                <%= link_to "他のコメントを全て表示", my_post_path(post) %>
+              <% else %>
+                <%= link_to "他のコメントを全て表示", your_post_path(post) %>
+              <% end %>
             </div>
           </div>
         </div>
-        each文を記述
-        <h4>コメント</h4>
-          <div class="row">
-            <div class="col p-2">
-              <div class="row border ml-3 mr-1 p-2">
-                <div class="col">
-                  <div class="row d-flex align-items-center">
-                    <!--コメント機能実装時に修正-->
-                    <span class="mr-3"><%= image_tag member.get_member_image(50,50) %></span>
-                    <span>コメントをした人</span>
-                  </div>
-                  <div class="row pt-3 pl-2">
-                    投稿のコメント
-                  </div>
-                </div>
-              </div>
-              <div class="row border mt-2 ml-3 mr-1">
-                <div class="col p-2 text-right">
-                  <!--自分の投稿かどうかを判別-->
-                  <% if member == current_member %>
-                    <%= link_to "他のコメントを全て表示", my_post_path(post) %>
-                  <% else %>
-                    <%= link_to "他のコメントを全て表示", your_post_path(post) %>
-                  <% end %>
-                </div>
-              </div>
-            </div>
-          </div>
-          eachのend
       </div>
-    </div>
-    <% end %>
+      eachのend
   </div>
 </div>
+<% end %>
