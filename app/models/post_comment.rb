@@ -1,4 +1,4 @@
 class PostComment < ApplicationRecord
-  belongs_to :members
-  belongs_to :posts
+  belongs_to :member
+  belongs_to :post
 end
