@@ -51,7 +51,7 @@ class Public::SessionsController < Devise::SessionsController
       # 取得したアカウントのis_deletedカラムがtrueだった場合、
       ## 退会しているためサインアップ画面に遷移する
       if @member.is_deleted == true
-        redirect_to new_member_registration_path, notice: "退会済みメンバーです。再度ご登録をしてご利用ください。"
+        redirect_to new_member_registration_path, notice: "退会済みメンバーです。再度登録してご利用ください。（※退会前と同じニックネーム・メールアドレスは使用できません）"
       end
     end
   end

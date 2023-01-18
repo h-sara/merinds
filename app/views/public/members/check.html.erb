@@ -12,7 +12,7 @@
           <%= link_to "退会しない", my_page_path, class: "btn btn-primary", style: "width:115px" %>
         </div>
         <div class="col offset-1">
-          <%= link_to "退会する", members_withdraw_path, class: "btn btn-danger", style: "width:115px" %>
+          <%= link_to "退会する", members_withdraw_path, method: :patch, data: {confirm: "本当に退会してもよろしいですか？\n※最終確認です"}, class: "btn btn-danger", style: "width:115px" %>
         </div>
       </div>
       <div class="row mt-5 p-1">
