@@ -1,2 +1,10 @@
-<h1>Public::Posts#show</h1>
-<p>Find me in app/views/public/posts/show.html.erb</p>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-4">
+      <%= render "public/shared/left_screen", member: @member, post: @post %>
+    </div>
+    <div class="col-8 pr-5">
+      <%= render "public/posts/show", member: @member, post_show: @post_show %>
+    </div>
+  </div>
+</div>

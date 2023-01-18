@@ -14,6 +14,8 @@ class Public::PostsController < ApplicationController
     @member = current_member
     # 投稿の作成
     @post = Post.new
+
+    @post_show = Post.find(params[:id])
   end
 
   def create #投稿作成
