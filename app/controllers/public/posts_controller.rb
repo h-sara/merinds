@@ -60,6 +60,12 @@ class Public::PostsController < ApplicationController
   end
 
   def show_your
+    # 現メンバー情報を@memberに格納
+    @member = current_member
+    # 投稿の作成
+    @post = Post.new
+    # 選択した投稿の情報を@post_showに格納
+    @post_show = Post.find(params[:id])
   end
 
   private

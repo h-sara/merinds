@@ -32,7 +32,7 @@
                   </div>
                   <div class="row">
                     <div class="col px-4 mt-4">
-                      <%= post.sentence %>
+                      <%= safe_join(post.sentence.split("\n"),tag(:br)) %>
                       <% if post.is_edited == true %>
                         <p class="text-right">(編集済み)</p>
                       <% end %>
