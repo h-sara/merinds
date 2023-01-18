@@ -47,6 +47,10 @@ class Public::PostsController < ApplicationController
   end
 
   def destroy
+    # 選択した投稿の情報をpostに格納
+    post = Post.find(params[:id])
+    post.destroy
+    redirect_to my_posts_path, notice: "投稿の削除を実行しました。"
   end
 
   def index_your
