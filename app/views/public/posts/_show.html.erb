@@ -1,0 +1,65 @@
+<div class="row">
+  <div class="col">
+    <h4 class="mt-2 mb-4">投稿詳細</h4>
+    <div class="row border mb-3">
+      <div class="col">
+        <div class="row p-2 border m-2">
+          <div class="col">
+            <div class="row">
+              <span class="mr-4">
+                <%= link_to root_path do %>
+                  ♡0
+                <% end %>
+              </span>
+              <span class="mr-4">
+                コメント数：
+                <%= link_to root_path do %>
+                  0
+                <% end %>
+              </span>
+              <span class="mr-4">
+                <%= link_to "投稿編集", posts_edit_path(post_show), class: "btn btn-success" %>
+              </span>
+              <span class="mr-4">
+                <%= link_to "投稿削除", posts_destroy_path(post_show), method: :delete, data: {confirm: "投稿を削除してもよろしいですか？"}, class: "btn btn-danger" %>
+              </span>
+            </div>
+            <div class="row">
+              <div class="col px-4 pt-2">
+                <%= @post_show.sentence %>
+                <% if @post_show.is_edited == true %>
+                  <p class="text-right">(編集済み)</p>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <h4>コメント</h4>
+          <div class="row">
+            <div class="col p-2">
+              <!--↓↓コメント機能実装時に修正↓↓-->
+              each文を記述
+              <div class="row border ml-3 mr-1 p-3">
+                <div class="col">
+                  <div class="row d-flex align-items-center">
+                    <span class="mr-3"><%= image_tag member.get_member_image(50,50) %></span>
+                    <span class="mr-4">コメントをした人</span>
+                    <span>
+                      <% if member == current_member %>
+                        <%= link_to "コメント削除", post_comments_destroy_path(member), method: :delete, data: {confirm: "コメント削除してもよろしいですか？"}, class: "btn btn-danger" %>
+                      <% end %>
+                    </span>
+                  </div>
+                  <div class="row pt-3 pl-2">
+                    投稿のコメント
+                  </div>
+                </div>
+              </div>
+              eachのend
+              <!--↑↑コメント機能実装時に修正↑↑-->
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>

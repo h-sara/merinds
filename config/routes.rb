@@ -56,7 +56,7 @@ Rails.application.routes.draw do
     get "posts" => "posts#index_your", as: "your_posts"
     get "posts/:id" => "posts#show_your", as: "your_post"
     post "posts" => "posts#create"
-    delete "posts/my_posts/:id" => "posts#destroy"
+    delete "posts/my_posts/:id" => "posts#destroy", as: "posts_destroy"
 
     # いいねのルーティング
     get "/members/my_page/favorited_posts" => "favorites#index", as: "my_favorited_posts"
@@ -65,7 +65,7 @@ Rails.application.routes.draw do
 
     # 投稿コメントのルーティング
     post "posts/:post_id/post_comments" => "post_comments#create"
-    delete "posts/:post_id/post_comments" => "post_comments#destroy"
+    delete "posts/:post_id/post_comments" => "post_comments#destroy", as: "post_comments_destroy"
 
     get "searches/search" => "searches#search"
   end
