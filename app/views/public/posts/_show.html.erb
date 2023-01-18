@@ -26,10 +26,18 @@
             </div>
             <div class="row">
               <div class="col px-4 pt-2">
-                <%= safe_join(post_show.sentence.split("\n"),tag(:br)) %>
-                <% if post_show.is_edited == true %>
-                  <p class="text-right">(編集済み)</p>
-                <% end %>
+                <div class="row">
+                  <%= safe_join(post_show.sentence.split("\n"),tag(:br)) %>
+                  <% if post_show.is_edited == true %>
+                    <p class="text-right">(編集済み)</p>
+                  <% end %>
+                </div>
+                <div class="row">
+                  <!--投稿に画像がある場合は表示させる-->
+                  <% if post_show.image_id.attached? %>
+                    <%= image_tag post_show.image_id, class: "img-fluid" %>
+                  <% end %>
+                </div>
               </div>
             </div>
           </div>
