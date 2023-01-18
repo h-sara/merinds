@@ -78,6 +78,12 @@
                             <span class="text-right">(編集済み)</span>
                           <% end %>
                         </div>
+                        <div class="row">
+                          <!--投稿に画像がある場合は表示させる-->
+                          <% if post.image_id.attached? %>
+                            <%= image_tag post.image_id, class: "img-fluid" %>
+                          <% end %>
+                        </div>
                       </div>
                     </div>
                   <% end %>
