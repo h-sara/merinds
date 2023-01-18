@@ -12,11 +12,9 @@
                 <% end %>
               </span>
               <span class="mr-4">
-                コメント数：
-                <%= link_to root_path do %>
-                  0
-                <% end %>
+                コメント数：<%= post_show.post_comments.count %>
               </span>
+              <span class="mr-4">作成日時：<%= @post_show.created_at.strftime('%Y/%m/%d %H:%M') %></span>
               <span class="mr-4">
                 <%= link_to "投稿編集", posts_edit_path(post_show), class: "btn btn-success" %>
               </span>
@@ -27,9 +25,12 @@
             <div class="row">
               <div class="col px-4 pt-2">
                 <div class="row">
-                  <%= safe_join(post_show.sentence.split("\n"),tag(:br)) %>
-                  <% if post_show.is_edited == true %>
-                    <p class="text-right">(編集済み)</p>
+                  <%= safe_join(@post_show.sentence.split("\n"),tag(:br)) %>
+                </div>
+                <div class="row justify-content-end">
+                  <% if @post_show.is_edited == true %>
+                  <span class="mr-2"><%= @post_show.updated_at.strftime('%Y/%m/%d %H:%M') %></span>
+                    <span class="text-right">(編集済み)</span>
                   <% end %>
                 </div>
                 <div class="row">
@@ -45,26 +46,37 @@
         <h4>コメント</h4>
           <div class="row">
             <div class="col p-2">
-              <!--↓↓コメント機能実装時に修正↓↓-->
-              each文を記述
-              <div class="row border ml-3 mr-1 p-3">
-                <div class="col">
-                  <div class="row d-flex align-items-center">
-                    <span class="mr-3"><%= image_tag member.get_member_image(50,50) %></span>
-                    <span class="mr-4">コメントをした人</span>
-                    <span>
-                      <% if member == current_member %>
-                        <%= link_to "コメント削除", post_comments_destroy_path(member), method: :delete, data: {confirm: "コメント削除してもよろしいですか？"}, class: "btn btn-danger" %>
-                      <% end %>
-                    </span>
-                  </div>
-                  <div class="row pt-3 pl-2">
-                    投稿のコメント
+              <% post_show.post_comments.each do |post_comment| %>
+                <div class="row border ml-3 mr-1 p-3 mb-3">
+                  <div class="col">
+                    <div class="row d-flex align-items-center">
+                      <span class="mr-3"><%= image_tag post_comment.member.get_member_image(50,50) %></span>
+                      <span class="mr-4"><%= post_comment.member.nickname %></span>
+                      <span class="mr-4"><%= post_comment.created_at.strftime('%Y/%m/%d %H:%M') %></span>
+                      <span>
+                        <!--現メンバーがコメント作成者であれば削除できるようにする-->
+                        <% if member == current_member %>
+                          <%= link_to "コメント削除", post_comments_destroy_path(post_comment.post_id, post_comment.id), method: :delete, data: {confirm: "コメント削除してもよろしいですか？"}, class: "btn btn-danger" %>
+                        <% end %>
+                      </span>
+                    </div>
+                    <div class="row pt-3 pl-2">
+                      <%= post_comment.comment %>
+                    </div>
                   </div>
                 </div>
+              <% end %>
+              <div class="row  ml-3 mr-1 py-3">
+                <div class="col">
+                  <h4 class="mt-1 mb-3">コメントを書く</h4>
+                  <%= form_with model: [@post_comment], url: post_comments_create_path(@post_show) do |f| %>
+                    <%= f.text_area :comment, style: "width:100%; height:150px", placeholder: "コメントをここに入力してください" %><br>
+                    <div class="text-right mt-2">
+                      <%= f.submit '投稿', class: "btn btn-info", style: "width:100px" %>
+                    </div>
+                  <% end %>
+                </div>
               </div>
-              eachのend
-              <!--↑↑コメント機能実装時に修正↑↑-->
             </div>
           </div>
       </div>
