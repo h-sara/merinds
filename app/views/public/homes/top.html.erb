@@ -10,9 +10,11 @@
       <%= link_to "ログアウト", destroy_member_session_path, method: :delete, class: "btn btn-outline-dark mt-2" %>
       <% elsif member_signed_in? %>
       <!--メンバーでログインしている場合-->
-      <%= link_to "ログアウト", destroy_member_session_path, method: :delete, class: "btn btn-outline-dark mt-2" %>
-      <%= link_to "マイページ", my_page_members_path, class: "btn btn-outline-dark" %>
-      <%= link_to "○○さんの投稿一覧", posts_path, class: "btn btn-outline-dark" %>
+      <%= link_to "ログアウト", destroy_member_session_path, method: :delete, class: "btn btn-outline-dark mt-2" %><br>
+      <%= link_to "マイページ", my_page_path, class: "btn btn-outline-dark mt-3" %><br>
+      <%= link_to my_posts_path, class: "btn btn-outline-dark mt-3" do %>
+        <%=current_member.nickname %>さんの投稿一覧
+      <% end %>
       <% else %>
         <%= link_to "ゲストログイン(閲覧用)", members_guest_sign_in_path, method: :post, class: "btn btn-secondary mb-3", style: "width:300px" %><br>
         <%= link_to "ログイン", member_session_path, class: "btn btn-secondary mb-3", style: "width:300px" %><br>

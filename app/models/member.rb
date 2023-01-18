@@ -1,4 +1,15 @@
 class Member < ApplicationRecord
+  has_one_attached :member_image
+  has_many :posts, dependent: :destroy
+  has_many :post_comments, dependent: :destroy
+  has_many :favorites, dependent: :destroy
+  # フォローした、されたの関係
+  has_many :following, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
+  has_many :followed, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
+  # 一覧画面で使用する
+  has_many :followings, through: :following, source: :followed
+  has_many :followers, through: :followed, source: :follower
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -6,6 +17,7 @@ class Member < ApplicationRecord
 
   # メンバーのアイコン画像の設定
   def get_member_image(width, height)
+    ## アイコン画像がない場合
     unless member_image.attached?
       file_path = Rails.root.join('app/assets/images/no_image.jpg')
       member_image.attach(io: File.open(file_path), filename: 'default-image.jpg', content_type: 'image/jpeg')
@@ -23,5 +35,10 @@ class Member < ApplicationRecord
       member.last_name_kana = "メンバー"
       member.nickname = "merindsゲスト"
     end
+  end
+
+  # リンク先指定のため記述
+  def to_param
+    return nickname
   end
 end

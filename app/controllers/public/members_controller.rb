@@ -1,25 +1,74 @@
 class Public::MembersController < ApplicationController
-  def top
-  end
 
+  # 現メンバー == current_member
   def index
+    # 現メンバー情報を@memberに格納
+    @member = current_member
+    # 投稿の作成
+    @post = Post.new
+    # ゲスト、退会済み以外のメンバーのレコードをすべて取得
+    @members = Member.where.not("email = ? or is_deleted = ?", "guest@example.com", true)
   end
 
   def show
+    # 現メンバー情報を@memberに格納
+    @member = current_member
+    # 投稿の作成
+    @post = Post.new
   end
 
   def show_your
+    # 現メンバー情報を@memberに格納
+    @member = current_member
+    # 投稿の作成
+    @post = Post.new
+
+    @show_your = Member.find_by(nickname: params[:nickname])
   end
 
   def edit
+    # 現メンバー情報を@memberに格納
+    @member = current_member
+    # 投稿の作成
+    @post = Post.new
   end
 
   def update
+    @member = current_member
+    if @member.update(member_params)
+      redirect_to my_page_path
+    else
+      render :edit
+    end
   end
 
   def check
+    # 現メンバー情報を@memberに格納
+    @member = current_member
+    # 投稿の作成
+    @post = Post.new
   end
 
   def withdraw
+    @member = current_member
+    # is_deletedカラムをtrueに変更
+    @member.update(is_deleted: true)
+    reset_session
+    redirect_to root_path, notice: "退会を実行しました。"
+  end
+
+  private
+
+  def member_params
+    params.require(:member).permit(
+      :member_image,
+      :first_name,
+      :last_name,
+      :first_name_kana,
+      :last_name_kana,
+      :nickname,
+      :introduction,
+      :is_deleted
+    )
   end
 end
