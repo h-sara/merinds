@@ -31,7 +31,7 @@
                   </div>
                   <div class="row">
                     <div class="col px-4 mt-4">
-                      <%= @post_show.sentence %>
+                      <%= safe_join(@post_show.sentence.split("\n"),tag(:br)) %>
                       <% if @post_show.is_edited == true %>
                         <p class="text-right">(編集済み)</p>
                       <% end %>
