@@ -5,7 +5,7 @@ class Post < ApplicationRecord
 
   # 投稿検索のためのメソッド
   def self.looks(word)
-    #完全一致で検索
+    #部分一致で検索
     @post = Post.where("sentence LIKE ?", "%#{word}%")
   end
 

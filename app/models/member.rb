@@ -44,7 +44,7 @@ class Member < ApplicationRecord
 
   # メンバー検索のためのメソッド
   def self.looks(word)
-    #完全一致で検索
+    #部分一致で検索
     @member = Member.where("nickname LIKE ?", "%#{word}%")
   end
 end
