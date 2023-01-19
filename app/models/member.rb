@@ -41,4 +41,10 @@ class Member < ApplicationRecord
   def to_param
     return nickname
   end
+
+  # メンバー検索のためのメソッド
+  def self.looks(word)
+    #部分一致で検索
+    @member = Member.where("nickname LIKE ?", "%#{word}%")
+  end
 end
