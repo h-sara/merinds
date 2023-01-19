@@ -23,7 +23,12 @@
                   <%= form_with model: @post_show, url: posts_update_path(@post_show.id) do |f| %>
                   <div class="row">
                     <div class="col px-4 pt-2">
-                      <%= f.text_area :sentence, style: "width:100%; height:100px" %>
+                      <div>
+                        <%= f.text_area :sentence, style: "width:100%; height:100px" %>
+                      </div>
+                      <div>
+                        <%= f.file_field :image_id, accept: "image/*" %>
+                      </div>
                     </div>
                   </div>
                   <div class="row">
@@ -35,25 +40,31 @@
                 </div>
               </div>
               <h4>コメント</h4>
-                <div class="row">
-                  <div class="col p-2">
-                    <!--↓↓コメント機能実装時に修正↓↓-->
-                    each文を記述
-                    <div class="row border ml-3 mr-1 p-3">
+              <div class="row">
+                <div class="col p-2">
+                  <% @post_show.post_comments.each do |post_comment| %>
+                    <div class="row border ml-3 mr-1 p-3 mb-3">
                       <div class="col">
                         <div class="row d-flex align-items-center">
-                          <span class="mr-3"><%= image_tag @member.get_member_image(50,50) %></span>
-                          <span class="mr-4">コメントをした人</span>
+                          <span class="mr-3"><%= image_tag post_comment.member.get_member_image(50,50) %></span>
+                          <span class="mr-4"><%= post_comment.member.nickname %></span>
+                          <span class="mr-4"><%= post_comment.created_at.strftime('%Y/%m/%d %H:%M') %></span>
+                          <span>
+                            <!--現メンバーがコメント作成者であれば削除できるようにする-->
+                            <% if @member == current_member %>
+                              <%= link_to "コメント削除", post_comments_destroy_path(post_comment.post_id, post_comment.id), method: :delete, data: {confirm: "コメント削除してもよろしいですか？"}, class: "btn btn-danger" %>
+                            <% end %>
+                          </span>
                         </div>
                         <div class="row pt-3 pl-2">
-                          投稿のコメント
+                          <%= post_comment.comment %>
                         </div>
                       </div>
                     </div>
-                    eachのend
-                    <!--↑↑コメント機能実装時に修正↑↑-->
+                  <% end %>
                   </div>
                 </div>
+              </div>
             </div>
           </div>
         </div>
