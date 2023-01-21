@@ -73,7 +73,7 @@
                       <span class="mr-4"><%= post_comment.created_at.strftime('%Y/%m/%d %H:%M') %></span>
                       <span>
                         <!--現メンバーがコメント作成者であれば削除できるようにする-->
-                        <% if member == current_member %>
+                        <% if current_member.id == post_comment.member_id %>
                           <!--コメント削除ボタン-->
                           <%= link_to post_comments_destroy_path(post_comment.post_id, post_comment.id), method: :delete, data: {confirm: "コメント削除してもよろしいですか？"}, class: "btn btn-danger" do %>
                             <i class="fas fa-trash-alt"></i>
