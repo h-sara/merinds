@@ -1,4 +1,9 @@
 class Member < ApplicationRecord
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :validatable
+
   has_one_attached :member_image
   has_many :posts, dependent: :destroy
   has_many :post_comments, dependent: :destroy
@@ -10,10 +15,6 @@ class Member < ApplicationRecord
   has_many :followings, through: :following, source: :followed
   has_many :followers, through: :followed, source: :follower
 
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
 
   # メンバーのアイコン画像の設定
   def get_member_image(width, height)
