@@ -57,8 +57,15 @@
                       <div class="col">
                         <div class="row p-2">
                           <span class="mr-4">
-                            <%= link_to root_path do %>
-                              ♡0
+                            <% if post.favorited_by?(current_member) %>
+                            <!--現ユーザーが投稿のfavoritesテーブル内に存在する(いいね済)場合-->
+                              <%= link_to favorites_create_path(post), method: :delete do %>
+                                ♥<%= post.favorites.count %>
+                              <% end %>
+                            <% else %>
+                              <%= link_to favorites_create_path(post), method: :post do %>
+                                ♡<%= post.favorites.count %>
+                              <% end %>
                             <% end %>
                           </span>
                           <span class="mr-4">

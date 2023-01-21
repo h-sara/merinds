@@ -18,8 +18,15 @@
                       <%= link_to "フォロー", root_path, class: "btn btn-primary" %>
                     </span>
                     <span class="mr-4">
-                      <%= link_to root_path do %>
-                        ♡0
+                      <% if @post_show.favorited_by?(current_member) %>
+                      <!--現ユーザーが投稿のfavoritesテーブル内に存在する(いいね済)場合-->
+                        <%= link_to favorites_create_path(@post_show), method: :delete do %>
+                          ♥<%= @post_show.favorites.count %>
+                        <% end %>
+                      <% else %>
+                        <%= link_to favorites_create_path(@post_show), method: :post do %>
+                          ♡<%= @post_show.favorites.count %>
+                        <% end %>
                       <% end %>
                     </span>
                     <span class="mr-4">

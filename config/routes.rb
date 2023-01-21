@@ -60,7 +60,7 @@ Rails.application.routes.draw do
 
     # いいねのルーティング
     get "/members/my_page/favorited_posts" => "favorites#index", as: "my_favorited_posts"
-    post "posts/:post_id/favorites" => "favorites#create"
+    post "posts/:post_id/favorites" => "favorites#create", as: "favorites_create"
     delete "posts/:post_id/favorites" => "favorites#destroy"
 
     # 投稿コメントのルーティング
