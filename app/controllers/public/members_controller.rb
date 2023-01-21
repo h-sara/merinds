@@ -6,6 +6,11 @@ class Public::MembersController < ApplicationController
     @member = current_member
     # 投稿の作成
     @post = Post.new
+    # 現メンバーがいいねした投稿のidをfavoritesに格納
+    favorites = Favorite.where(member_id: current_member.id).pluck(:post_id)
+    # 現メンバーがいいねした投稿の情報を取り出して@favorite_postsに格納
+    @favorite_posts = Post.find(favorites)
+    
     # ゲスト、退会済み以外のメンバーのレコードをすべて取得
     @members = Member.where.not("email = ? or is_deleted = ?", "guest@example.com", true)
   end
@@ -15,6 +20,10 @@ class Public::MembersController < ApplicationController
     @member = current_member
     # 投稿の作成
     @post = Post.new
+    # 現メンバーがいいねした投稿のidをfavoritesに格納
+    favorites = Favorite.where(member_id: current_member.id).pluck(:post_id)
+    # 現メンバーがいいねした投稿の情報を取り出して@favorite_postsに格納
+    @favorite_posts = Post.find(favorites)
   end
 
   def show_your
@@ -22,6 +31,10 @@ class Public::MembersController < ApplicationController
     @member = current_member
     # 投稿の作成
     @post = Post.new
+    # 現メンバーがいいねした投稿のidをfavoritesに格納
+    favorites = Favorite.where(member_id: current_member.id).pluck(:post_id)
+    # 現メンバーがいいねした投稿の情報を取り出して@favorite_postsに格納
+    @favorite_posts = Post.find(favorites)
 
     @show_your = Member.find_by(nickname: params[:nickname])
   end
@@ -31,6 +44,10 @@ class Public::MembersController < ApplicationController
     @member = current_member
     # 投稿の作成
     @post = Post.new
+    # 現メンバーがいいねした投稿のidをfavoritesに格納
+    favorites = Favorite.where(member_id: current_member.id).pluck(:post_id)
+    # 現メンバーがいいねした投稿の情報を取り出して@favorite_postsに格納
+    @favorite_posts = Post.find(favorites)
   end
 
   def update
@@ -47,6 +64,10 @@ class Public::MembersController < ApplicationController
     @member = current_member
     # 投稿の作成
     @post = Post.new
+    # 現メンバーがいいねした投稿のidをfavoritesに格納
+    favorites = Favorite.where(member_id: current_member.id).pluck(:post_id)
+    # 現メンバーがいいねした投稿の情報を取り出して@favorite_postsに格納
+    @favorite_posts = Post.find(favorites)
   end
 
   def withdraw

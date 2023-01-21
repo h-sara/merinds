@@ -25,7 +25,7 @@
             <li>
               いいねした投稿：
               <%= link_to my_favorited_posts_path do %>
-                0
+                <%= favorite_posts.count %>
               <% end %>
             </li>
             <li>グループ：</li>
