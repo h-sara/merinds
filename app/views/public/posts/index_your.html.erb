@@ -10,7 +10,7 @@
           <% @posts.each do |post| %>
           <div class="row border mb-3">
             <div class="col">
-              <div class="row p-2 border m-2">
+              <div class="row p-2  m-2">
                 <div class="col">
                   <div class="row d-flex align-items-center">
                     <span class="mr-3"><%= image_tag post.member.get_member_image(50,50) %></span>
@@ -19,13 +19,22 @@
                       <%= link_to "フォロー", root_path, class: "btn btn-primary" %>
                     </span>
                     <span class="mr-4">
-                      <%= link_to root_path do %>
-                        ♡0
+                      <% if post.favorited_by?(current_member) %>
+                      <!--現ユーザーが投稿のfavoritesテーブル内に存在する(いいね済)場合-->
+                        <%= link_to favorites_create_path(post), method: :delete do %>
+                          <i class="fas fa-heart"></i>
+                          <%= post.favorites.count %>
+                        <% end %>
+                      <% else %>
+                        <%= link_to favorites_create_path(post), method: :post do %>
+                          <i class="far fa-heart"></i>
+                          <%= post.favorites.count %>
+                        <% end %>
                       <% end %>
                     </span>
                     <span class="mr-4">
-                      コメント数：
                       <%= link_to your_post_path(post) do %>
+                        <i class="fas fa-comment-alt"></i>
                         <%= post.post_comments.count %>
                       <% end %>
                     </span>
