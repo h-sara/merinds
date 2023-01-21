@@ -9,7 +9,7 @@ class Post < ApplicationRecord
     #部分一致で検索
     @post = Post.where("sentence LIKE ?", "%#{word}%")
   end
-  
+
   # 引数で渡されたメンバーidがfavoritesテーブル内に存在するかどうかを調べるためのメソッド
   def favorited_by?(member)
     favorites.exists?(member_id: member.id)

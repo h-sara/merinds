@@ -3,10 +3,12 @@
     <div class="col-4">
       <%= render "public/shared/left_screen", member: @member, post: @post, favorite_posts: @favorite_posts %>
     </div>
-    <div class="col-8 pr-5">
-      <div class="row">
-        <h4 class="mt-2 mb-4">会員一覧</h4>
-        <%= render "public/members/index", members: @members %>
+    <div class="col-8">
+      <div class="row mt-2 mr-2">
+        <div class="col">
+          <h3>いいねした投稿</h3>
+          <%= render "public/posts/index", posts: @favorite_posts %>
+        </div>
       </div>
     </div>
   </div>
