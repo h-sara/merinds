@@ -48,4 +48,20 @@ class Member < ApplicationRecord
     #部分一致で検索
     @member = Member.where("nickname LIKE ?", "%#{word}%")
   end
+  
+  # フォローした時の処理
+  def follow(member_id)
+    
+    relationships.find_by(followed_id: member_id)
+  end
+  
+  # フォローを外すときの処理
+  def unfollow(member_id)
+    relationships.find_by(followed_id: member_id).destroy
+  end
+  
+  # フォローしているか判定
+  def following?(member)
+    followings.include?(member)
+  end
 end
