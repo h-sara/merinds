@@ -18,24 +18,30 @@
                     <span class="mr-4">
                       <%= link_to "フォロー", root_path, class: "btn btn-primary" %>
                     </span>
-                    <span class="mr-4">
+                    <span class="mr-4 text-danger">
                       <% if post.favorited_by?(current_member) %>
                       <!--現ユーザーが投稿のfavoritesテーブル内に存在する(いいね済)場合-->
                         <%= link_to favorites_create_path(post), method: :delete do %>
-                          <i class="fas fa-heart"></i>
-                          <%= post.favorites.count %>
+                          <span class="text-danger">
+                            <i class="fas fa-heart"></i>
+                            <%= post.favorites.count %>
+                          </span>
                         <% end %>
                       <% else %>
                         <%= link_to favorites_create_path(post), method: :post do %>
-                          <i class="far fa-heart"></i>
-                          <%= post.favorites.count %>
+                          <span class="text-muted">
+                            <i class="far fa-heart"></i>
+                            <%= post.favorites.count %>
+                          </span>
                         <% end %>
                       <% end %>
                     </span>
                     <span class="mr-4">
                       <%= link_to your_post_path(post) do %>
-                        <i class="fas fa-comment-alt"></i>
-                        <%= post.post_comments.count %>
+                        <span class="text-muted">
+                          <i class="far fa-comment-alt"></i>
+                          <%= post.post_comments.count %>
+                        </span>
                       <% end %>
                     </span>
                     <span>作成日時：<%= post.created_at.strftime('%Y/%m/%d %H:%M') %></span>

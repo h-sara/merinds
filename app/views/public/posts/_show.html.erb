@@ -10,23 +10,31 @@
                 <% if post_show.favorited_by?(current_member) %>
                 <!--現ユーザーが投稿のfavoritesテーブル内に存在する(いいね済)場合-->
                   <%= link_to favorites_create_path(post_show), method: :delete do %>
-                    <i class="fas fa-heart"></i>
-                    <%= post_show.favorites.count %>
+                    <span class="text-danger">
+                      <i class="fas fa-heart"></i>
+                      <%= post_show.favorites.count %>
+                    </span>
                   <% end %>
                 <% else %>
                   <%= link_to favorites_create_path(post_show), method: :post do %>
-                    <i class="far fa-heart"></i>
-                    <%= post_show.favorites.count %>
+                    <span class="text-muted">
+                      <i class="far fa-heart"></i>
+                      <%= post_show.favorites.count %>
+                    </span>
                   <% end %>
                 <% end %>
               </span>
               <span class="mr-4">
-                <i class="fas fa-comment-alt"></i>
-                <%= post_show.post_comments.count %>
+                <span class="text-muted">
+                  <i class="far fa-comment-alt"></i>
+                  <%= post_show.post_comments.count %>
+                </span>
               </span>
               <span class="mr-4">作成日時：<%= post_show.created_at.strftime('%Y/%m/%d %H:%M') %></span>
               <span class="mr-4">
-                <%= link_to "投稿編集", posts_edit_path(post_show), class: "btn btn-success" %>
+                <%= link_to posts_edit_path(post_show), class: "btn btn-success" do %>
+                  <i class="fas fa-edit"></i>
+                <% end %>
               </span>
               <span class="mr-4">
                 <%= link_to "投稿削除", posts_destroy_path(post_show), method: :delete, data: {confirm: "投稿を削除してもよろしいですか？"}, class: "btn btn-danger" %>
@@ -66,7 +74,10 @@
                       <span>
                         <!--現メンバーがコメント作成者であれば削除できるようにする-->
                         <% if current_member.id == post_comment.member_id %>
-                          <%= link_to "コメント削除", post_comments_destroy_path(post_comment.post_id, post_comment.id), method: :delete, data: {confirm: "コメント削除してもよろしいですか？"}, class: "btn btn-danger" %>
+                          <!--コメント削除ボタン-->
+                          <%= link_to post_comments_destroy_path(post_comment.post_id, post_comment.id), method: :delete, data: {confirm: "コメント削除してもよろしいですか？"}, class: "btn btn-danger" do %>
+                            <i class="fas fa-trash-alt"></i>
+                          <% end %>
                         <% end %>
                       </span>
                     </div>
