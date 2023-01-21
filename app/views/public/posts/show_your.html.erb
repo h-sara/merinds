@@ -21,16 +21,19 @@
                       <% if @post_show.favorited_by?(current_member) %>
                       <!--現ユーザーが投稿のfavoritesテーブル内に存在する(いいね済)場合-->
                         <%= link_to favorites_create_path(@post_show), method: :delete do %>
-                          ♥<%= @post_show.favorites.count %>
+                          <i class="fas fa-heart"></i>
+                          <%= @post_show.favorites.count %>
                         <% end %>
                       <% else %>
                         <%= link_to favorites_create_path(@post_show), method: :post do %>
-                          ♡<%= @post_show.favorites.count %>
+                          <i class="far fa-heart"></i>
+                          <%= @post_show.favorites.count %>
                         <% end %>
                       <% end %>
                     </span>
                     <span class="mr-4">
-                      コメント数：<%= @post_show.post_comments.count %>
+                      <i class="fas fa-comment-alt"></i>
+                      <%= @post_show.post_comments.count %>
                     </span>
                     <span>作成日時：<%= @post_show.created_at.strftime('%Y/%m/%d %H:%M') %></span>
                   </div>
