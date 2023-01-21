@@ -22,7 +22,12 @@
           <ul class="list-unstyled">
             <li>フォロー：</li>
             <li>フォロワー：</li>
-            <li>いいねした投稿：</li>
+            <li>
+              いいねした投稿：
+              <%= link_to my_favorited_posts_path do %>
+                0
+              <% end %>
+            </li>
             <li>グループ：</li>
           </ul>
           <div class="text-center mt-3">
