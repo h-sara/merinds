@@ -9,7 +9,7 @@ class Public::PostsController < ApplicationController
     favorites = Favorite.where(member_id: current_member.id).pluck(:post_id)
     # 現メンバーがいいねした投稿の情報を取り出して@favorite_postsに格納
     @favorite_posts = Post.find(favorites)
-    
+
     # 現メンバーが投稿した投稿情報を@postsに格納
     @posts = Post.where(member_id: @member.id)
   end
@@ -23,7 +23,7 @@ class Public::PostsController < ApplicationController
     favorites = Favorite.where(member_id: current_member.id).pluck(:post_id)
     # 現メンバーがいいねした投稿の情報を取り出して@favorite_postsに格納
     @favorite_posts = Post.find(favorites)
-    
+
     # 選択した投稿の情報を@post_showに格納
     @post_show = Post.find(params[:id])
     # コメントの作成
@@ -45,7 +45,7 @@ class Public::PostsController < ApplicationController
     favorites = Favorite.where(member_id: current_member.id).pluck(:post_id)
     # 現メンバーがいいねした投稿の情報を取り出して@favorite_postsに格納
     @favorite_posts = Post.find(favorites)
-    
+
     # 選択した投稿の情報を@post_showに格納
     @post_show = Post.find(params[:id])
   end
@@ -79,7 +79,7 @@ class Public::PostsController < ApplicationController
     favorites = Favorite.where(member_id: current_member.id).pluck(:post_id)
     # 現メンバーがいいねした投稿の情報を取り出して@favorite_postsに格納
     @favorite_posts = Post.find(favorites)
-    
+
     # すべての投稿を@postsに格納
     @posts = Post.all
     # binding.pry
@@ -94,7 +94,9 @@ class Public::PostsController < ApplicationController
     favorites = Favorite.where(member_id: current_member.id).pluck(:post_id)
     # 現メンバーがいいねした投稿の情報を取り出して@favorite_postsに格納
     @favorite_posts = Post.find(favorites)
-    
+
+
+
     # 選択した投稿の情報を@post_showに格納
     @post_show = Post.find(params[:id])
     # コメントの作成

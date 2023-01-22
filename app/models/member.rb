@@ -8,12 +8,14 @@ class Member < ApplicationRecord
   has_many :posts, dependent: :destroy
   has_many :post_comments, dependent: :destroy
   has_many :favorites, dependent: :destroy
-  # フォローした、されたの関係
-  has_many :following, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
-  has_many :followed, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
+
+  # フォローした場合
+  has_many :relationship_er, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
+  # フォローされた場合
+  has_many :relationship_ed, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
   # 一覧画面で使用する
-  has_many :followings, through: :following, source: :followed
-  has_many :followers, through: :followed, source: :follower
+  has_many :followings, through: :relationship_er, source: :followed
+  has_many :followers, through: :relationship_ed, source: :follower
 
 
   # メンバーのアイコン画像の設定
@@ -48,20 +50,22 @@ class Member < ApplicationRecord
     #部分一致で検索
     @member = Member.where("nickname LIKE ?", "%#{word}%")
   end
-  
+
   # フォローした時の処理
   def follow(member_id)
-    
-    relationships.find_by(followed_id: member_id)
+    # relationship_erテーブルのfollowed_idに、member_idを保存する
+    relationship_er.create(followed_id: member_id)
   end
-  
+
   # フォローを外すときの処理
   def unfollow(member_id)
-    relationships.find_by(followed_id: member_id).destroy
+    # relationship_erテーブルのfollowed_idが、member_idとマッチした最初のデータを取得
+    relationship_er.find_by(followed_id: member_id).destroy
   end
-  
-  # フォローしているか判定
+
+  # フォローしていればtrueを返す
   def following?(member)
+    # フォローしているメンバーを取得し、引数のメンバーが含まれていないか確認
     followings.include?(member)
   end
 end

@@ -43,10 +43,10 @@ Rails.application.routes.draw do
     get "members/:nickname" => "members#show_your", as: "your_page"
 
     # リレーションシップのルーティング
+    post "members/:member_id/relationships" => "relationships#create", as: "relationships_create"
+    delete "members/:member_id/relationships" => "relationships#destroy", as: "relationships_destroy"
     get "members/my_page/followings" => "relationships#followings", as: "members_followings"
     get "members/my_page/followers" => "relationships#followers", as: "members_followers"
-    post "members/:id/relationships" => "relationships#create"#, as: "members_relationships"
-    delete "members/:id/relationships" => "relationships#destroy"
 
     # 投稿のルーティング
     get "posts/my_posts" => "posts#index", as: "my_posts"
