@@ -29,8 +29,8 @@
           <% end %>
         <% end %>
       </td>
-      <td class="align-middle"></td>
-      <td class="align-middle"></td>
+      <td class="align-middle"><%= member.followings.count %></td>
+      <td class="align-middle"><%= member.followers.count %></td>
       <td class="align-middle">未所属</td>
       <td class="align-middle">
         <% if member == current_member %>

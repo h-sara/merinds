@@ -20,8 +20,18 @@
       <div class="row">
         <div class="col">
           <ul class="list-unstyled">
-            <li>フォロー：</li>
-            <li>フォロワー：</li>
+            <li>
+              フォロー：
+              <%= link_to members_followings_path do%>
+                <%= member.followings.count %>
+              <% end %>
+            </li>
+            <li>
+              フォロワー：
+              <%= link_to members_followers_path do%>
+                <%= member.followers.count %>
+              <% end %>
+            </li>
             <li>
               いいねした投稿：
               <%= link_to my_favorited_posts_path do %>

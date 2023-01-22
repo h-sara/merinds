@@ -1,13 +1,40 @@
 class Public::RelationshipsController < ApplicationController
-  def create
+
+  def create # フォローする時の処理
+    current_member.follow(params[:member_id])
+    redirect_to request.referer
   end
 
-  def destroy
+  def destroy # フォロー解除する時の処理
+    current_member.unfollow(params[:member_id])
+    redirect_to request.referer
   end
 
-  def followings
+  def followings # フォロー一覧
+    # 現メンバー情報を@memberに格納
+    @member = current_member
+    # 投稿の作成
+    @post = Post.new
+    # 現メンバーがいいねした投稿のidをfavoritesに格納
+    favorites = Favorite.where(member_id: current_member.id).pluck(:post_id)
+    # 現メンバーがいいねした投稿の情報を取り出して@favorite_postsに格納
+    @favorite_posts = Post.find(favorites)
+
+    # 現メンバーのフォロー情報を@followingsに格納
+    @followings = current_member.followings
   end
 
-  def followers
+  def followers # フォロワー一覧
+    # 現メンバー情報を@memberに格納
+    @member = current_member
+    # 投稿の作成
+    @post = Post.new
+    # 現メンバーがいいねした投稿のidをfavoritesに格納
+    favorites = Favorite.where(member_id: current_member.id).pluck(:post_id)
+    # 現メンバーがいいねした投稿の情報を取り出して@favorite_postsに格納
+    @favorite_posts = Post.find(favorites)
+
+    # 現メンバーのフォロワー情報を@followersに格納
+    @followers = current_member.followers
   end
 end

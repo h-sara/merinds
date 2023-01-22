@@ -1,7 +1,7 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-4">
-      <%= render "public/shared/left_screen", member: @member, post: @post, favorite_posts: @favorite_posts %>
+      <%= render "public/shared/left_screen", member: @member, members: @members, post: @post, favorite_posts: @favorite_posts %>
     </div>
     <div class="col-8 pr-5">
       <div class="row">
@@ -15,7 +15,7 @@
                     <span class="mr-3"><%= image_tag @post_show.member.get_member_image(50,50) %></span>
                     <span class="mr-4"><%= @post_show.member.nickname %></span>
                     <span class="mr-4">
-                      <%= link_to "フォロー", root_path, class: "btn btn-primary" %>
+                      <%= render "public/relationships/follow", post: @post_show %>
                     </span>
                     <span class="mr-4">
                       <% if @post_show.favorited_by?(current_member) %>
