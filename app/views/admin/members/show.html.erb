@@ -1,2 +1,85 @@
-<h1>Admin::Members#show</h1>
-<p>Find me in app/views/admin/members/show.html.erb</p>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col">
+      <div class="row">
+        <h4 class="mt-2 mb-4 ml-5" style="background-color: rgba(169, 169, 169, 0.5)">
+          <%= @member.first_name %><%= @member.last_name %>さんのメンバー詳細
+        </h4>
+      </div>
+      <div class="row">
+        <div class="col offset-1">
+          <table class="table">
+            <tr>
+              <th>メンバーID</th>
+              <td><%= @member.id %></td>
+            </tr>
+            <tr>
+              <th>アイコン</th>
+              <td><%= image_tag @member.get_member_image(50,50) %></td>
+            </tr>
+            <tr>
+              <th>氏名</th>
+              <td><%= @member.first_name %>　<%= @member.last_name %></td>
+            </tr>
+            <tr>
+              <th>フリガナ</th>
+              <td><%= @member.first_name_kana %>　<%= @member.last_name_kana %></td>
+            </tr>
+            <tr>
+              <th>ニックネーム</th>
+              <td><%= @member.nickname %></td>
+            </tr>
+            <tr>
+              <th>自己紹介文</th>
+              <td><%= @member.introduction %></td>
+            </tr>
+            <tr>
+              <th>メールアドレス</th>
+              <td><%= @member.email %></td>
+            </tr>
+            <tr>
+              <th>投稿数</th>
+              <td><%= @member.posts.count %></td>
+            </tr>
+            <tr>
+              <th>いいねした投稿数</th>
+              <td><%= @favorite_posts.count %></td>
+            </tr>
+            <tr>
+              <th>フォロー数</th>
+              <td><%= @member.followings.count %></td>
+            </tr>
+            <tr>
+              <th>フォロワー数</th>
+              <td><%= @member.followings.count %></td>
+            </tr>
+            <tr>
+              <th>作成したグループ</th>
+              <td>なし</td>
+            </tr>
+            <tr>
+              <th>参加グループ</th>
+              <td>未所属</td>
+            </tr>
+            <tr>
+              <th>ステータス</th>
+              <td>
+                <% if @member.is_deleted == false %>
+                <!--退会ステータスがtrueの場合-->
+                  <b class="text-success">有効</b>
+                <% else %>
+                  <b class="text-muted">退会</b>
+                <% end %>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div class="row">
+        <div class="mx-auto">
+          <%= link_to "メンバー情報編集", edit_admin_member_path(@member.id), class: "btn btn-success" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
