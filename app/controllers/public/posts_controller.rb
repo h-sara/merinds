@@ -95,8 +95,6 @@ class Public::PostsController < ApplicationController
     # 現メンバーがいいねした投稿の情報を取り出して@favorite_postsに格納
     @favorite_posts = Post.find(favorites)
 
-
-
     # 選択した投稿の情報を@post_showに格納
     @post_show = Post.find(params[:id])
     # コメントの作成

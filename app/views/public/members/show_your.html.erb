@@ -14,22 +14,22 @@
                   <div class="row lead mb-3">
                     <div class="col"><%= @show_your.nickname %></div>
                     <div class="col">
-                      フォロー中
+                      <%= render "public/relationships/follow", post: @posts %>
                     </div>
                     <div class="col"></div>
                   </div>
                   <div class="row">
                     <div class="col">
                       フォロー：
+                      <%= @show_your.followings.count %>
                     </div>
                     <div class="col">
                       フォロワー：
+                      <%= @show_your.followers.count %>
                     </div>
                     <div class="col">
                       投稿数：
-                      <%= link_to your_posts_path do %>
-                        <%= @show_your.posts.count %>
-                      <% end %>
+                      <%= @show_your.posts.count %>
                     </div>
                   </div>
                   <div class="row">

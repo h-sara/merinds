@@ -20,6 +20,7 @@ class Public::RelationshipsController < ApplicationController
     # 現メンバーがいいねした投稿の情報を取り出して@favorite_postsに格納
     @favorite_posts = Post.find(favorites)
 
+    # 現メンバーのフォロー情報を@followingsに格納
     @followings = current_member.followings
   end
 
@@ -33,6 +34,7 @@ class Public::RelationshipsController < ApplicationController
     # 現メンバーがいいねした投稿の情報を取り出して@favorite_postsに格納
     @favorite_posts = Post.find(favorites)
 
-    @members = current_member.followers
+    # 現メンバーのフォロワー情報を@followersに格納
+    @followers = current_member.followers
   end
 end

@@ -1,10 +1,14 @@
-<% if current_member.id != post_show.member_id %>
+<% if current_member.id != post.member_id %>
 <!--現メンバー情報でない場合-->
-  <% if current_member.following?(post_show.member) %>
+  <% if current_member.following?(post.member) %>
   <!--現メンバーが選択したメンバーをフォローしている場合-->
-    <%= link_to "フォロー中", relationships_destroy_path(post_show.member.id), class: "btn btn-outline-primary", method: :delete %>
+    <%= link_to relationships_destroy_path(post.member.id), class: "btn btn-outline-primary", method: :delete do %>
+      フォロー中
+    <% end %>
   <% else %>
   <!--現メンバーが選択したメンバーをフォローしていなかった場合-->
-    <%= link_to "フォロー", relationships_create_path(post_show.member.id), class: "btn btn-primary", method: :post %>
+    <%= link_to relationships_create_path(post.member.id), class: "btn btn-primary", method: :post do %>
+      フォロー
+    <% end %>
   <% end %>
 <% end %>

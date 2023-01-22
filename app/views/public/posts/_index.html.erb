@@ -16,13 +16,7 @@
             <span class="mr-4"><%= post.member.nickname %></span>
           <% end %>
           <span class="mr-4">
-            <% if current_member.id != post.member_id %>
-            <!--現メンバーが投稿者ではない場合-->
-              <!--フォローしている場合のif文-->
-              <%= link_to "フォロー", root_path, class: "btn btn-primary" %>
-              <!--フォローしてない場合のelse-->
-              <!--フォロー中-->
-            <% end %>
+            <%= render "public/relationships/follow", post: post %>
           </span>
           <span class="mr-4">
             <% if post.favorited_by?(current_member) %>
