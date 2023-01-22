@@ -1,2 +1,63 @@
-<h1>Admin::Members#edit</h1>
-<p>Find me in app/views/admin/members/edit.html.erb</p>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col">
+      <div class="row">
+        <h4 class="mt-2 mb-4 ml-5" style="background-color: rgba(169, 169, 169, 0.5)">
+          <%= @member.first_name %><%= @member.last_name %>さんのメンバー情報編集
+        </h4>
+      </div>
+      <%= form_with model: @member, url: admin_member_path(@member.id), method: :patch do |f| %>
+      <div class="row">
+        <div class="col offset-1">
+          <div class="row mb-3">
+            <div class="col-2">会員ID</div>
+            <div class="col-10"><%= @member.id %></div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-2">アイコン</div>
+            <div class="col-9"><%= f.file_field :member_image, accept: "image/*" %></div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-2">氏名</div>
+            <div class="col-3"><%= f.text_field :first_name %></div>
+            <div class="col-3"><%= f.text_field :last_name %></div>
+            <div class="col-3"></div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-2">フリガナ</div>
+            <div class="col-3"><%= f.text_field :first_name_kana %></div>
+            <div class="col-3"><%= f.text_field :last_name_kana %></div>
+            <div class="col-3"></div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-2">ニックネーム</div>
+            <div class="col-9"><%= f.text_field :nickname %></div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-2">自己紹介文</div>
+            <div class="col-9"><%= f.text_area :introduction, style: "width:80%; height:100px" %></div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-2">メールアドレス</div>
+            <div class="col-10"><%= f.text_field :email %></div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-2">ステータス</div>
+            <div class="col-9">
+              <%= f.radio_button :is_deleted, :false %>
+              <label class="mr-4">有効</label>
+              <%= f.radio_button :is_deleted, :true %>
+              <label>退会</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="mx-auto">
+          <%= f.submit "変更を保存", class: "btn btn-success" %>
+        </div>
+      </div>
+      <% end %>
+    </div>
+  </div>
+</div>
