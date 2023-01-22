@@ -1,2 +1,13 @@
-<h1>Public::Members#index</h1>
-<p>Find me in app/views/public/members/index.html.erb</p>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-4">
+      <%= render "public/shared/left_screen", member: @member, post: @post, favorite_posts: @favorite_posts %>
+    </div>
+    <div class="col-8 pr-5">
+      <div class="row">
+        <h4 class="mt-2 mb-4">会員一覧</h4>
+        <%= render "public/members/index", members: @members %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -33,32 +33,39 @@ Rails.application.routes.draw do
     root "homes#top"
     get "about" => "homes#about"
 
-    resource :members, only: [] do
-      get "/", action: "index"
-      get "my_page", action: "show"
-      get "information/edit", action: "edit"
-      patch "update", action: "update"
-      get "check_withdrawal", action: "check"
-      patch "withdraw_member", action: "withdraw"
-      get ":nickname", action: "show_your"
-      resource :relationships, only: [:create, :destroy] do
-        member do
-          get "followings"
-          get "followers"
-        end
-      end
-    end
+    # メンバーのルーティング
+    get "members" => "members#index"
+    get "members/my_page" => "members#show", as: "my_page"
+    get "members/information/edit" => "members#edit", as: "members_edit"
+    patch "members/update" => "members#update", as: "members_update"
+    get "members/check" => "members#check", as: "members_check"
+    patch "members/withdraw" => "members#withdraw", as: "members_withdraw"
+    get "members/:nickname" => "members#show_your", as: "your_page"
 
-    resources :posts, only: [:index, :show, :edit, :update, :destroy] do
-      collection do
-        get "index_your"
-      end
-      member do
-        get "show_your"
-        resource :favorites, only: [:create, :destroy]
-        resources :post_comments, only: [:create, :destroy]
-      end
-    end
+    # リレーションシップのルーティング
+    post "members/:member_id/relationships" => "relationships#create", as: "relationships_create"
+    delete "members/:member_id/relationships" => "relationships#destroy", as: "relationships_destroy"
+    get "members/my_page/followings" => "relationships#followings", as: "members_followings"
+    get "members/my_page/followers" => "relationships#followers", as: "members_followers"
+
+    # 投稿のルーティング
+    get "posts/my_posts" => "posts#index", as: "my_posts"
+    get "posts/my_posts/:id" => "posts#show", as: "my_post"
+    get "posts/my_posts/:id/edit" => "posts#edit", as: "posts_edit"
+    patch "posts/my_posts/:id" => "posts#update", as: "posts_update"
+    get "posts" => "posts#index_your", as: "your_posts"
+    get "posts/:id" => "posts#show_your", as: "your_post"
+    post "posts" => "posts#create"
+    delete "posts/my_posts/:id" => "posts#destroy", as: "posts_destroy"
+
+    # いいねのルーティング
+    get "/members/my_page/favorited_posts" => "favorites#index", as: "my_favorited_posts"
+    post "posts/:post_id/favorites" => "favorites#create", as: "favorites_create"
+    delete "posts/:post_id/favorites" => "favorites#destroy"
+
+    # 投稿コメントのルーティング
+    post "posts/:post_id/post_comments" => "post_comments#create", as: "post_comments_create"
+    delete "posts/:post_id/post_comments/:id" => "post_comments#destroy", as: "post_comments_destroy"
 
     get "searches/search" => "searches#search"
   end

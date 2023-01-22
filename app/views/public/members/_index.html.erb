@@ -1,0 +1,47 @@
+<table class="table">
+  <thead class="text-center">
+    <th>アイコン</th>
+    <th>ニックネーム</th>
+    <th>フォロー数</th>
+    <th>フォロワー数</th>
+    <th>グループ</th>
+    <th>投稿数</th>
+  </thead>
+  <tbody class="text-center">
+    <!--自分のメンバー情報では遷移できないようにする-->
+    <% members.each do |member| %>
+    <tr>
+      <td class="align-middle">
+        <% if member == current_member %>
+          <%= image_tag member.get_member_image(50,50) %>
+        <% else %>
+          <%= link_to your_page_path(member.nickname) do %>
+            <%= image_tag member.get_member_image(50,50) %>
+          <% end %>
+        <% end %>
+      </td>
+      <td class="align-middle">
+        <% if member == current_member %>
+          <%= member.nickname %>
+        <% else %>
+          <%= link_to your_page_path(member.nickname) do %>
+            <%= member.nickname %>
+          <% end %>
+        <% end %>
+      </td>
+      <td class="align-middle"><%= member.followings.count %></td>
+      <td class="align-middle"><%= member.followers.count %></td>
+      <td class="align-middle">未所属</td>
+      <td class="align-middle">
+        <% if member == current_member %>
+          <%= member.posts.count %>
+        <% else %>
+          <%= link_to your_posts_path do %>
+            <%= member.posts.count %>
+          <% end %>
+        <% end %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -8,11 +8,13 @@
 
     <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
     <%= render "layouts/header" %>
-    <main class="pb-4" style="min-height: 70vh">
+    <main class="py-2">
+      <div style= "height: 90px; background-color: rgba(255, 255, 255, 1);"></div>
       <%= notice %>
       <%= yield %>
     </main>
