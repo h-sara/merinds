@@ -58,8 +58,8 @@ class Public::PostsController < ApplicationController
     #includeしたインスタンスメソッドを使用
     left_screen_variables
 
-    # すべての投稿を@postsに格納
-    @posts = Post.all
+    # すべての投稿を作成が新しい順に@postsに格納
+    @posts = Post.all.order(created_at: :desc)
   end
 
   def show_your
