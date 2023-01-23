@@ -59,7 +59,7 @@ class Public::PostsController < ApplicationController
     left_screen_variables
 
     # すべての投稿を@postsに格納
-    @posts = Post.all
+    @posts = Post.all.order(created_at: :desc)
   end
 
   def show_your
