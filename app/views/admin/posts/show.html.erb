@@ -89,7 +89,7 @@
                 <tbody>
                   <tr>
                     <td class="align-middle">
-                      <%= link_to admin_post_post_comment_path(post_comment.id) do %>
+                      <%= link_to admin_post_post_comment_path(post_comment.post.id, post_comment.id) do %>
                         <%= post_comment.id %>
                       <% end %>
                     </td>
