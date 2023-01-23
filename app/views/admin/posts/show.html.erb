@@ -15,7 +15,7 @@
             </tr>
             <tr>
               <th class="align-middle">文章</th>
-              <td><%= @post.sentence %></td>
+              <td><%= safe_join(@post.sentence.split("\n"),tag(:br)) %></td>
             </tr>
             <tr>
               <th class="align-middle">添付画像</th>
@@ -38,8 +38,14 @@
               <td><%= @post.post_comments.count %></td>
             </tr>
             <tr>
-              <th class="align-middle">作成者</th>
-              <td><%= @post.member.first_name %> <%= @post.member.last_name %></td>
+              <th class="align-middle">
+                投稿者(ニックネーム)<br>
+              　　　(氏名)
+              </th>
+              <td>
+                <%= @post.member.nickname %><br>
+                (<%= @post.member.first_name %> <%= @post.member.last_name %>)
+              </td>
             </tr>
             <tr>
               <th class="align-middle">ステータス</th>
@@ -60,7 +66,7 @@
           <%= link_to "投稿情報編集", edit_admin_post_path(@post.id), class: "btn btn-success" %>
         </div>
       </div>
-      <div class="row mx-3">
+      <div class="row">
         <div class="col">
           <div class="row">
             <h4 class="mt-2 mb-4 ml-5" style="background-color: rgba(169, 169, 169, 0.5)">
@@ -69,12 +75,15 @@
           </div>
           <div class="row">
             <div class="col offset-1">
-              <table class="table text-center">
-                <thead>
-                  <th>コメントID</th>
-                  <th style="width:70%">文章</th>
-                  <th>投稿者</th>
-                  <th>ステータス</th>
+              <table class="table table-bordered text-center">
+                <thead class="thead-dark">
+                  <th class="align-middle">コメントID</th>
+                  <th class="align-middle" style="width:70%">文章</th>
+                  <th class="align-middle">
+                    投稿者<br>
+                    (ニックネーム)
+                  </th>
+                  <th class="align-middle">ステータス</th>
                 </thead>
                 <% @post_comments.each do |post_comment| %>
                 <tbody>
@@ -84,10 +93,10 @@
                         <%= post_comment.id %>
                       <% end %>
                     </td>
-                    <td class="align-middle text-left"><%= post_comment.comment %></td>
+                    <td class="align-middle text-left"><%= safe_join(post_comment.comment.split("\n"),tag(:br)) %></td>
                     <td class="align-middle">
                       <%= link_to admin_member_path(post_comment.member_id) do %>
-                        <%= post_comment.member.first_name%> <%= post_comment.member.last_name%>
+                        <%= post_comment.member.nickname %>
                       <% end %>
                     </td>
                     <td class="align-middle">
