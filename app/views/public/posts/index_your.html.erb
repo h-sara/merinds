@@ -15,17 +15,35 @@
                   <div class="row">
                     <div class="col-1 mr-3">
                       <div class="row">
-                        <%= link_to your_page_path(post.member.nickname) do %>
-                          <!--投稿者のアイコン-->
-                          <%= image_tag post.member.get_member_image(50,50), class: "rounded-circle" %>
+                        <% if current_member.id == post.member_id %>
+                        <!--投稿者が現メンバーの場合-->
+                          <%= link_to my_page_path do %>
+                            <!--投稿者のアイコン-->
+                            <%= image_tag post.member.get_member_image(50,50), class: "rounded-circle" %>
+                          <% end %>
+                        <% else %>
+                          <!--投稿者が現メンバーではない場合-->
+                          <%= link_to your_page_path(post.member.nickname) do %>
+                            <!--投稿者のアイコン-->
+                            <%= image_tag post.member.get_member_image(50,50), class: "rounded-circle" %>
+                          <% end %>
                         <% end %>
                       </div>
                     </div>
                     <div class="col-10">
                       <div class="row d-flex align-items-top">
                         <b class="mr-4">
-                          <%= link_to your_page_path(post.member.nickname), class: "text-dark" do %>
-                            <%= post.member.nickname %>
+                          <% if current_member.id == post.member_id %>
+                          <!--投稿者が現メンバーの場合-->
+                            <%= link_to my_page_path, class: "text-dark" do %>
+                              <!--投稿者のアイコン-->
+                              <%= post.member.nickname %>
+                            <% end %>
+                          <% else %>
+                            <!--投稿者が現メンバーではない場合-->
+                            <%= link_to your_page_path(post.member.nickname), class: "text-dark" do %>
+                              <%= post.member.nickname %>
+                            <% end %>
                           <% end %>
                         </b>
                         <span><%= post.created_at.strftime('%Y/%m/%d %H:%M') %></span>
@@ -88,6 +106,9 @@
           </div>
           <% end %>
         </div>
+      </div>
+      <div class="row">
+        <div class="mx-auto"><%= paginate @posts %></div>
       </div>
     </div>
   </div>
