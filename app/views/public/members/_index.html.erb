@@ -33,13 +33,7 @@
       <td class="align-middle"><%= member.followers.count %></td>
       <td class="align-middle">未所属</td>
       <td class="align-middle">
-        <% if member == current_member %>
-          <%= member.posts.count %>
-        <% else %>
-          <%= link_to your_posts_path do %>
-            <%= member.posts.count %>
-          <% end %>
-        <% end %>
+        <%= member.posts.count %>
       </td>
     </tr>
     <% end %>
