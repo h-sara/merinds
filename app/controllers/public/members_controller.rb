@@ -22,8 +22,10 @@ class Public::MembersController < ApplicationController
 
     # メンバーのnicknameを取り出して@show_yourに格納
     @show_your = Member.find_by(nickname: params[:nickname])
-    # メンバーが投稿者になっている投稿を取り出して@postsに格納
-    @posts = Post.find_by(member_id: @show_your.id)
+    # メンバーが投稿者になっている投稿を取り出して@your_postに格納
+    @your_post = Post.find_by(member_id: @show_your.id)
+    # メンバーが投稿者になっている投稿を全て取り出して@postsに格納
+    @posts = Post.where(member_id: @show_your.id)
   end
 
   def edit
