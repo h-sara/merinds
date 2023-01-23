@@ -6,15 +6,16 @@
     <div class="col-8">
       <div class="row mt-2 mr-2">
         <div class="col">
-          <div class="row border">
+          <div class="row rounded border">
             <div class="col">
               <div class="row px-4 pt-4 mt-2">
-                <div class="col-3"><%= image_tag @show_your.get_member_image(100,100) %></div>
+                <div class="col-3"><%= image_tag @show_your.get_member_image(100,100), class: "rounded-circle" %></div>
                 <div class="col-9">
                   <div class="row lead mb-3">
                     <div class="col"><%= @show_your.nickname %></div>
                     <div class="col">
-                      <%= render "public/relationships/follow", post: @posts %>
+                      <!--フォローボタンの部分テンプレート-->
+                      <%= render "public/relationships/follow", post: @your_post %>
                     </div>
                     <div class="col"></div>
                   </div>
@@ -39,7 +40,10 @@
               </div>
               <div class="row p-4">
                 <p class="lead">自己紹介</p><br>
-                <%= @show_your.introduction %>
+                <!--自己紹介文がnilでない場合、改行をして表示させる-->
+                <% if @show_your.introduction != nil%>
+                  <%= safe_join(@show_your.introduction.split("\n"),tag(:br)) %>
+                <% end %>
               </div>
             </div>
           </div>
@@ -47,61 +51,90 @@
       </div>
       <div class="row mt-2 mr-2">
         <div class="col">
-          <div class="row border">
+          <div class="row">
             <div class="col mt-2">
-              <h4>投稿一覧</h4>
-              <div class="row px-4 pb-2">
+              <h4><%= @show_your.nickname %> の投稿一覧</h4>
+              <div class="row pb-2">
                 <div class="col">
-                  <% @show_your.posts.each do |post| %>
-                    <div class="row border mb-2">
-                      <div class="col">
-                        <div class="row p-2">
-                          <span class="mr-4">
-                            <% if post.favorited_by?(current_member) %>
-                            <!--現ユーザーが投稿のfavoritesテーブル内に存在する(いいね済)場合-->
-                              <%= link_to favorites_create_path(post), method: :delete do %>
-                                <i class="fas fa-heart"></i>
-                                <%= post.favorites.count %>
+                  <% @posts.each do |post| %>
+                  <div class="row border">
+                    <div class="col">
+                      <div class="row p-2">
+                        <div class="col">
+                          <div class="row">
+                            <div class="col-1 mr-3">
+                              <div class="row">
+                                <!--投稿者のアイコン-->
+                                <%= image_tag post.member.get_member_image(50,50), class: "rounded-circle" %>
+                              </div>
+                            </div>
+                            <div class="col-10">
+                              <div class="row d-flex align-items-top">
+                                <b class="mr-4"><%= post.member.nickname %></b>
+                                <span><%= post.created_at.strftime('%Y/%m/%d %H:%M') %></span>
+                                <span>
+                                  <% if post.is_edited == true %>
+                                    （編集済み）
+                                  <% end %>
+                                </span>
+                              </div>
+                              <%= link_to your_post_path(post.id) do %>
+                              <div class="row">
+                                <div class="col">
+                                  <div class="row text-dark">
+                                    <%= safe_join(post.sentence.split("\n"),tag(:br)) %>
+                                  </div>
+                                  <div class="row">
+                                    <!--投稿に画像がある場合は表示させる-->
+                                    <% if post.image_id.attached? %>
+                                      <%= image_tag post.image_id, class: "img-fluid" %>
+                                    <% end %>
+                                  </div>
+                                </div>
+                              </div>
                               <% end %>
-                            <% else %>
-                              <%= link_to favorites_create_path(post), method: :post do %>
-                                <i class="far fa-heart"></i>
-                                <%= post.favorites.count %>
+                            </div>
+                          </div>
+                          <div class="row mt-2">
+                            <div class="col-2 offset-1">
+                              <!--コメントのアイコン・コメント数-->
+                              <%= link_to my_post_path(post) do %>
+                                <span class="text-muted">
+                                  <i class="far fa-comment-alt"></i>
+                                  <%= post.post_comments.count %>
+                                </span>
                               <% end %>
-                            <% end %>
-                          </span>
-                          <span class="mr-4">
-                            <%= link_to my_post_path(post) do %>
-                              <i class="fas fa-comment-alt"></i>
-                              <%= post.post_comments.count %>
-                            <% end %>
-                          </span>
-                          <span>作成日時：<%= post.created_at.strftime('%Y/%m/%d %H:%M') %></span>
-                        </div>
-                        <div class="row">
-                          <%= safe_join(post.sentence.split("\n"),tag(:br)) %>
-                        </div>
-                        <div class="row">
-                          <!--投稿に画像がある場合は表示させる-->
-                          <% if post.image_id.attached? %>
-                            <%= image_tag post.image_id, class: "img-fluid" %>
-                          <% end %>
-                        </div>
-                        <div class="row justify-content-end">
-                          <% if post.is_edited == true %>
-                          <span class="mr-2"><%= post.updated_at.strftime('%Y/%m/%d %H:%M') %></span>
-                            <span class="text-right">(編集済み)</span>
-                          <% end %>
+                            </div>
+                            <div class="col-2">
+                              <!--いいねのアイコン・いいね数-->
+                              <% if post.favorited_by?(current_member) %>
+                              <!--現ユーザーが投稿のfavoritesテーブル内に存在する(いいね済)場合-->
+                                <%= link_to favorites_create_path(post), method: :delete do %>
+                                  <span class="text-danger">
+                                    <i class="fas fa-heart"></i>
+                                    <%= post.favorites.count %>
+                                  </span>
+                                <% end %>
+                              <% else %>
+                                <%= link_to favorites_create_path(post), method: :post do %>
+                                  <span class="text-dark">
+                                    <i class="far fa-heart"></i>
+                                    <%= post.favorites.count %>
+                                  </span>
+                                <% end %>
+                              <% end %>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
+                  </div>
                   <% end %>
                 </div>
               </div>
             </div>
           </div>
         </div>
-
       </div>
     </div>
   </div>
