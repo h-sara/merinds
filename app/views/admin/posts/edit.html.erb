@@ -19,12 +19,14 @@
           </div>
           <div class="row mb-3">
             <div class="col-2">画像</div>
-            <div class="col-10"><%= f.file_field :image_id, accept: "image/*" %></div>
+            <div class="col-10">
+              <%= f.file_field :image_id, accept: "image/*" %>
+            </div>
           </div>
           <div class="row mb-3">
             <div class="col-2">作成者</div>
             <div class="col-10">
-              <%= f.select :member_id, @member, {prompt: "選択してください"}, :class => 'form-control', :id => 'member_id' %>
+              <%= f.select :member_id, @member, :id => 'member_id' %>
             </div>
           </div>
           <div class="row mb-3">
