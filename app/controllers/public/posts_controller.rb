@@ -6,8 +6,8 @@ class Public::PostsController < ApplicationController
     #includeしたインスタンスメソッドを使用
     left_screen_variables
 
-    # 現メンバーが投稿した投稿情報を@postsに格納
-    @posts = Post.where(member_id: @member.id)
+    # 現メンバーが投稿した非表示ではない投稿情報を作成順に@postsに格納（10個ずつでページネーション）
+    @posts = Post.where(member_id: @member.id, is_hidden: false).order(created_at: :desc).page(params[:page]).per(10)
   end
 
   def show
