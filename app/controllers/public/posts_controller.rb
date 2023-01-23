@@ -57,9 +57,8 @@ class Public::PostsController < ApplicationController
   def index_your
     #includeしたインスタンスメソッドを使用
     left_screen_variables
-
     # すべての投稿を@postsに格納
-    @posts = Post.all.order(created_at: :desc)
+    @posts = Post.where(is_hidden: false).order(created_at: :desc).page(params[:page]).per(10)
   end
 
   def show_your
