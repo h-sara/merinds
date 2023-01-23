@@ -1,24 +1,113 @@
 <% posts.each do |post| %>
-<div class="row border mb-3">
+<div class="row border mb-2">
   <div class="col">
-    <div class="row p-2 border m-2">
+    <div class="row p-2">
       <div class="col">
-        <div class="row d-flex align-items-center">
-          <% if current_member.id != post.member_id %>
-          <!--現メンバーが投稿者ではない場合-->
-            <%= link_to your_page_path(post.member) do %>
-              <span class="mr-3"><%= image_tag post.member.get_member_image(50,50) %></span>
-              <span class="mr-4"><%= post.member.nickname %></span>
+        <div class="row">
+          <div class="col-1 mr-3">
+            <div class="row">
+              <% if current_member.id == post.member_id %>
+              <!--投稿者が現メンバーの場合-->
+                <%= link_to my_page_path do %>
+                  <!--投稿者のアイコン-->
+                  <%= image_tag post.member.get_member_image(50,50), class: "rounded-circle" %>
+                <% end %>
+              <% else %>
+                <!--投稿者が現メンバーではない場合-->
+                <%= link_to your_page_path(post.member.nickname) do %>
+                  <!--投稿者のアイコン-->
+                  <%= image_tag post.member.get_member_image(50,50), class: "rounded-circle" %>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+          <div class="col-10">
+            <div class="row d-flex align-items-center">
+              <b class="mr-4">
+                <% if current_member.id == post.member_id %>
+                <!--投稿者が現メンバーの場合-->
+                  <%= link_to my_page_path, class: "text-dark" do %>
+                    <!--投稿者のアイコン-->
+                    <%= post.member.nickname %>
+                  <% end %>
+                <% else %>
+                  <!--投稿者が現メンバーではない場合-->
+                  <%= link_to your_page_path(post.member.nickname), class: "text-dark" do %>
+                    <%= post.member.nickname %>
+                  <% end %>
+                <% end %>
+              </b>
+              <span class="mr-4">
+                <%= render "public/relationships/follow", post: post %>
+              </span>
+              <span><%= post.created_at.strftime('%Y/%m/%d %H:%M') %></span>
+              <span>
+                <% if post.is_edited == true %>
+                  （編集済み）
+                <% end %>
+              </span>
+            </div>
+            <% if current_member.id == post.member_id %>
+            <!--現メンバーが投稿者の場合-->
+              <%= link_to my_post_path(post.id) do %>
+                <div class="row">
+                  <div class="col">
+                    <div class="row text-dark">
+                      <%= safe_join(post.sentence.split("\n"),tag(:br)) %>
+                    </div>
+                    <div class="row">
+                      <!--投稿に画像がある場合は表示させる-->
+                      <% if post.image_id.attached? %>
+                        <%= image_tag post.image_id, class: "img-fluid" %>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            <% else %>
+            <!--現メンバーが投稿者ではない場合-->
+              <%= link_to your_post_path(post.id) do %>
+                <div class="row">
+                  <div class="col">
+                    <div class="row text-dark">
+                      <%= safe_join(post.sentence.split("\n"),tag(:br)) %>
+                    </div>
+                    <div class="row">
+                      <!--投稿に画像がある場合は表示させる-->
+                      <% if post.image_id.attached? %>
+                        <%= image_tag post.image_id, class: "img-fluid" %>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
             <% end %>
-          <% else%>
-          <!--現メンバーが投稿者の場合-->
-            <span class="mr-3"><%= image_tag post.member.get_member_image(50,50) %></span>
-            <span class="mr-4"><%= post.member.nickname %></span>
-          <% end %>
-          <span class="mr-4">
-            <%= render "public/relationships/follow", post: post %>
-          </span>
-          <span class="mr-4">
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-2 offset-1">
+            <% if current_member.id == post.member_id %>
+            <!--現メンバーが投稿者の場合-->
+              <%= link_to my_post_path(post.id) do %>
+                <!--コメントのアイコン・コメント数-->
+                <span class="text-muted">
+                  <i class="far fa-comment-alt"></i>
+                  <%= post.post_comments.count %>
+                </span>
+              <% end %>
+            <% else %>
+            <!--現メンバーが投稿者ではない場合-->
+              <%= link_to your_post_path(post.id) do %>
+                <!--コメントのアイコン・コメント数-->
+                <span class="text-muted">
+                  <i class="far fa-comment-alt"></i>
+                  <%= post.post_comments.count %>
+                </span>
+              <% end %>
+            <% end %>
+          </div>
+          <div class="col-2">
+            <!--いいねのアイコン・いいね数-->
             <% if post.favorited_by?(current_member) %>
             <!--現ユーザーが投稿のfavoritesテーブル内に存在する(いいね済)場合-->
               <%= link_to favorites_create_path(post), method: :delete do %>
@@ -35,34 +124,6 @@
                 </span>
               <% end %>
             <% end %>
-          </span>
-          <span class="mr-4">
-            <%= link_to my_post_path(post) do %>
-              <span class="text-muted">
-                <i class="far fa-comment-alt"></i>
-                <%= post.post_comments.count %>
-              </span>
-            <% end %>
-          </span>
-          <span>作成日時：<%= post.created_at.strftime('%Y/%m/%d %H:%M') %></span>
-        </div>
-        <div class="row">
-          <div class="col px-4 pt-2">
-            <div class="row">
-              <%= safe_join(post.sentence.split("\n"),tag(:br)) %>
-            </div>
-            <div class="row justify-content-end">
-              <% if post.is_edited == true %>
-              <span class="mr-2"><%= post.updated_at.strftime('%Y/%m/%d %H:%M') %></span>
-                <span class="text-right">(編集済み)</span>
-              <% end %>
-            </div>
-            <div class="row">
-              <!--投稿に画像がある場合は表示させる-->
-              <% if post.image_id.attached? %>
-                <%= image_tag post.image_id, class: "img-fluid" %>
-              <% end %>
-            </div>
           </div>
         </div>
       </div>
