@@ -1,0 +1,9 @@
+<% if contents.errors.any? %>
+  <div class="row">
+    <ul style="color: red">
+      <% contents.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

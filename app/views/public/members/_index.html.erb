@@ -22,7 +22,7 @@
       </td>
       <td class="align-middle">
         <% if member == current_member %>
-          <%= member.nickname %>
+          <%= member.nickname.truncate(13) %>
         <% else %>
           <%= link_to your_page_path(member.nickname) do %>
             <%= member.nickname %>

@@ -34,10 +34,13 @@ class Public::MembersController < ApplicationController
   end
 
   def update
-    @member = current_member
-    if @member.update(member_params)
+    member = current_member
+    if member.update(member_params)
+      flash[:notice] = "編集が完了しました"
       redirect_to my_page_path
     else
+      #includeしたインスタンスメソッドを使用
+      left_screen_variables
       render :edit
     end
   end
@@ -60,14 +63,13 @@ class Public::MembersController < ApplicationController
   def member_params
     params.require(:member).permit(
       :member_image,
-      :email,
       :first_name,
       :last_name,
       :first_name_kana,
       :last_name_kana,
+      :email,
       :nickname,
-      :introduction,
-      :is_deleted
+      :introduction
     )
   end
 end
