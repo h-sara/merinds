@@ -15,4 +15,9 @@ module CommonActions
     @favorite_posts = Post.find(favorites)
   end
 
+  # 繰り返し使用する変数等を記述
+  def repeat_variables
+   @member = current_member
+  end
+
 end

@@ -2,8 +2,9 @@ class Public::MembersController < ApplicationController
   #モジュールをincludeする
   include CommonActions
 
-  # 現メンバー == current_member
   def index
+    #includeしたインスタンスメソッドを使用
+    repeat_variables
     #includeしたインスタンスメソッドを使用
     left_screen_variables
 
@@ -12,6 +13,8 @@ class Public::MembersController < ApplicationController
   end
 
   def show
+    #includeしたインスタンスメソッドを使用
+    repeat_variables
     #includeしたインスタンスメソッドを使用
     left_screen_variables
   end
@@ -31,11 +34,14 @@ class Public::MembersController < ApplicationController
   def edit
     #includeしたインスタンスメソッドを使用
     left_screen_variables
+    #includeしたインスタンスメソッドを使用
+    repeat_variables
   end
 
   def update
-    member = current_member
-    if current_member.update(member_params)
+    #includeしたインスタンスメソッドを使用
+    repeat_variables
+    if @member.update(member_params)
       flash[:notice] = "編集が完了しました"
       redirect_to my_page_path
     else

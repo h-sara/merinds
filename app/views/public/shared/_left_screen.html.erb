@@ -52,8 +52,7 @@
       <h4 class="mt-3 mb-4 text-center">投稿フォーム</h4>
       <div class="row">
         <% if post.errors.any? %>
-          <%= post.errors.count %>件のエラーが発生しました
-          <ul>
+          <ul style="color: red">
             <% post.errors.full_messages.each do |message| %>
               <li><%= message %></li>
             <% end %>

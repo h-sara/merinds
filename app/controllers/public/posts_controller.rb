@@ -5,6 +5,8 @@ class Public::PostsController < ApplicationController
   def index
     #includeしたインスタンスメソッドを使用
     left_screen_variables
+    #includeしたインスタンスメソッドを使用
+    repeat_variables
 
     # 現メンバーが投稿した非表示ではない投稿情報を作成順に@postsに格納（10個ずつでページネーション）
     @posts = Post.where(member_id: @member.id, is_hidden: false).order(created_at: :desc).page(params[:page]).per(10)
@@ -13,6 +15,8 @@ class Public::PostsController < ApplicationController
   def show
     #includeしたインスタンスメソッドを使用
     left_screen_variables
+    #includeしたインスタンスメソッドを使用
+    repeat_variables
 
     # 選択した投稿の情報を@post_showに格納
     @post_show = Post.find(params[:id])
@@ -23,12 +27,14 @@ class Public::PostsController < ApplicationController
   def create #投稿作成
     #includeしたインスタンスメソッドを使用
     left_screen_variables
+    #includeしたインスタンスメソッドを使用
+    repeat_variables
     @post = Post.new(post_params)
     if @post.save
       redirect_to my_post_path(@post.id)
     else
       flash[:notice] = "投稿に失敗しました"
-      
+
       # 現メンバーが投稿した非表示ではない投稿情報を作成順に@postsに格納（10個ずつでページネーション）
       @posts = Post.where(member_id: @member.id, is_hidden: false).order(created_at: :desc).page(params[:page]).per(10)
       render :index
