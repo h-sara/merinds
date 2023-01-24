@@ -21,5 +21,11 @@ module Merinds
 
     # タイムゾーンを日本に変更
     config.time_zone = 'Tokyo'
+
+    # 日本語化
+    config.i18n.default_locale = :ja
+
+    # ja.ymlファイルへのパスを通す
+    config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.yml').to_s]
   end
 end

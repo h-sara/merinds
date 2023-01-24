@@ -37,7 +37,7 @@ Rails.application.routes.draw do
     get "members" => "members#index"
     get "members/my_page" => "members#show", as: "my_page"
     get "members/information/edit" => "members#edit", as: "members_edit"
-    patch "members/update" => "members#update", as: "members_update"
+    patch "members/my_page" => "members#update"
     get "members/check" => "members#check", as: "members_check"
     patch "members/withdraw" => "members#withdraw", as: "members_withdraw"
     get "members/:nickname" => "members#show_your", as: "your_page"

@@ -15,7 +15,9 @@ class Public::RelationshipsController < ApplicationController
   def followings # フォロー一覧
     #includeしたインスタンスメソッドを使用
     left_screen_variables
-
+    #includeしたインスタンスメソッドを使用
+    repeat_variables
+    
     # 現メンバーのフォロー情報を@followingsに格納
     @followings = current_member.followings
   end
@@ -23,7 +25,9 @@ class Public::RelationshipsController < ApplicationController
   def followers # フォロワー一覧
     #includeしたインスタンスメソッドを使用
     left_screen_variables
-
+    #includeしたインスタンスメソッドを使用
+    repeat_variables
+    
     # 現メンバーのフォロワー情報を@followersに格納
     @followers = current_member.followers
   end

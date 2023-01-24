@@ -4,6 +4,13 @@ class Post < ApplicationRecord
   has_many :post_comments, dependent: :destroy
   has_many :favorites, dependent: :destroy
 
+
+  # バリデーションの設定
+  ## 投稿内容（必須・300文字まで）
+  validates :sentence, presence: true, length: { maximum: 300 }
+
+
+
   # 投稿検索のためのメソッド
   def self.looks(word)
     #部分一致で検索
@@ -14,12 +21,4 @@ class Post < ApplicationRecord
   def favorited_by?(member)
     favorites.exists?(member_id: member.id)
   end
-
-  # 投稿の添付画像の設定
-  # def get_post_image(width, height)
-  #   unless post_image.attached?
-  #     post_image =
-  #   end
-  #   post_image.variant(resize_to_fill: [width, height]).processed
-  # end
 end
