@@ -5,8 +5,8 @@ module CommonActions
 
   # 左側画面に必要な変数等を記述
   def left_screen_variables
-    # 現メンバー情報を@memberに格納
-    @member = current_member
+    # 現メンバー情報をDBから取り出し、@member_for_leftに格納
+    @member_for_left = Member.find(current_member.id)
     # 投稿の作成
     @post = Post.new
     # 現メンバーがいいねした投稿のidをfavoritesに格納
