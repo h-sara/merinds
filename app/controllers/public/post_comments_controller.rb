@@ -15,8 +15,10 @@ class Public::PostCommentsController < ApplicationController
     # 投稿idをコメントのpost_idに格納
     @post_comment.post_id = @post_show.id
     if @post_comment.save
+      flash[:notice] = "コメントの投稿に成功しました"
       redirect_to my_post_path(@post_show)
     else
+      flash[:notice] = "コメントの投稿に失敗しました"
       render "public/posts/show"
     end
   end
