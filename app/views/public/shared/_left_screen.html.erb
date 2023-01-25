@@ -1,51 +1,59 @@
 <div class="container" style="width:90%">
+  <div class="row">
+    <span class="text-info"><%= notice %></span>
+  </div>
   <div class="row border p-2 mt-2 h-50" >
-    <div class="col">
-      <div class="row">
-        <div class="col">
-          <%= image_tag member.get_member_image(100,100), class: "rounded-circle" %>
+    <!--現メンバーがゲストメンバーの場合-->
+    <% if current_member.nickname == "merindsゲスト" %>
+      <%= render "public/members/guest_prof", member: member %>
+    <% else %>
+      <div class="col">
+        <div class="row">
+          <div class="col">
+            <%= image_tag member.get_member_image(100,100), class: "rounded-circle" %>
+          </div>
+          <div class="col my-auto">
+            <ul class="list-unstyled my-auto">
+              <li class="mb-2"><%= member.nickname %></li>
+              <li>
+                投稿数：
+                <%= link_to my_posts_path do %>
+                  <%= member.posts.count %>
+                <% end %>
+              </li>
+            </ul>
+          </div>
         </div>
-        <div class="col my-auto">
-          <ul class="list-unstyled my-auto">
-            <li class="mb-2"><%= member.nickname %></li>
-            <li>
-              投稿数：
-              <%= link_to my_posts_path do %>
-                <%= member.posts.count %>
-              <% end %>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <ul class="list-unstyled">
-            <li>
-              フォロー：
-              <%= link_to members_followings_path do%>
-                <%= member.followings.count %>
-              <% end %>
-            </li>
-            <li>
-              フォロワー：
-              <%= link_to members_followers_path do%>
-                <%= member.followers.count %>
-              <% end %>
-            </li>
-            <li>
-              いいねした投稿：
-              <%= link_to my_favorited_posts_path do %>
-                <%= favorite_posts.count %>
-              <% end %>
-            </li>
-            <li>グループ：</li>
-          </ul>
-          <div class="text-center mt-3">
-            <%= link_to "マイページへ", my_page_path, class: "btn btn-success" %>
+        <div class="row">
+          <div class="col">
+            <ul class="list-unstyled">
+              <li>
+                フォロー：
+                <%= link_to members_followings_path do%>
+                  <%= member.followings.count %>
+                <% end %>
+              </li>
+              <li>
+                フォロワー：
+                <%= link_to members_followers_path do%>
+                  <%= member.followers.count %>
+                <% end %>
+              </li>
+              <li>
+                いいねした投稿：
+                <%= link_to my_favorited_posts_path do %>
+                  <%= favorite_posts.count %>
+                <% end %>
+              </li>
+              <li>グループ：</li>
+            </ul>
+            <div class="text-center mt-3">
+              <%= link_to "マイページへ", my_page_path, class: "btn btn-success" %>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    <% end %>
   </div>
   <div class="row border p-2 mt-2" >
     <div class="col">
@@ -57,7 +65,13 @@
         <label>画像</label><br>
         <%= f.file_field :image_id, accept: "image/*" %>
         <div class="text-center my-2">
-          <%= f.submit '投稿', class: "btn btn-info mt-3", style: "width:100px" %>
+          <% if member.nickname == "merindsゲスト"%>
+            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#postModal" style="width:100px">
+              投稿
+            </button>
+          <% else %>
+            <%= f.submit '投稿', class: "btn btn-info mt-3", style: "width:100px" %>
+          <% end %>
         </div>
       <% end %>
     </div>

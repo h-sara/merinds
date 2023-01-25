@@ -6,6 +6,11 @@
           投稿ID <%= @post.id %>の投稿情報編集
         </h4>
       </div>
+      <div class="row">
+        <div class="col offset-1">
+          <%= render "public/shared/error", contents: @post %>
+        </div>
+      </div>
       <%= form_with model: @post, url: admin_post_path(@post.id), method: :patch do |f| %>
       <div class="row">
         <div class="col offset-1">

@@ -6,38 +6,18 @@
         <div class="row">
           <div class="col-1 mr-3">
             <div class="row">
-              <% if current_member.id == post.member_id %>
-              <!--投稿者が現メンバーの場合-->
-                <%= link_to my_page_path do %>
-                  <!--投稿者のアイコン-->
-                  <%= image_tag post.member.get_member_image(50,50), class: "rounded-circle" %>
-                <% end %>
-              <% else %>
-                <!--投稿者が現メンバーではない場合-->
-                <%= link_to your_page_path(post.member.nickname) do %>
-                  <!--投稿者のアイコン-->
-                  <%= image_tag post.member.get_member_image(50,50), class: "rounded-circle" %>
-                <% end %>
-              <% end %>
+              <!--投稿者のアイコン-->
+              <%= render "public/posts/post_member_icon", post: post %>
             </div>
           </div>
           <div class="col-10">
             <div class="row d-flex align-items-center">
               <b class="mr-4">
-                <% if current_member.id == post.member_id %>
-                <!--投稿者が現メンバーの場合-->
-                  <%= link_to my_page_path, class: "text-dark" do %>
-                    <!--投稿者のアイコン-->
-                    <%= post.member.nickname %>
-                  <% end %>
-                <% else %>
-                  <!--投稿者が現メンバーではない場合-->
-                  <%= link_to your_page_path(post.member.nickname), class: "text-dark" do %>
-                    <%= post.member.nickname %>
-                  <% end %>
-                <% end %>
+                <!--投稿者のニックネーム-->
+                <%= render "public/posts/post_member_nickname", post: post %>
               </b>
               <span class="mr-4">
+                <!--フォローボタン-->
                 <%= render "public/relationships/follow", post: post %>
               </span>
               <span><%= post.created_at.strftime('%Y/%m/%d %H:%M') %></span>
@@ -108,21 +88,13 @@
           </div>
           <div class="col-2">
             <!--いいねのアイコン・いいね数-->
-            <% if post.favorited_by?(current_member) %>
-            <!--現ユーザーが投稿のfavoritesテーブル内に存在する(いいね済)場合-->
-              <%= link_to favorites_create_path(post), method: :delete do %>
-                <span class="text-danger">
-                  <i class="fas fa-heart"></i>
-                  <%= post.favorites.count %>
-                </span>
-              <% end %>
-            <% else %>
-              <%= link_to favorites_create_path(post), method: :post do %>
-                <span class="text-dark">
-                  <i class="far fa-heart"></i>
-                  <%= post.favorites.count %>
-                </span>
-              <% end %>
+            <% if current_member.nickname == "merindsゲスト" %>
+              <a href="#" class="text-dark" data-toggle="modal" data-target="#favoriteModal">
+                <i class="far fa-heart"></i>
+                <%= post.favorites.count %>
+              </a>
+            <% else%>
+              <%= render "public/favorites/favorites_icon", post: post %>
             <% end %>
           </div>
         </div>

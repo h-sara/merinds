@@ -1,4 +1,6 @@
 class Public::PostCommentsController < ApplicationController
+  before_action :ensure_guest_user
+
   #モジュールをincludeする
   include CommonActions
 
@@ -13,8 +15,10 @@ class Public::PostCommentsController < ApplicationController
     # 投稿idをコメントのpost_idに格納
     @post_comment.post_id = @post_show.id
     if @post_comment.save
+      flash[:notice] = "コメントの投稿に成功しました"
       redirect_to my_post_path(@post_show)
     else
+      flash[:notice] = "コメントの投稿に失敗しました"
       render "public/posts/show"
     end
   end
@@ -53,5 +57,12 @@ class Public::PostCommentsController < ApplicationController
     params.require(:post_comment).permit(
       :member_id,
       :comment).merge(member_id: current_member.id)
+  end
+
+  def ensure_guest_user
+    if current_member.nickname == "merindsゲスト"
+      flash[:notice] = "そのページには遷移できません。"
+      redirect_to your_posts_path
+    end
   end
 end

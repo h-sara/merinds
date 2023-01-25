@@ -8,7 +8,7 @@
       </div>
       <div class="row">
         <div class="col">
-          <table class="table text-center small">
+          <table class="table text-center">
             <thead>
               <th class="align-middle" style="width:6%">投稿ID</th>
               <th class="align-middle" style="width:40%">文章</th>
@@ -30,7 +30,7 @@
                   <% end %>
                 </td>
                 <td class="align-middle text-left">
-                  <%= safe_join(post.sentence.split("\n"),tag(:br)) %>
+                  <%= post.sentence.truncate(35) %>
                 </td>
                 <td class="align-middle">
                   <% if post.image_id.attached? %>

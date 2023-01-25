@@ -3,8 +3,13 @@
     <div class="col">
       <div class="row">
         <h4 class="mt-2 mb-4 ml-5" style="background-color: rgba(169, 169, 169, 0.5)">
-          <%= @member.first_name %><%= @member.last_name %>さんのメンバー情報編集
+          <%= @member_edit.first_name %> <%= @member_edit.last_name %>さんのメンバー情報編集
         </h4>
+      </div>
+      <div class="row">
+        <div class="col offset-1">
+          <%= render "public/shared/error", contents: @member %>
+        </div>
       </div>
       <%= form_with model: @member, url: admin_member_path(@member.id), method: :patch do |f| %>
       <div class="row">

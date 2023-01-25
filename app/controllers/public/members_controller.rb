@@ -1,4 +1,6 @@
 class Public::MembersController < ApplicationController
+  before_action :ensure_guest_user
+
   #モジュールをincludeする
   include CommonActions
 
@@ -42,11 +44,12 @@ class Public::MembersController < ApplicationController
     #includeしたインスタンスメソッドを使用
     repeat_variables
     if @member.update(member_params)
-      flash[:notice] = "編集が完了しました"
+      flash[:notice] = "メンバー情報の編集に成功しました"
       redirect_to my_page_path
     else
       #includeしたインスタンスメソッドを使用
       left_screen_variables
+      flash[:notice] = "メンバー情報の編集に失敗しました"
       render :edit
     end
   end
@@ -61,7 +64,8 @@ class Public::MembersController < ApplicationController
     # is_deletedカラムをtrueに変更
     @member.update(is_deleted: true)
     reset_session
-    redirect_to root_path, notice: "退会を実行しました。"
+    flash[:notice] = "退会を実行しました"
+    redirect_to root_path
   end
 
   private
@@ -77,5 +81,12 @@ class Public::MembersController < ApplicationController
       :nickname,
       :introduction
     )
+  end
+
+  def ensure_guest_user
+    if current_member.nickname == "merindsゲスト"
+      flash[:notice] = "そのページには遷移できません。"
+      redirect_to your_posts_path
+    end
   end
 end

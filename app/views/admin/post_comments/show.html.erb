@@ -8,9 +8,14 @@
       </div>
       <div class="row">
         <div class="col offset-1">
+          <%= render "public/shared/error", contents: @post_comment %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-fluid ml-5" style="width:90%">
           <table class="table">
             <tr>
-              <th>コメントID</th>
+              <th style="width:20%">コメントID</th>
               <td><%= @post_comment.id %></td>
             </tr>
             <tr>
