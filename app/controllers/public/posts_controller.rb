@@ -31,10 +31,8 @@ class Public::PostsController < ApplicationController
     repeat_variables
     @post = Post.new(post_params)
     if @post.save
-      redirect_to my_post_path(@post.id)
+      redirect_to my_post_path(@post.id), notice: "投稿に成功しました。"
     else
-      flash[:notice] = "投稿に失敗しました"
-
       # 現メンバーが投稿した非表示ではない投稿情報を作成順に@postsに格納（10個ずつでページネーション）
       @posts = Post.where(member_id: @member.id, is_hidden: false).order(created_at: :desc).page(params[:page]).per(10)
       render :index
