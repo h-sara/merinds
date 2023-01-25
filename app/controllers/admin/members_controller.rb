@@ -10,18 +10,20 @@ class Admin::MembersController < ApplicationController
   end
 
   def edit
+    @member_edit = Member.find(params[:id])
     # 選択したメンバー情報を@memberに格納
     @member = Member.find(params[:id])
   end
 
   def update
     # 選択したメンバー情報をmemberに格納
-    member = Member.find(params[:id])
+    @member = Member.find(params[:id])
     # 選択したメンバー情報をmember_paramsにある該当するカラムを更新する
-    if member.update(member_params)
+    if @member.update(member_params)
       # updateに成功した場合
-      redirect_to admin_member_path(member.id)
+      redirect_to admin_member_path(@member.id)
     else
+      @member_edit = Member.find(params[:id])
       # updateに失敗した場合
       render :edit
     end
