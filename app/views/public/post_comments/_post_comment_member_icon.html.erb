@@ -1,0 +1,12 @@
+<!--現メンバーがゲストメンバーの場合-->
+<% if current_member.nickname == "merindsゲスト" %>
+  <%= image_tag post_comment.member.get_member_image(50,50), class: "rounded-circle" %>
+<% elsif current_member.id == post_comment.member_id %>
+<!--現メンバーがコメント作成者の場合-->
+  <%= image_tag post_comment.member.get_member_image(50,50), class: "rounded-circle" %>
+<% else %>
+<!--現メンバーがコメント作成者でない場合-->
+  <%= link_to your_page_path(post_comment.member.nickname) do%>
+    <%= image_tag post_comment.member.get_member_image(50,50), class: "rounded-circle" %>
+  <% end %>
+<% end %>

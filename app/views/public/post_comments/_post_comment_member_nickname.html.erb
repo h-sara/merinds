@@ -1,0 +1,12 @@
+<!--現メンバーがゲストメンバーの場合-->
+<% if current_member.nickname == "merindsゲスト" %>
+  <%= post_comment.member.nickname %>
+<% elsif current_member.id == post_comment.member_id %>
+<!--現メンバーがコメント作成者の場合-->
+  <%= post_comment.member.nickname %>
+<% else %>
+<!--現メンバーがコメント作成者でない場合-->
+  <%= link_to your_page_path(post_comment.member.nickname) do%>
+    <span class="text-dark"><%= post_comment.member.nickname %></span>
+  <% end %>
+<% end %>
