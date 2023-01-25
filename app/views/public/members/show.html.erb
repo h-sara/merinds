@@ -8,38 +8,43 @@
         <h4 class="mt-2 mb-4">マイページ</h4>
         <table class="table table-bordered">
           <tr>
-            <th style="width: 25%">アイコン</th>
-            <td style="width: 75%"><%= image_tag @member.get_member_image(100,100) %></td>
+            <th class="align-middle" style="width: 25%">アイコン</th>
+            <td style="width: 75%"><%= image_tag @member.get_member_image(100,100), class: "rounded-circle" %></td>
           </tr>
           <tr>
-            <th>名前</th>
+            <th class="align-middle">名前</th>
             <td><%= @member.first_name %>　<%= @member.last_name %></td>
           </tr>
           <tr>
-            <th>フリガナ</th>
+            <th class="align-middle">フリガナ</th>
             <td><%= @member.first_name_kana %>　<%= @member.last_name_kana %></td>
           </tr>
           <tr>
-            <th>メールアドレス</th>
+            <th class="align-middle">メールアドレス</th>
             <td><%= @member.email %></td>
           </tr>
           <tr>
-            <th>ニックネーム</th>
+            <th class="align-middle">ニックネーム</th>
             <td><%= @member.nickname %></td>
           </tr>
           <tr>
-            <th>自己紹介文</th>
-            <td><%= @member.introduction %></td>
+            <th class="align-middle">自己紹介文</th>
+            <td>
+              <!--自己紹介文がnilでない場合、改行をして表示させる-->
+              <% if @member.introduction != nil%>
+                <%= safe_join(@member.introduction.split("\n"),tag(:br)) %>
+              <% end %>
+            </td>
           </tr>
         </table>
         <div class="mx-auto mt-3">
           <%= link_to "メンバー情報編集", members_edit_path, class: "btn btn-success" %>
         </div>
       </div>
-      <div class="row mt-5">
+      <div class="row mt-4">
         <h4>
           退会希望の方は
-          <u><%= link_to "こちら", members_check_path , class: "text-primary" %></u>
+          <u><%= link_to "こちら", members_check_path, class: "text-primary" %></u>
         </h4>
       </div>
     </div>
