@@ -52,6 +52,8 @@ class Public::PostsController < ApplicationController
   end
 
   def update
+    #includeしたインスタンスメソッドを使用
+    left_screen_variables
     # 選択した投稿の情報を@post_showに格納
     @post_show = Post.find(params[:id])
     # 現メンバー情報を@memberに格納
