@@ -1,8 +1,8 @@
-<% if contents.errors.any? %>
-  <div class="row">
-    <ul style="color: red">
+<% if contents && contents.errors.any? %>
+  <div class="row pl-3">
+    <ul class="list-unstyled" style="color: red">
       <% contents.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+        <li>※<%= message %></li>
       <% end %>
     </ul>
   </div>

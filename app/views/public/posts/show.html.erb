@@ -95,7 +95,7 @@
                     </h4>
                   </div>
                   <% @post_show.post_comments.each do |post_comment| %>
-                    <div class="row border p-2">
+                    <div class="row border p-2 mb-3">
                       <div class="col">
                         <div class="row d-flex align-items-center">
                           <span class="mr-3">
@@ -140,7 +140,8 @@
                       </div>
                     </div>
                   <% end %>
-                  <div class="row my-3">
+                  <%= render "public/shared/error", contents: @post_comment %>
+                  <div class="row mb-3">
                     <div class="col">
                       <%= form_with model: [@post_comment], url: post_comments_create_path(@post_show) do |f| %>
                         <%= f.text_area :comment, style: "width:100%; height:100px", placeholder: "コメントをここに入力してください" %><br>
