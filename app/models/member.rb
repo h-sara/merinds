@@ -26,7 +26,7 @@ class Member < ApplicationRecord
   validates :first_name_kana, presence: true, length: { maximum: 40 }
   ## メイ（必須・40文字まで）
   validates :last_name_kana, presence: true, length: { maximum: 40 }
-  ## ニックネーム（必須・一意）
+  ## ニックネーム（必須・一意・15文字まで）
   validates :nickname, presence: true, uniqueness: true, length: { maximum: 15 }
   ## 自己紹介文（100文字まで）
   validates :introduction, length: { maximum: 100 }
