@@ -12,3 +12,7 @@ ja:
         password: パスワード
         nickname: ニックネーム
         introduction: 自己紹介
+      post:
+        sentence: 文章
+      post_comment:
+        comment: コメント

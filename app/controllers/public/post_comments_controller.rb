@@ -1,15 +1,38 @@
 class Public::PostCommentsController < ApplicationController
+  #モジュールをincludeする
+  include CommonActions
+
   def create
-    post = Post.find(params[:post_id])
-    comment = PostComment.new(post_comment_params)
+    #includeしたインスタンスメソッドを使用
+    left_screen_variables
+    repeat_variables
+    # コメントの作成
+    @post_comment = PostComment.new
+    @post_show = Post.find(params[:post_id])
+    @post_comment = PostComment.new(post_comment_params)
     # 投稿idをコメントのpost_idに格納
-    comment.post_id = post.id
-    comment.save
-    # 投稿が現メンバーのものかどうかで遷移先を変更する
-    if post.member_id == current_member.id
-      redirect_to my_post_path(post)
+    @post_comment.post_id = @post_show.id
+    if @post_comment.save
+      redirect_to my_post_path(@post_show)
     else
-      redirect_to your_post_path(post)
+      render "public/posts/show"
+    end
+  end
+
+  def create_your
+    #includeしたインスタンスメソッドを使用
+    left_screen_variables
+    repeat_variables
+    # コメントの作成
+    @post_comment = PostComment.new
+    @post_show = Post.find(params[:post_id])
+    @post_comment = PostComment.new(post_comment_params)
+    # 投稿idをコメントのpost_idに格納
+    @post_comment.post_id = @post_show.id
+    if @post_comment.save
+      redirect_to your_post_path(@post_show)
+    else
+      render "public/posts/show_your"
     end
   end
 

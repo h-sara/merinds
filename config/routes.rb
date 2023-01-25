@@ -64,7 +64,8 @@ Rails.application.routes.draw do
     delete "posts/:post_id/favorites" => "favorites#destroy"
 
     # 投稿コメントのルーティング
-    post "posts/:post_id/post_comments" => "post_comments#create", as: "post_comments_create"
+    post "posts/my_posts/:post_id" => "post_comments#create", as: "post_comments_create"
+    post "posts/:post_id" => "post_comments#create_your", as: "post_comments_create_your"
     delete "posts/:post_id/post_comments/:id" => "post_comments#destroy", as: "post_comments_destroy"
 
     get "searches/search" => "searches#search"
