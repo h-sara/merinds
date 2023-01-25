@@ -78,3 +78,5 @@ gem 'devise'
 gem 'kaminari','~> 1.2.1'
 # ActiveStrage
 gem 'image_processing', '~> 1.2'
+# 日本語化するgem
+gem 'rails-i18n'

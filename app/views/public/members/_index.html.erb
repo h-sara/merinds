@@ -13,16 +13,16 @@
     <tr>
       <td class="align-middle">
         <% if member == current_member %>
-          <%= image_tag member.get_member_image(50,50) %>
+          <%= image_tag member.get_member_image(50,50), class: "rounded-circle" %>
         <% else %>
           <%= link_to your_page_path(member.nickname) do %>
-            <%= image_tag member.get_member_image(50,50) %>
+            <%= image_tag member.get_member_image(50,50), class: "rounded-circle" %>
           <% end %>
         <% end %>
       </td>
       <td class="align-middle">
         <% if member == current_member %>
-          <%= member.nickname %>
+          <%= member.nickname.truncate(13) %>
         <% else %>
           <%= link_to your_page_path(member.nickname) do %>
             <%= member.nickname %>

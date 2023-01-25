@@ -1,6 +1,4 @@
 class Member < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
@@ -13,9 +11,26 @@ class Member < ApplicationRecord
   has_many :relationship_er, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
   # フォローされた場合
   has_many :relationship_ed, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
-  # 一覧画面で使用する
+  # フォロー一覧画面で使用
   has_many :followings, through: :relationship_er, source: :followed
+  # フォワー一覧画面で使用
   has_many :followers, through: :relationship_ed, source: :follower
+
+
+  # バリデーションの設定
+  ## 姓（必須・20文字まで）
+  validates :first_name, presence: true, length: { maximum: 20 }
+  ## 名（必須・20文字まで）
+  validates :last_name, presence: true, length: { maximum: 20 }
+  ## セイ（必須・40文字まで）
+  validates :first_name_kana, presence: true, length: { maximum: 40 }
+  ## メイ（必須・40文字まで）
+  validates :last_name_kana, presence: true, length: { maximum: 40 }
+  ## ニックネーム（必須・一意）
+  validates :nickname, presence: true, uniqueness: true, length: { maximum: 15 }
+  ## 自己紹介文（100文字まで）
+  validates :introduction, length: { maximum: 100 }
+
 
 
   # メンバーのアイコン画像の設定
