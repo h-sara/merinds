@@ -1,4 +1,5 @@
 class Admin::MembersController < ApplicationController
+  before_action :authenticate_admin!
   def show
     # 選択したメンバー情報を@memberに格納
     @member = Member.find(params[:id])
