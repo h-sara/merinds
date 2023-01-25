@@ -1,4 +1,6 @@
 class Public::SearchesController < ApplicationController
+  before_action :ensure_guest_user
+
   #モジュールをincludeする
   include CommonActions
 
@@ -23,6 +25,14 @@ class Public::SearchesController < ApplicationController
       if @posts == nil
         @posts = 0
       end
+    end
+  end
+
+  private
+  def ensure_guest_user
+    if current_member.nickname == "merindsゲスト"
+      flash[:notice] = "そのページには遷移できません。"
+      redirect_to your_posts_path
     end
   end
 end

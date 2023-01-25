@@ -1,4 +1,6 @@
 class Public::FavoritesController < ApplicationController
+  before_action :ensure_guest_user
+
   #モジュールをincludeする
   include CommonActions
 
@@ -25,5 +27,13 @@ class Public::FavoritesController < ApplicationController
     favorite.destroy
     # 直前のページにリダイレクトする
     redirect_back(fallback_location: root_path)
+  end
+
+  private
+  def ensure_guest_user
+    if current_member.nickname == "merindsゲスト"
+      flash[:notice] = "そのページには遷移できません。"
+      redirect_to your_posts_path
+    end
   end
 end
