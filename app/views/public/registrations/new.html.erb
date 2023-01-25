@@ -1,5 +1,12 @@
 <div class="container" style="width:80%">
   <div class="row">
+    <b class="text-danger">
+      <% if notice != nil%>
+        <i class="fas fa-exclamation-triangle"></i> <%= notice %>
+      <% end %>
+    </b>
+  </div>
+  <div class="row">
     <h4 class="mt-2 mb-4 px-1" style="background-color: rgba(169, 169, 169, 0.5)">新規登録</h4>
     <div class="col align-self-center text-danger">※全て必須項目です。</div>
   </div>
