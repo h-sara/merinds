@@ -1,4 +1,5 @@
 class Admin::PostCommentsController < ApplicationController
+  before_action :authenticate_admin!
   def show
     # 選択したコメントの情報を@post_commentに格納
     @post_comment = PostComment.find(params[:id])
