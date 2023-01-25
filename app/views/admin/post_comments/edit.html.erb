@@ -6,6 +6,11 @@
           コメント情報編集
         </h4>
       </div>
+      <div class="row">
+        <div class="col offset-1">
+          <%= render "public/shared/error", contents: @post_comment %>
+        </div>
+      </div>
       <%= form_with model: @post_comment, url: admin_post_post_comment_path(@post_comment.id), method: :patch do |f| %>
       <div class="row">
         <div class="col offset-1">
