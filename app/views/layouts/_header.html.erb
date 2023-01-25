@@ -40,7 +40,14 @@
                   <%= form_with url: searches_search_path, local: true, method: :get do |f| %>
                     <%= f.text_field :word, placeholder: "ここに検索ワードを入力" %>
                     <%= f.select :select_model, options_for_select([["メンバー"], ["投稿"]]) %>
-                    <%= f.submit "検索" %>
+                    <!--現メンバーがゲストメンバーの場合-->
+                    <% if current_member.nickname == "merindsゲスト" %>
+                      <button type="button" data-toggle="modal" data-target="#searchModal">
+                        検索
+                      </button>
+                    <% else %>
+                      <%= f.submit "検索" %>
+                    <% end %>
                   <% end %>
                 </div>
               </div>
