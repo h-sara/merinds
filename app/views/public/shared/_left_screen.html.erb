@@ -66,7 +66,7 @@
         <% if post.image_id.attached? %>
           <%= image_tag post.image_id, onClick: "$('.img_field').click()", class: 'center-block img-thumbnail img-responsive img_prev' %>
         <% else %>
-          <%= image_tag "image_post", onClick: "$('.img_field').click()", class: 'center-block img-thumbnail img-responsive img_prev' %>
+          <%= image_tag 'image_post.jpg', onClick: "$('.img_field').click()", class: 'center-block img-thumbnail img-responsive img_prev' %>
         <% end %>
         <!--/画像をクリックすることで、画像を追加することができるようにする-->
         <span>↑こちらをクリックで、画像を追加</span>
