@@ -5,8 +5,15 @@ class Public::FavoritesController < ApplicationController
   include CommonActions
 
   def index
-    #includeしたインスタンスメソッドを使用
-    left_screen_variables
+    # 現メンバー情報をDBから取り出し、@member_for_leftに格納
+    @member_for_left = Member.find(current_member.id)
+    # 投稿の作成
+    @post = Post.new
+    # 現メンバーがいいねした投稿のidをfavoritesに格納
+    favorites = Favorite.where(member_id: current_member.id).pluck(:post_id)
+
+    # favoritesに格納された投稿IDで街頭の投稿を呼び出し、@favorite_postsに格納（10個ずつでページネーション）
+    @favorite_posts = Post.where(id: favorites).page(params[:page]).per(10)
   end
 
   def create

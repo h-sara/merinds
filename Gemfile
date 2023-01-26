@@ -80,3 +80,5 @@ gem 'kaminari','~> 1.2.1'
 gem 'image_processing', '~> 1.2'
 # 日本語化するgem
 gem 'rails-i18n'
+# ページネーション用のBootstrap
+gem 'bootstrap5-kaminari-views', '~> 0.0.1'

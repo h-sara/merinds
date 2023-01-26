@@ -1,12 +1,16 @@
 <div class="container-fluid">
   <div class="row">
-    <div class="col-4">
+    <div class="col-3">
       <%= render "public/shared/left_screen", member: @member_for_left, post: @post, favorite_posts: @favorite_posts %>
     </div>
-    <div class="col-8">
+    <div class="col-9">
       <div class="row mt-2 mr-2">
         <div class="col">
-          <h3><%= @member.nickname %>さんの投稿一覧</h3>
+          <div class="row">
+            <h3 style="background-color: rgba(169, 169, 169, 0.5)">
+              <%= @member.nickname %>さんの投稿一覧
+            </h3>
+          </div>
           <% @posts.each do |post| %>
           <div class="row mb-2">
             <div class="col">
@@ -81,7 +85,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="mx-auto"><%= paginate @posts %></div>
+        <div class="mx-auto"><%= paginate @posts, theme: 'bootstrap-5' %></div>
       </div>
     </div>
   </div>

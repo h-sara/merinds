@@ -10,8 +10,8 @@ class Public::MembersController < ApplicationController
     #includeしたインスタンスメソッドを使用
     left_screen_variables
 
-    # ゲスト、退会済み以外のメンバーのレコードをすべて取得
-    @members = Member.where.not("email = ? or is_deleted = ?", "guest@example.com", true)
+    # ゲスト、退会済み以外のメンバーのレコードをすべて取得（10個ずつでページネーション）
+    @members = Member.where.not("email = ? or is_deleted = ?", "guest@example.com", true).page(params[:page]).per(10)
   end
 
   def show

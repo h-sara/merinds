@@ -1,14 +1,21 @@
 <div class="container-fluid">
   <div class="row">
-    <div class="col-4">
+    <div class="col-3">
       <%= render "public/shared/left_screen", member: @member_for_left, post: @post, favorite_posts: @favorite_posts %>
     </div>
-    <div class="col-8">
+    <div class="col-9">
       <div class="row mt-2 mr-2">
         <div class="col">
-          <h3>いいねした投稿</h3>
+          <div class="row">
+            <h3 style="background-color: rgba(169, 169, 169, 0.5)">
+              いいねした投稿
+            </h3>
+          </div>
           <%= render "public/posts/index", posts: @favorite_posts %>
         </div>
+      </div>
+      <div class="row">
+        <div class="mx-auto"><%= paginate @favorite_posts, theme: 'bootstrap-5' %></div>
       </div>
     </div>
   </div>
