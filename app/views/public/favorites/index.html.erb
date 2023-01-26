@@ -14,6 +14,9 @@
           <%= render "public/posts/index", posts: @favorite_posts %>
         </div>
       </div>
+      <div class="row">
+        <div class="mx-auto"><%= paginate @favorite_posts, theme: 'bootstrap-5' %></div>
+      </div>
     </div>
   </div>
 </div>
