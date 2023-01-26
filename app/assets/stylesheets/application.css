@@ -14,28 +14,9 @@
  *= require_self
  */
 
-/*html, body {*/
-/*  height: 100%;*/
-/*  margin: 0;*/
-/*}*/
-
-/*#footerFixed{*/
-  /*コンテンツの高さの最小値＝ブラウザの高さに指定*/
-/*  min-height: 100vh;*/
-  /*相対位置*/
-/*  position: relative;*/
-  /*フッターの高さを指定*/
-/*  padding-bottom: 60px;*/
-  /*ヘッダーやフッターを含むすべての要素の高さ＝min-height:100vhになるように指定*/
-/*  box-sizing: border-box;*/
-/*}*/
-
-/*footer{*/
-  /*絶対位置*/
-/*  position: absolute;*/
-/*  bottom: 0;*/
-
-  /*幅いっぱいに表示させる*/
-/*  width: 100%;*/
-/*  color: #fff;*/
-/*}*/
+/* ブラウザがそれぞれ持っているCSSをリセットするための記述 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
