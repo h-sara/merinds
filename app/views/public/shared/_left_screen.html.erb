@@ -1,4 +1,4 @@
-<div class="container" style="width:90%">
+<div class="container" style="height:100%; width:100%">
   <div class="row">
     <span class="text-info"><%= notice %></span>
   </div>
@@ -61,8 +61,8 @@
       <%= render "public/shared/error", contents: post %>
       <%= form_with model: post do |f| %>
         <label>文章</label><br>
-        <%= f.text_area :sentence, placeholder: "文章をここに入力してください", style: "width:100%; height:100px" %><br>
-        <label>画像</label><br>
+        <%= f.text_area :sentence, placeholder: "文章をここに入力してください\n※300文字まで", style: "width:100%; height:150px" %><br>
+        <label class="mt-2">画像</label><br>
         <%= f.file_field :image_id, accept: "image/*" %>
         <div class="text-center my-2">
           <% if member.nickname == "merindsゲスト"%>
