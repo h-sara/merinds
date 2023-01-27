@@ -7,7 +7,6 @@ class Public::PostsController < ApplicationController
   def index
     #includeしたインスタンスメソッドを使用
     left_screen_variables
-    #includeしたインスタンスメソッドを使用
     repeat_variables
 
     # 現メンバーが投稿した非表示ではない投稿情報を作成順に@postsに格納（10個ずつでページネーション）
@@ -17,11 +16,16 @@ class Public::PostsController < ApplicationController
   def show
     #includeしたインスタンスメソッドを使用
     left_screen_variables
-    #includeしたインスタンスメソッドを使用
     repeat_variables
 
+    # 非表示になっている投稿にアクセスしようとした場合
+    if post_show = Post.find_by(id: params[:id], is_hidden: true)
+      flash[:notice] = "その投稿は表示できません"
+      redirect_to my_posts_path
+    end
     # 選択した投稿の情報を@post_showに格納
-    @post_show = Post.find(params[:id])
+    @post_show = Post.find_by(id: params[:id], is_hidden: false)
+
     # コメントの作成
     @post_comment = PostComment.new
   end
@@ -79,7 +83,7 @@ class Public::PostsController < ApplicationController
   def index_your
     #includeしたインスタンスメソッドを使用
     left_screen_variables
-    # すべての投稿を@postsに格納
+    # すべての投稿を@postsに格納（ステータス：表示・最新順・10個ずつでページネーション）
     @posts = Post.where(is_hidden: false).order(created_at: :desc).page(params[:page]).per(10)
   end
 
@@ -87,8 +91,14 @@ class Public::PostsController < ApplicationController
     #includeしたインスタンスメソッドを使用
     left_screen_variables
 
+    # 非表示になっている投稿にアクセスしようとした場合
+    if @post_show = Post.find_by(id: params[:id], is_hidden: true)
+      flash[:notice] = "その投稿は表示できません"
+      redirect_to your_posts_path
+    end
     # 選択した投稿の情報を@post_showに格納
-    @post_show = Post.find(params[:id])
+    @post_show = Post.find_by(id: params[:id], is_hidden: false)
+
     # コメントの作成
     @post_comment = PostComment.new
   end

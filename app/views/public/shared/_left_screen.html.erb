@@ -1,15 +1,15 @@
 <div class="container" style="height:100%; width:100%">
   <div class="row">
-    <span class="text-info"><%= notice %></span>
+    <span class="text-info mt-2"><%= notice %></span>
   </div>
-  <div class="row rounded border p-2 mt-2" >
+  <div class="row rounded border" >
     <!--現メンバーがゲストメンバーの場合-->
     <% if current_member.nickname == "merindsゲスト" %>
       <%= render "public/members/guest_prof", member: member %>
     <% else %>
-      <div class="col">
-        <div class="row p-3">
-          <%= image_tag member.get_member_image(100,100), class: "rounded-circle" %>
+      <div class="col px-3 pt-2">
+        <div class="row pl-2 mb-1">
+          <%= image_tag member.get_member_image(80,80), class: "rounded-circle" %>
         </div>
         <div class="row">
           <div class="col my-auto">
@@ -20,7 +20,7 @@
               <li class="mb-1">
                 投稿数：
                 <%= link_to my_posts_path do %>
-                  <%= member.posts.count %>
+                  <%= member_posts.count %>
                 <% end %>
               </li>
               <li class="mb-1">
