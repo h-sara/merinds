@@ -11,8 +11,10 @@ module CommonActions
     @post = Post.new
     # 現メンバーがいいねした投稿のidをfavoritesに格納
     favorites = Favorite.where(member_id: current_member.id).pluck(:post_id)
-    # 現メンバーがいいねした投稿の情報を取り出して@favorite_postsに格納
-    @favorite_posts = Post.find(favorites)
+    # favoritesに格納された投稿IDで街頭の投稿を呼び出し、@favorite_postsに格納（ステータス：表示・10個ずつでページネーション）
+    @favorite_posts = Post.where(id: favorites, is_hidden: false).page(params[:page]).per(10)
+    # 投稿数の表示
+    @member_posts = Post.where(member_id: @member_for_left.id, is_hidden: false)
   end
 
   # 繰り返し使用する変数等を記述

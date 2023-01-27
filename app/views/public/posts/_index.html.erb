@@ -18,7 +18,7 @@
               </b>
               <span class="mr-4">
                 <!--フォローボタン-->
-                <%= render "public/relationships/follow", post: post %>
+                <%= render "public/relationships/follow", member: post.member %>
               </span>
               <span><%= post.created_at.strftime('%Y/%m/%d %H:%M') %></span>
               <span>

@@ -1,9 +1,9 @@
 <div class="container-fluid">
   <div class="row">
-    <div class="col-4">
-      <%= render "public/shared/left_screen", member: @member_for_left, post: @post, favorite_posts: @favorite_posts %>
+    <div class="col-3">
+      <%= render "public/shared/left_screen", member: @member_for_left, post: @post, favorite_posts: @favorite_posts, member_posts: @member_posts %>
     </div>
-    <div class="col-8">
+    <div class="col-9">
       <div class="row mt-2 mr-2">
         <div class="col">
           <div class="row rounded border">
@@ -11,13 +11,12 @@
               <div class="row px-4 pt-4 mt-2">
                 <div class="col-3"><%= image_tag @show_your.get_member_image(100,100), class: "rounded-circle" %></div>
                 <div class="col-9">
-                  <div class="row lead mb-3">
-                    <div class="col"><%= @show_your.nickname %></div>
-                    <div class="col">
-                      <!--フォローボタンの部分テンプレート-->
-                      <%= render "public/relationships/follow", post: @your_post %>
-                    </div>
-                    <div class="col"></div>
+                  <div class="row">
+                    <h4><%= @show_your.nickname %></h4>
+                  </div>
+                  <div class="row py-2">
+                    <!--フォローボタンの部分テンプレート-->
+                    <%= render "public/relationships/follow", member: @show_your %>
                   </div>
                   <div class="row">
                     <div class="col">
@@ -33,7 +32,7 @@
                       <%= @show_your.posts.count %>
                     </div>
                   </div>
-                  <div class="row">
+                  <div class="row py-1">
                     <div class="col">グループ：未所属</div>
                   </div>
                 </div>
@@ -53,7 +52,9 @@
         <div class="col">
           <div class="row">
             <div class="col mt-2">
-              <h4><%= @show_your.nickname %> さんの投稿一覧</h4>
+              <div class="row">
+                <h3 style="background-color: rgba(169, 169, 169, 0.5)"><%= @show_your.nickname %> さんの投稿一覧</h3>
+              </div>
               <div class="row pb-2">
                 <div class="col">
                   <% @posts.each do |post| %>

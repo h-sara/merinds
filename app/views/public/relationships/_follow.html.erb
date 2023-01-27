@@ -1,14 +1,14 @@
-<!--投稿がnilでなく、現メンバーと投稿者は一致せず、現メンバーがゲストメンバーではない場合-->
-<% if post != nil && current_member.id != post.member_id && current_member.nickname != "merindsゲスト" %>
+<!--現メンバーと投稿者は一致せず、現メンバーがゲストメンバーではない場合-->
+<% if current_member.id != member.id && current_member.nickname != "merindsゲスト" %>
 <!--現メンバー情報でない場合-->
-  <% if current_member.following?(post.member) %>
+  <% if current_member.following?(member) %>
   <!--現メンバーが選択したメンバーをフォローしている場合-->
-    <%= link_to relationships_destroy_path(post.member.id), class: "btn btn-outline-primary", method: :delete do %>
+    <%= link_to relationships_destroy_path(member.id), class: "btn btn-outline-primary", method: :delete do %>
       フォロー中
     <% end %>
   <% else %>
   <!--現メンバーが選択したメンバーをフォローしていなかった場合-->
-    <%= link_to relationships_create_path(post.member.id), class: "btn btn-primary", method: :post do %>
+    <%= link_to relationships_create_path(member.id), class: "btn btn-primary", method: :post do %>
       フォロー
     <% end %>
   <% end %>

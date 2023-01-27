@@ -7,7 +7,6 @@ class Public::MembersController < ApplicationController
   def index
     #includeしたインスタンスメソッドを使用
     repeat_variables
-    #includeしたインスタンスメソッドを使用
     left_screen_variables
 
     # ゲスト、退会済み以外のメンバーのレコードをすべて取得（10個ずつでページネーション）
@@ -17,7 +16,6 @@ class Public::MembersController < ApplicationController
   def show
     #includeしたインスタンスメソッドを使用
     repeat_variables
-    #includeしたインスタンスメソッドを使用
     left_screen_variables
   end
 
@@ -25,18 +23,24 @@ class Public::MembersController < ApplicationController
     #includeしたインスタンスメソッドを使用
     left_screen_variables
 
-    # メンバーのnicknameを取り出して@show_yourに格納
-    @show_your = Member.find_by(nickname: params[:nickname])
-    # メンバーが投稿者になっている投稿を取り出して@your_postに格納
-    @your_post = Post.find_by(member_id: @show_your.id)
-    # メンバーが投稿者になっている投稿を全て取り出して@postsに格納
-    @posts = Post.where(member_id: @show_your.id)
+    # ゲスト、退会済みになっているメンバーにアクセスしようとした場合
+    if (show_your = Member.find_by(nickname: params[:nickname], is_deleted: true)) || (show_your = Member.find_by(nickname: params[:nickname], email: "guest@example.com"))
+      flash[:notice] = "そのメンバーは表示できません"
+      redirect_to members_path
+    else
+      # メンバーのnicknameを取り出して@show_yourに格納
+      @show_your = Member.find_by(nickname: params[:nickname])
+      # binding.pry
+      # メンバーが投稿者になっている投稿を取り出して@your_postに格納
+      @your_post = Post.find_by(member_id: @show_your.id)
+      # メンバーが投稿者になっている投稿を全て取り出して@postsに格納
+      @posts = Post.where(member_id: @show_your.id)
+    end
   end
 
   def edit
     #includeしたインスタンスメソッドを使用
     left_screen_variables
-    #includeしたインスタンスメソッドを使用
     repeat_variables
   end
 
