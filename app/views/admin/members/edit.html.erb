@@ -19,8 +19,15 @@
             <div class="col-10"><%= @member.id %></div>
           </div>
           <div class="row mb-3">
-            <div class="col-2">アイコン</div>
-            <div class="col-9"><%= f.file_field :member_image, accept: "image/*" %></div>
+            <div class="col-2 align-self-center">アイコン</div>
+            <div class="col-9">
+              <span class="mb-1">↓こちらをクリックで、画像の追加・変更ができます。</span>
+                <div class="mt-2">
+                  <%= f.file_field :member_image, accept: "image/*", class: "prof_img_field", style: 'display:none' %>
+                  <!--画像をクリックすることで、画像を追加・変更することができるようにする-->
+                  <%= image_tag @member.get_member_image(200,200), onClick: "$('.prof_img_field').click()", class: 'center-block img-thumbnail img-responsive prof_img_prev', size: "200×200" %>
+                </div>
+            </div>
           </div>
           <div class="row mb-3">
             <div class="col-2">氏名</div>
@@ -59,7 +66,7 @@
       </div>
       <div class="row">
         <div class="mx-auto">
-          <%= f.submit "変更を保存", class: "btn btn-success" %>
+          <%= f.submit "変更を保存", class: "btn btn-lg btn-success" %>
         </div>
       </div>
       <% end %>
