@@ -7,18 +7,24 @@
       <b class="text-danger">
         ※新規登録・メンバーでログインする場合は、一旦ログアウトする必要があります。
       </b><br>
-      <%= link_to "ログアウト", destroy_member_session_path, method: :delete, class: "btn btn-outline-dark mt-2" %>
+      <div class="mt-3">
+        <%= link_to "ログアウト", destroy_member_session_path, method: :delete, class: "btn btn-lg btn-secondary mt-3" %>
+      </div>
       <% elsif member_signed_in? %>
       <!--メンバーでログインしている場合-->
-      <%= link_to "ログアウト", destroy_member_session_path, method: :delete, class: "btn btn-outline-dark mt-2" %><br>
-      <%= link_to "マイページ", my_page_path, class: "btn btn-outline-dark mt-3" %><br>
-      <%= link_to my_posts_path, class: "btn btn-outline-dark mt-3" do %>
-        <%=current_member.nickname %>さんの投稿一覧
-      <% end %>
+      <div class="mt-3">
+        <%= link_to "マイページ", my_page_path, class: "btn btn-lg btn-secondary mr-4" %>
+        <%= link_to my_posts_path, class: "btn btn-lg btn-secondary mr-4" do %>
+          <%=current_member.nickname %>さんの投稿一覧
+        <% end %>
+        <%= link_to "ログアウト", destroy_member_session_path, method: :delete, class: "btn btn-lg btn-secondary" %>
+      </div>
       <% else %>
-        <%= link_to "ゲストログイン(閲覧用)", members_guest_sign_in_path, method: :post, class: "btn btn-secondary mb-3", style: "width:300px" %><br>
-        <%= link_to "ログイン", member_session_path, class: "btn btn-secondary mb-3", style: "width:300px" %><br>
-        <%= link_to "新規登録", new_member_registration_path, class: "btn btn-secondary", style: "width:300px" %>
+      <div class="mt-3">
+        <%= link_to "ゲストログイン(閲覧用)", members_guest_sign_in_path, method: :post, class: "btn btn-lg btn-secondary mb-3", style: "width:300px" %><br>
+        <%= link_to "ログイン", member_session_path, class: "btn btn-lg btn-secondary mb-3", style: "width:300px" %><br>
+        <%= link_to "新規登録", new_member_registration_path, class: "btn btn-lg btn-secondary", style: "width:300px" %>
+      </div>
       <% end %>
     </div>
   </div>

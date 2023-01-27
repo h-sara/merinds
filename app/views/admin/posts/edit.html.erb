@@ -25,7 +25,17 @@
           <div class="row mb-3">
             <div class="col-2">画像</div>
             <div class="col-10">
-              <%= f.file_field :image_id, accept: "image/*" %>
+              <span class="mb-1">↓こちらをクリックで、画像の追加・変更ができます。</span>
+              <div class="mt-2" style="width:80%">
+                <%= f.file_field :image_id, accept: "image/*", class: "img_field", style: 'display:none;' %>
+                <!--画像をクリックすることで、画像を追加・変更することができるようにする-->
+                <% if @post.image_id.attached? %>
+                  <%= image_tag @post.image_id, onClick: "$('.img_field').click()", class: 'center-block img-thumbnail img-responsive img_prev' %>
+                <% else %>
+                  <%= image_tag 'image_post.jpg', onClick: "$('.img_field').click()", class: 'center-block img-thumbnail img-responsive img_prev' %>
+                <% end %>
+                <!--/画像をクリックすることで、画像を追加することができるようにする-->
+              </div>
             </div>
           </div>
           <div class="row mb-3">
@@ -47,7 +57,7 @@
       </div>
       <div class="row">
         <div class="mx-auto">
-          <%= f.submit "変更を保存", class: "btn btn-success" %>
+          <%= f.submit "変更を保存", class: "btn btn-lg btn-success" %>
         </div>
       </div>
       <% end %>
