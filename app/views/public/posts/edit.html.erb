@@ -32,7 +32,7 @@
                         <b class="mr-4"><%= @post_show.member.nickname %></b>
                         <span class="mr-4">
                           <!--フォローボタン-->
-                          <%= render "public/relationships/follow", post: @post_show %>
+                          <%= render "public/relationships/follow", member: @post_show.member %>
                         </span>
                         <!--投稿作成日時-->
                         <span><%= @post_show.created_at.strftime('%Y/%m/%d %H:%M') %></span>
