@@ -21,3 +21,13 @@
   // 少しだけ画像を拡大する
   transform: scale(1.01, 1.01);
 }
+
+// 画像にマウスが乗っているときにCSSを反映させる //
+.post_img_edit_prev:hover {
+  // マウスカーソルをポインターに変更
+  cursor: pointer;
+  // 不透明度を低くして、画像を少し白くする
+  opacity: 0.7;
+  // 少しだけ画像を拡大する
+  transform: scale(1.01, 1.01);
+}

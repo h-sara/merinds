@@ -16,9 +16,10 @@
             <div class="row mb-3">
               <div class="col-2 align-self-center"><b>アイコン</b></div>
               <div class="col offset-1">
+                <b class="text-danger">※拡張子は「.png」「.jpg」「.jpeg」のみです</b><br>
                 <span class="mb-1">↓こちらをクリックで、画像の追加・変更ができます。</span>
                 <div class="mt-2">
-                  <%= f.file_field :member_image, accept: "image/*", class: "prof_img_field", style: 'display:none' %>
+                  <%= f.file_field :member_image, accept: 'image/jpeg, image/jpg, image/png', class: "prof_img_field", style: 'display:none' %>
                   <!--画像をクリックすることで、画像を追加・変更することができるようにする-->
                   <%= image_tag @member.get_member_image(200,200), onClick: "$('.prof_img_field').click()", class: 'center-block img-thumbnail img-responsive prof_img_prev' %>
                 </div>

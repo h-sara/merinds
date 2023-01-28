@@ -69,7 +69,8 @@
           <%= image_tag 'image_post.jpg', onClick: "$('.img_field').click()", class: 'center-block img-thumbnail img-responsive img_prev' %>
         <% end %>
         <!--/画像をクリックすることで、画像を追加することができるようにする-->
-        <span>↑こちらをクリックで、画像を追加</span>
+        <span>↑こちらをクリックで、画像を追加</span><br>
+        <b class="text-danger">※拡張子は「.png」「.jpg」「.jpeg」のみです</b>
         <div class="text-center my-2">
           <% if member.nickname == "merindsゲスト"%>
             <button type="button" class="btn btn-info" data-toggle="modal" data-target="#postModal" style="width:100px">
