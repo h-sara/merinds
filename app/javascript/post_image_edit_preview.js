@@ -5,13 +5,13 @@ $(document).on('turbolinks:load', function() {
       if (input.files && input.files[0]) {
         var reader = new FileReader();
         reader.onload = function (e) {
-          $('.prof_img_prev').attr('src', e.target.result);
+          $('.post_img_edit_prev').attr('src', e.target.result);
         }
         reader.readAsDataURL(input.files[0]);
       }
     }
 
-    $('.prof_img_field').change(function () {
+    $('.post_img_edit_field').change(function () {
       readURL(this);
     });
   });
