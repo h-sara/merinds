@@ -32,7 +32,7 @@
                         <b class="mr-4"><%= @post_show.member.nickname %></b>
                         <span class="mr-4">
                           <!--フォローボタン-->
-                          <%= render "public/relationships/follow", post: @post_show %>
+                          <%= render "public/relationships/follow", member: @post_show.member %>
                         </span>
                         <!--投稿作成日時-->
                         <span><%= @post_show.created_at.strftime('%Y/%m/%d %H:%M') %></span>
@@ -49,14 +49,17 @@
                           <div class="mb-2">
                             <%= f.text_area :sentence, style: "width:100%; height:150px" %>
                           </div>
-                          <span class="mb-1">↓こちらをクリックで、画像の追加・変更ができます。</span>
+                          <b class="text-danger">※拡張子は「.png」「.jpg」「.jpeg」のみです</b><br>
+                          <span class="mb-1">
+                            ↓こちらをクリックで、画像の追加・変更ができます。
+                          </span>
                           <div class="mt-2">
-                            <%= f.file_field :image_id, accept: "image/*", class: "img_field", style: 'display:none;' %>
+                            <%= f.file_field :image_id, accept: "image/*", class: "post_img_edit_field", style: 'display:none;' %>
                             <!--画像をクリックすることで、画像を追加・変更することができるようにする-->
                             <% if @post_show.image_id.attached? %>
-                              <%= image_tag @post_show.image_id, onClick: "$('.img_field').click()", class: 'center-block img-thumbnail img-responsive img_prev' %>
+                              <%= image_tag @post_show.image_id, onClick: "$('.post_img_edit_field').click()", class: 'center-block img-thumbnail img-responsive post_img_edit_prev' %>
                             <% else %>
-                              <%= image_tag 'image_post.jpg', onClick: "$('.img_field').click()", class: 'center-block img-thumbnail img-responsive img_prev' %>
+                              <%= image_tag 'image_post.jpg', onClick: "$('.post_img_edit_field').click()", class: 'center-block img-thumbnail img-responsive post_img_edit_prev' %>
                             <% end %>
                             <!--/画像をクリックすることで、画像を追加することができるようにする-->
                           </div>
