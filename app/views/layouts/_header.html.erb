@@ -36,8 +36,8 @@
                   <%= link_to "ログイン", new_member_session_path, class: "btn btn-dark" %>
                 <% end %><br>
                 <div class="my-2 text-right">
-                  <!--管理者メンバーではない場合に表示-->
-                  <% unless current_admin  %>
+                  <!--管理者メンバー・未ログイン時ではない場合-->
+                  <% unless current_admin || current_member == nil %>
                     <!--検索機能、以下記述は未設定-->
                     <%= form_with url: searches_search_path, local: true, method: :get do |f| %>
                       <%= f.text_field :word, placeholder: "ここに検索ワードを入力" %>
