@@ -13,7 +13,6 @@
               <th>氏名</th>
               <th>ニックネーム</th>
               <th>メールアドレス</th>
-              <th>グループ</th>
               <th>ステータス</th>
             </thead>
             <% @members.each do |member| %>
@@ -35,9 +34,6 @@
                 </td>
                 <td class="align-middle">
                   <%= member.email %>
-                </td>
-                <td class="align-middle">
-                  未所属
                 </td>
                 <td class="align-middle">
                   <% if member.is_deleted == false %>
