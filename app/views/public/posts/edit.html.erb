@@ -54,7 +54,7 @@
                             ↓こちらをクリックで、画像の追加・変更ができます。
                           </span>
                           <div class="mt-2">
-                            <%= f.file_field :image_id, accept: "image/*", class: "post_img_edit_field", style: 'display:none;' %>
+                            <%= f.file_field :image_id, accept: '.jpeg, .jpg, .png', class: "post_img_edit_field", style: 'display:none;' %>
                             <!--画像をクリックすることで、画像を追加・変更することができるようにする-->
                             <% if @post_show.image_id.attached? %>
                               <%= image_tag @post_show.image_id, onClick: "$('.post_img_edit_field').click()", class: 'center-block img-thumbnail img-responsive post_img_edit_prev' %>
