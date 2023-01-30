@@ -3,48 +3,47 @@
     ※これはサンプルです
   </div>
   <div class="row">
-    <div class="col">
-      <%= image_tag member.get_member_image(100,100), class: "rounded-circle" %>
-    </div>
-    <div class="col my-auto">
-      <ul class="list-unstyled my-auto">
-        <li class="mb-2">めりんず</li>
-        <li>
-          投稿数：
-          <a href="#" class="text-dark" data-toggle="modal" data-target="#post_countModal">
-            0
-          </a>
-        </li>
-      </ul>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col">
-      <ul class="list-unstyled">
-        <li>
-          フォロー：
-          <a href="#" class="text-dark" data-toggle="modal" data-target="#followModal">
-            12
-          </a>
-        </li>
-        <li>
-          フォロワー：
-          <a href="#" class="text-dark" data-toggle="modal" data-target="#followerModal">
-            15
-          </a>
-        </li>
-        <li>
-          いいねした投稿：
-          <a href="#" class="text-dark" data-toggle="modal" data-target="#favorite_postModal">
-            20
-          </a>
-        </li>
-        <li>グループ：未所属</li>
-      </ul>
-      <div class="text-center mt-3">
-        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#my_pageModal">
-          マイページへ
-        </button>
+    <div class="col px-3 pt-2">
+      <div class="row pl-2 mb-1">
+        <%= image_tag member.get_member_image(100,100), class: "rounded-circle" %>
+      </div>
+      <div class="row">
+        <div class="col my-auto">
+          <ul class="list-unstyled">
+            <li class="mb-2">
+              <b>めりんず</b>
+            </li>
+            <li class="mb-1">
+              投稿数：
+              <a href="#" class="text-dark" data-toggle="modal" data-target="#post_countModal">
+                0
+              </a>
+            </li>
+            <li class="mb-1">
+              フォロー：
+              <a href="#" class="text-dark" data-toggle="modal" data-target="#followModal">
+                12
+              </a>
+            </li>
+            <li class="mb-1">
+              フォロワー：
+              <a href="#" class="text-dark" data-toggle="modal" data-target="#followerModal">
+                15
+              </a>
+            </li>
+            <li class="mb-1">
+              いいねした投稿：
+              <a href="#" class="text-dark" data-toggle="modal" data-target="#favorite_postModal">
+                20
+              </a>
+            </li>
+          </ul>
+          <div class="text-center my-3">
+            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#my_pageModal">
+              マイページへ
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>

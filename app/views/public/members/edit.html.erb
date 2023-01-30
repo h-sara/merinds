@@ -1,7 +1,7 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-3">
-      <%= render "public/shared/left_screen", member: @member_for_left, post: @post, favorite_posts: @favorite_posts, member_posts: @member_posts %>
+      <%= render "public/shared/left_screen", member: @member_for_left, post: @post, favorite_post: @favorite_post, member_posts: @member_posts %>
     </div>
     <div class="col-9">
       <div class="row mt-2">
@@ -19,7 +19,7 @@
                 <b class="text-danger">※拡張子は「.png」「.jpg」「.jpeg」のみです</b><br>
                 <span class="mb-1">↓こちらをクリックで、画像の追加・変更ができます。</span>
                 <div class="mt-2">
-                  <%= f.file_field :member_image, accept: 'image/jpeg, image/jpg, image/png', class: "prof_img_field", style: 'display:none' %>
+                  <%= f.file_field :member_image, accept: '.jpeg, .jpg, .png', class: "prof_img_field", style: 'display:none' %>
                   <!--画像をクリックすることで、画像を追加・変更することができるようにする-->
                   <%= image_tag @member.get_member_image(200,200), onClick: "$('.prof_img_field').click()", class: 'center-block img-thumbnail img-responsive prof_img_prev' %>
                 </div>
