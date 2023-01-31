@@ -1,0 +1,142 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-3">
+      <%= render "public/shared/left_screen", member: @member_for_left, post: @post, favorite_post: @favorite_post, member_posts: @member_posts %>
+    </div>
+    <div class="col-9">
+      <div class="row mt-2 mr-2">
+        <div class="col">
+          <div class="row rounded border">
+            <div class="col">
+              <div class="row px-4 pt-4 mt-2">
+                <div class="col-3"><%= image_tag @show_your.get_member_image(100,100), class: "rounded-circle" %></div>
+                <div class="col-9">
+                  <div class="row">
+                    <h4><%= @show_your.nickname %></h4>
+                  </div>
+                  <div class="row py-2">
+                    <!--フォローボタンの部分テンプレート-->
+                    <%= render "public/relationships/follow", member: @show_your %>
+                  </div>
+                  <div class="row">
+                    <div class="col">
+                      フォロー：
+                      <%= @show_your.followings.count %>
+                    </div>
+                    <div class="col">
+                      フォロワー：
+                      <%= @show_your.followers.count %>
+                    </div>
+                    <div class="col">
+                      投稿数：
+                      <%= @show_your.posts.count %>
+                    </div>
+                  </div>
+                  <div class="row py-1">
+                    <!--<div class="col">グループ：未所属</div>-->
+                  </div>
+                </div>
+              </div>
+              <div class="row p-4">
+                <p class="lead">自己紹介</p><br>
+                <!--自己紹介文がnilでない場合、改行をして表示させる-->
+                <% if @show_your.introduction != nil%>
+                  <%= safe_join(@show_your.introduction.split("\n"),tag(:br)) %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-2 mr-2">
+        <div class="col">
+          <div class="row">
+            <div class="col mt-2">
+              <div class="row">
+                <h3 style="background-color: rgba(169, 169, 169, 0.5)"><%= @show_your.nickname %> さんの投稿一覧</h3>
+              </div>
+              <div class="row pb-2">
+                <div class="col">
+                  <% @posts.each do |post| %>
+                  <div class="row border">
+                    <div class="col">
+                      <div class="row p-2">
+                        <div class="col">
+                          <div class="row">
+                            <div class="col-1 mr-3">
+                              <div class="row">
+                                <!--投稿者のアイコン-->
+                                <%= image_tag post.member.get_member_image(50,50), class: "rounded-circle" %>
+                              </div>
+                            </div>
+                            <div class="col-10">
+                              <div class="row d-flex align-items-top">
+                                <b class="mr-4"><%= post.member.nickname %></b>
+                                <span><%= post.created_at.strftime('%Y/%m/%d %H:%M') %></span>
+                                <span>
+                                  <% if post.is_edited == true %>
+                                    （編集済み）
+                                  <% end %>
+                                </span>
+                              </div>
+                              <%= link_to your_post_path(post.id) do %>
+                              <div class="row">
+                                <div class="col">
+                                  <div class="row text-dark">
+                                    <%= safe_join(post.sentence.split("\n"),tag(:br)) %>
+                                  </div>
+                                  <div class="row">
+                                    <!--投稿に画像がある場合は表示させる-->
+                                    <% if post.image_id.attached? %>
+                                      <%= image_tag post.image_id, class: "img-fluid" %>
+                                    <% end %>
+                                  </div>
+                                </div>
+                              </div>
+                              <% end %>
+                            </div>
+                          </div>
+                          <div class="row mt-2">
+                            <div class="col-2 offset-1">
+                              <!--コメントのアイコン・コメント数-->
+                              <%= link_to your_post_path(post.id) do %>
+                                <span class="text-muted">
+                                  <i class="far fa-comment-alt"></i>
+                                  <%= post.post_comments.count %>
+                                </span>
+                              <% end %>
+                            </div>
+                            <div class="col-2">
+                              <!--いいねのアイコン・いいね数-->
+                              <% if post.favorited_by?(current_member) %>
+                              <!--現ユーザーが投稿のfavoritesテーブル内に存在する(いいね済)場合-->
+                                <%= link_to favorites_create_path(post), method: :delete do %>
+                                  <span class="text-danger">
+                                    <i class="fas fa-heart"></i>
+                                    <%= post.favorites.count %>
+                                  </span>
+                                <% end %>
+                              <% else %>
+                                <%= link_to favorites_create_path(post), method: :post do %>
+                                  <span class="text-dark">
+                                    <i class="far fa-heart"></i>
+                                    <%= post.favorites.count %>
+                                  </span>
+                                <% end %>
+                              <% end %>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

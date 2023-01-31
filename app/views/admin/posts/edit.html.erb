@@ -1,0 +1,66 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col">
+      <div class="row">
+        <h4 class="mt-2 mb-4 ml-5" style="background-color: rgba(169, 169, 169, 0.5)">
+          投稿ID <%= @post.id %>の投稿情報編集
+        </h4>
+      </div>
+      <div class="row">
+        <div class="col offset-1">
+          <%= render "public/shared/error", contents: @post %>
+        </div>
+      </div>
+      <%= form_with model: @post, url: admin_post_path(@post.id), method: :patch do |f| %>
+      <div class="row">
+        <div class="col offset-1">
+          <div class="row mb-3">
+            <div class="col-2">投稿ID</div>
+            <div class="col-10"><%= @post.id %></div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-2">文章</div>
+            <div class="col-10"><%= f.text_area :sentence, style: "width:80%; height:100px" %></div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-2">画像</div>
+            <div class="col-10">
+              <span class="mb-1">↓こちらをクリックで、画像の追加・変更ができます。</span>
+              <div class="mt-2" style="width:80%">
+                <%= f.file_field :image_id, accept: "image/*", class: "img_field", style: 'display:none;' %>
+                <!--画像をクリックすることで、画像を追加・変更することができるようにする-->
+                <% if @post.image_id.attached? %>
+                  <%= image_tag @post.image_id, onClick: "$('.img_field').click()", class: 'center-block img-thumbnail img-responsive img_prev' %>
+                <% else %>
+                  <%= image_tag 'image_post.jpg', onClick: "$('.img_field').click()", class: 'center-block img-thumbnail img-responsive img_prev' %>
+                <% end %>
+                <!--/画像をクリックすることで、画像を追加することができるようにする-->
+              </div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-2">作成者</div>
+            <div class="col-10">
+              <%= f.select :member_id, @member, :id => 'member_id' %>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-2">ステータス</div>
+            <div class="col-10">
+              <%= f.radio_button :is_hidden, :false %>
+              <label class="mr-4">表示</label>
+              <%= f.radio_button :is_hidden, :true %>
+              <label>非表示</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="mx-auto">
+          <%= f.submit "変更を保存", class: "btn btn-lg btn-success" %>
+        </div>
+      </div>
+      <% end %>
+    </div>
+  </div>
+</div>

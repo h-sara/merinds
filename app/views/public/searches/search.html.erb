@@ -1,0 +1,44 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-3">
+      <%= render "public/shared/left_screen", member: @member_for_left, post: @post, favorite_post: @favorite_post, member_posts: @member_posts %>
+    </div>
+    <div class="col-9">
+      <div class="row mt-2 mr-2">
+        <div class="col">
+          <div class="row">
+            <h3>検索結果</h3>
+          </div>
+          <div class="row ml-4 mb-4">
+            <div class="col">
+              <% if @members == 0 || @posts == 0 %>
+              <!--検索結果が0件だった場合-->
+                <span>「<%= params[:word] %>」を検索しましたが、HITしませんでした。</span><br>
+                <span>　検索ワードをお確かめください</span>
+              <% elsif params[:select_model] == "メンバー" %>
+              <!--選択された検索対象がメンバーだった場合-->
+                <span>メンバー から「<%= params[:word] %>」を検索した結果、<%= @members.count %>件HITしました。</span>
+              <% else %>
+              <!--選択された検索対象がメンバー以外だった場合-->
+                <span>投稿 から「<%= params[:word] %>」を検索した結果、<%= @posts.count %>件HITしました。</span>
+              <% end %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <% if @members == 0 || @posts == 0 %>
+              <!--検索結果が0件だった場合-->
+              <% elsif params[:select_model] == "メンバー" %>
+              <!--選択された検索対象がメンバーだった場合-->
+                <%= render "public/members/index", members: @members %>
+              <% else %>
+              <!--選択された検索対象がメンバー以外だった場合-->
+                <%= render "public/posts/index", posts: @posts %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,60 @@
+<header class="fixed-top" style="height:90px">
+  <div class="container-fluid" style=" background-color: rgba(0, 112, 112, 1)">
+    <div class="row align-items-center"><!--上下中央寄せ-->
+      <!--ロゴ画像-->
+      <%= link_to root_path, class: "btn py-3" do %>
+        <%= image_tag "logo.png", size: "130x63" %>
+      <% end %>
+        <div class="col pt-2">
+          <div class="header_link">
+            <div class="d-grid gap-2 d-md-block">
+              <div class="float-right"><!--右寄せ-->
+                <% if member_signed_in? && current_member.email == "guest@example.com" %>
+                  <!--ゲストでログインしている場合-->
+                  <span class="text-white mr-3">ゲストログイン中</span>
+                  <%= link_to "About", about_path, class: "btn btn-dark mr-2" %>
+                  <%= link_to "投稿一覧", your_posts_path, class: "btn btn-dark" %>
+                  <%= link_to "ログアウト", destroy_member_session_path, method: :delete, class: "btn btn-dark" %>
+                <% elsif member_signed_in? %>
+                <!--メンバーでログインしている場合-->
+                  <%= link_to "投稿一覧", your_posts_path, class: "btn btn-dark" %>
+                  <%= link_to "メンバー一覧", members_path, class: "btn btn-dark" %>
+                  <%= link_to "ログアウト", destroy_member_session_path, method: :delete, class: "btn btn-dark" %>
+                <% elsif admin_signed_in? %>
+                <!--管理者でログインしている場合-->
+                <span class="text-light mr-3">管理者ログイン中</span>
+                  <%= link_to "投稿一覧", admin_posts_path, class: "btn btn-dark" %>
+                  <%= link_to "メンバー一覧", admin_top_path, class: "btn btn-dark" %>
+                  <%= link_to "ログアウト", destroy_admin_session_path, method: :delete, class: "btn btn-dark" %>
+                <% else %>
+                <!--ログインしていない場合-->
+                  <%= link_to "About", about_path, class: "btn btn-dark mr-2" %>
+                  <%= link_to "新規登録", new_member_registration_path, class: "btn btn-dark mr-2" %>
+                  <%= link_to "ログイン", new_member_session_path, class: "btn btn-dark" %>
+                <% end %><br>
+                <div class="my-2 text-right">
+                  <!--管理者メンバー・未ログイン時ではない場合-->
+                  <% unless current_admin || current_member == nil %>
+                    <!--検索機能、以下記述は未設定-->
+                    <%= form_with url: searches_search_path, local: true, method: :get do |f| %>
+                      <%= f.text_field :word, placeholder: "ここに検索ワードを入力" %>
+                      <%= f.select :select_model, options_for_select([["メンバー"], ["投稿"]]) %>
+                      <!--現メンバーがゲストメンバーの場合-->
+                      <% if current_member && current_member.nickname == "merindsゲスト" %>
+                        <button type="button" data-toggle="modal" data-target="#searchModal">
+                          検索
+                        </button>
+                      <% else %>
+                        <%= f.submit "検索" %>
+                      <% end %>
+                    <% end %>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>

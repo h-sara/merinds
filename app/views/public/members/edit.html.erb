@@ -1,0 +1,64 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-3">
+      <%= render "public/shared/left_screen", member: @member_for_left, post: @post, favorite_post: @favorite_post, member_posts: @member_posts %>
+    </div>
+    <div class="col-9">
+      <div class="row mt-2">
+        <h3 style="background-color: rgba(169, 169, 169, 0.5)">メンバー情報編集</h3>
+      </div>
+      <div class="row">
+        <%= render "public/shared/error", contents: @member %>
+      </div>
+      <%= form_with model: @member, url: members_my_page_path, method: :patch do |f| %>
+        <div class="row rounded p-2 py-4 mr-2 border">
+          <div class="col">
+            <div class="row mb-3">
+              <div class="col-2 align-self-center"><b>アイコン</b></div>
+              <div class="col offset-1">
+                <b class="text-danger">※拡張子は「.png」「.jpg」「.jpeg」のみです</b><br>
+                <span class="mb-1">↓こちらをクリックで、画像の追加・変更ができます。</span>
+                <div class="mt-2">
+                  <%= f.file_field :member_image, accept: '.jpeg, .jpg, .png', class: "prof_img_field", style: 'display:none' %>
+                  <!--画像をクリックすることで、画像を追加・変更することができるようにする-->
+                  <%= image_tag @member.get_member_image(200,200), onClick: "$('.prof_img_field').click()", class: 'center-block img-thumbnail img-responsive prof_img_prev' %>
+                </div>
+              </div>
+            </div>
+            <div class="row mb-4">
+              <div class="col-2"><b>氏名</b></div>
+              <div class="col-1">(姓)</div>
+              <div class="col-4"><%= f.text_field :first_name, style: "width:300px; height:30px" %></div>
+              <div class="col-1">(名)</div>
+              <div class="col-4"><%= f.text_field :last_name, style: "width:300px; height:30px" %></div>
+            </div>
+            <div class="row mb-4">
+              <div class="col-2"><b>フリガナ</b></div>
+              <div class="col-1">(セイ)</div>
+              <div class="col-4"><%= f.text_field :first_name_kana, style: "width:300px; height:30px" %></div>
+              <div class="col-1">(メイ)</div>
+              <div class="col-4"><%= f.text_field :last_name_kana, style: "width:300px; height:30px" %></div>
+            </div>
+            <div class="row mb-4">
+              <div class="col-2"><b>メールアドレス</b></div>
+              <div class="col offset-1"><%= f.text_field :email, style: "width:450px; height:30px" %></div>
+            </div>
+            <div class="row mb-4">
+              <div class="col-2"><b>ニックネーム</b></div>
+              <div class="col offset-1"><%= f.text_field :nickname, style: "width:450px; height:30px" %></div>
+            </div>
+            <div class="row mb-4">
+              <div class="col-2"><b>自己紹介</b></div>
+              <div class="col offset-1"><%= f.text_area :introduction, style: "width:90%; height:100px" %></div>
+            </div>
+            <div class="row mt-4">
+              <div class="col offset-3">
+                <%= f.submit "変更を保存", class: "btn btn-success btn-lg" %>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

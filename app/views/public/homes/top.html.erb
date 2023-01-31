@@ -1,0 +1,31 @@
+<div class="container">
+  <h1 class="mb-4 text-center">Welcome to merinds</h1>
+  <div class="row justify-content-center">
+    <div class="text-center">
+      <% if member_signed_in? && current_member.email == "guest@example.com" %>
+      <!--ゲストでログインしている場合-->
+      <b class="text-danger">
+        ※新規登録・メンバーでログインする場合は、一旦ログアウトする必要があります。
+      </b><br>
+      <div class="mt-3">
+        <%= link_to "ログアウト", destroy_member_session_path, method: :delete, class: "btn btn-lg btn-secondary mt-3" %>
+      </div>
+      <% elsif member_signed_in? %>
+      <!--メンバーでログインしている場合-->
+      <div class="mt-3">
+        <%= link_to "マイページ", my_page_path, class: "btn btn-lg btn-secondary mr-4" %>
+        <%= link_to my_posts_path, class: "btn btn-lg btn-secondary mr-4" do %>
+          <%=current_member.nickname %>さんの投稿一覧
+        <% end %>
+        <%= link_to "ログアウト", destroy_member_session_path, method: :delete, class: "btn btn-lg btn-secondary" %>
+      </div>
+      <% else %>
+      <div class="mt-3">
+        <%= link_to "ゲストログイン(閲覧用)", members_guest_sign_in_path, method: :post, class: "btn btn-lg btn-secondary mb-3", style: "width:300px" %><br>
+        <%= link_to "ログイン", member_session_path, class: "btn btn-lg btn-secondary mb-3", style: "width:300px" %><br>
+        <%= link_to "新規登録", new_member_registration_path, class: "btn btn-lg btn-secondary", style: "width:300px" %>
+      </div>
+      <% end %>
+    </div>
+  </div>
+</div>

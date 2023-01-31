@@ -32,6 +32,10 @@ gem 'bootsnap', '>= 1.4.4', require: false
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+
+  # デバッグ用
+  gem 'pry-byebug'
+  gem 'pry-rails'
 end
 
 group :development do
@@ -56,6 +60,7 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
+##－－－－－－↓ デプロイのために追加したGem ↓－－－－－－##
 # プロジェクトごとにファイルベースで環境変数を管理することができるGem
 gem 'dotenv-rails'
 group :production do
@@ -65,3 +70,15 @@ end
 gem "net-smtp"
 gem "net-pop"
 gem "net-imap"
+##－－－－－－↑ デプロイのために追加したGem ↑－－－－－－##
+
+# devise
+gem 'devise'
+# kaminari
+gem 'kaminari','~> 1.2.1'
+# ActiveStrage
+gem 'image_processing', '~> 1.2'
+# 日本語化するgem
+gem 'rails-i18n'
+# ページネーション用のBootstrap
+gem 'bootstrap5-kaminari-views', '~> 0.0.1'

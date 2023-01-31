@@ -1,0 +1,83 @@
+<div class="container" style="height:100%; width:100%">
+  <div class="row">
+    <span class="text-info mb-1"><%= notice %></span>
+  </div>
+  <div class="row rounded border" >
+    <!--現メンバーがゲストメンバーの場合-->
+    <% if current_member.nickname == "merindsゲスト" %>
+      <%= render "public/members/guest_prof", member: member %>
+    <% else %>
+      <div class="col px-3 pt-2">
+        <div class="row pl-2 mb-1">
+          <%= image_tag member.get_member_image(80,80), class: "rounded-circle" %>
+        </div>
+        <div class="row">
+          <div class="col my-auto">
+            <ul class="list-unstyled">
+              <li class="mb-2">
+                <b><%= member.nickname %></b>
+              </li>
+              <li class="mb-1">
+                投稿数：
+                <%= link_to my_posts_path do %>
+                  <%= member_posts.count %>
+                <% end %>
+              </li>
+              <li class="mb-1">
+                フォロー：
+                <%= link_to members_followings_path do%>
+                  <%= member.followings.count %>
+                <% end %>
+              </li>
+              <li class="mb-1">
+                フォロワー：
+                <%= link_to members_followers_path do%>
+                  <%= member.followers.count %>
+                <% end %>
+              </li>
+              <li class="mb-1">
+                いいねした投稿：
+                <%= link_to my_favorited_posts_path do %>
+                  <%= favorite_post.count %>
+                <% end %>
+              </li>
+            </ul>
+            <div class="text-center my-3">
+              <%= link_to "マイページへ", my_page_path, class: "btn btn-lg btn-success" %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <div class="row rounded border p-2 mt-2" >
+    <div class="col">
+      <h3 class="mt-3 text-center">投稿フォーム</h3>
+      <%= render "public/shared/error", contents: post %>
+      <%= form_with model: post do |f| %>
+        <label>文章</label><br>
+        <%= f.text_area :sentence, placeholder: "文章をここに入力してください\n※300文字まで", style: "width:100%; height:150px" %><br>
+        <label class="mt-2">画像</label><br>
+        <%= f.file_field :image_id, accept: '.jpeg, .jpg, .png', class: "img_field", style: 'display:none;' %>
+        <!--画像をクリックすることで、画像を追加することができるようにする-->
+        <% if post.image_id.attached? %>
+          <%= image_tag post.image_id, onClick: "$('.img_field').click()", class: 'center-block img-thumbnail img-responsive img_prev' %>
+        <% else %>
+          <%= image_tag 'image_post.jpg', onClick: "$('.img_field').click()", class: 'center-block img-thumbnail img-responsive img_prev' %>
+        <% end %>
+        <!--/画像をクリックすることで、画像を追加することができるようにする-->
+        <span>↑こちらをクリックで、画像を追加</span><br>
+        <b class="text-danger">※拡張子は「.png」「.jpg」「.jpeg」のみです</b>
+        <div class="text-center my-2">
+          <% if member.nickname == "merindsゲスト"%>
+            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#postModal" style="width:100px">
+              投稿
+            </button>
+          <% else %>
+            <%= f.submit '投稿', class: "btn btn-lg btn-info mt-3", style: "width:100px" %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,26 @@
+ja:
+  activerecord:
+    models:
+      member: #model名
+    attributes:
+      member: #model名
+        first_name: 姓 #カラム名
+        last_name: 名
+        first_name_kana: セイ
+        last_name_kana: メイ
+        email: メールアドレス
+        password: パスワード
+        nickname: ニックネーム
+        introduction: 自己紹介
+      post:
+        sentence: 文章
+      post_comment:
+        comment: コメント
+
+  views:
+    pagination:
+      first: <i class="fas fa-angle-double-left"></i>
+      last: <i class="fas fa-angle-double-right"></i>
+      previous: <i class="fas fa-angle-left"></i>
+      next: <i class="fas fa-angle-right"></i>
+      truncate: "..."

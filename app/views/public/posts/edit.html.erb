@@ -1,0 +1,138 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-3">
+      <%= render "public/shared/left_screen", member: @member_for_left, post: @post, favorite_post: @favorite_post, member_posts: @member_posts %>
+    </div>
+    <div class="col-9 pr-5">
+      <div class="row mt-2 mr-2">
+        <div class="col">
+          <div class="row">
+            <h3 style="background-color: rgba(169, 169, 169, 0.5)">投稿編集</h3>
+          </div>
+          <div class="row">
+            <div class="col">
+              <%= render "public/shared/error", contents: @post_show %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <!--投稿情報-->
+              <div class="row p-2 rounded border">
+                <div class="col">
+                  <div class="row">
+                    <div class="col-1">
+                      <div class="row mx-auto">
+                        <!--投稿者のアイコン-->
+                        <%= image_tag @post_show.member.get_member_image(50,50), class: "rounded-circle mx-auto" %>
+                      </div>
+                    </div>
+                    <div class="col-10">
+                      <div class="row d-flex align-items-center">
+                        <!--投稿者のニックネーム-->
+                        <b class="mr-4"><%= @post_show.member.nickname %></b>
+                        <span class="mr-4">
+                          <!--フォローボタン-->
+                          <%= render "public/relationships/follow", member: @post_show.member %>
+                        </span>
+                        <!--投稿作成日時-->
+                        <span><%= @post_show.created_at.strftime('%Y/%m/%d %H:%M') %></span>
+                        <span>
+                          <!--投稿の編集した場合（編集済み）を記述-->
+                          <% if @post_show.is_edited == true %>
+                            （編集済み）
+                          <% end %>
+                        </span>
+                      </div>
+                      <%= form_with model: @post_show, url: posts_update_path(@post_show.id) do |f| %>
+                      <div class="row mt-3">
+                        <div class="col px-4 pt-2">
+                          <div class="mb-2">
+                            <%= f.text_area :sentence, style: "width:100%; height:150px" %>
+                          </div>
+                          <b class="text-danger">※拡張子は「.png」「.jpg」「.jpeg」のみです</b><br>
+                          <span class="mb-1">
+                            ↓こちらをクリックで、画像の追加・変更ができます。
+                          </span>
+                          <div class="mt-2">
+                            <%= f.file_field :image_id, accept: '.jpeg, .jpg, .png', class: "post_img_edit_field", style: 'display:none;' %>
+                            <!--画像をクリックすることで、画像を追加・変更することができるようにする-->
+                            <% if @post_show.image_id.attached? %>
+                              <%= image_tag @post_show.image_id, onClick: "$('.post_img_edit_field').click()", class: 'center-block img-thumbnail img-responsive post_img_edit_prev' %>
+                            <% else %>
+                              <%= image_tag 'image_post.jpg', onClick: "$('.post_img_edit_field').click()", class: 'center-block img-thumbnail img-responsive post_img_edit_prev' %>
+                            <% end %>
+                            <!--/画像をクリックすることで、画像を追加することができるようにする-->
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col text-center py-2">
+                          <%= f.submit "編集内容を保存", class: "btn btn-success", style: "height:45px" %>
+                        </div>
+                      </div>
+                      <% end %>
+                    </div>
+                  </div>
+                  <div class="row mt-2">
+                    <div class="col-2 offset-1">
+                      <!--コメントのアイコン・コメント数-->
+                      <span class="text-muted">
+                        <i class="far fa-comment-alt"></i>
+                        <%= @post_show.post_comments.count %>
+                      </span>
+                    </div>
+                    <div class="col-2">
+                      <span class="text-muted">
+                        <i class="far fa-heart"></i>
+                        <%= @post_show.favorites.count %>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--/投稿情報-->
+              <div class="row">
+                <div class="col">
+                  <div class="row">
+                    <h4 class="mt-4" style="background-color: rgba(169, 169, 169, 0.5)">
+                      コメント
+                    </h4>
+                  </div>
+                  <% @post_show.post_comments.each do |post_comment| %>
+                    <div class="row border p-2 mb-3">
+                      <div class="col">
+                        <div class="row d-flex align-items-center">
+                          <span class="mr-3">
+                            <!--コメント作成者のアイコン-->
+                            <%= image_tag post_comment.member.get_member_image(50,50), class: "rounded-circle" %>
+                          </span>
+                          <b class="mr-3">
+                            <%= post_comment.member.nickname %>
+                          </b>
+                          <span class="mr-4"><%= post_comment.created_at.strftime('%Y/%m/%d %H:%M') %></span>
+                          <span>
+                            <!--現メンバーがコメント作成者であれば削除できるようにする-->
+                            <% if current_member.id == post_comment.member_id %>
+                              <!--コメント削除ボタン-->
+                              <%= link_to post_comments_destroy_path(post_comment.post_id, post_comment.id), method: :delete, data: {confirm: "コメント削除してもよろしいですか？"}, class: "btn btn-danger btn-sm" do %>
+                                <i class="fas fa-trash-alt"></i>
+                              <% end %>
+                            <% end %>
+                          </span>
+                        </div>
+                        <div class="row ml-4">
+                          <!--コメント文-->
+                          <span class="ml-4"><%= safe_join(post_comment.comment.split("\n"),tag(:br)) %></span>
+                        </div>
+                      </div>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
