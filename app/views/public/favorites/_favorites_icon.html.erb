@@ -1,19 +1,28 @@
-<% if post.favorited_by?(current_member) %>
-<!--現ユーザーが投稿のfavoritesテーブル内に存在する(いいね済)場合-->
-  <%= link_to favorites_create_path(post), method: :delete, remote: true do %>
-    <!--どの投稿に対していいねしたのかをidを付与し、判別-->
-    <span id="favorite_<%= post.id %>" class="text-danger">
-      <i class="fas fa-heart"></i>
-      <%= post.favorites.count %>
-    </span>
-  <% end %>
+<!--現メンバーがゲストメンバーの場合-->
+<% if current_member.nickname == "merindsゲスト" %>
+  <a href="#" class="text-dark" data-toggle="modal" data-target="#favoriteModal">
+    <i class="far fa-heart"></i>
+    <%= post.favorites.count %>
+  </a>
+<!--現メンバーがゲストメンバーでない場合-->
 <% else %>
-<!--現ユーザーが投稿のfavoritesテーブル内に存在しない(いいね未)場合-->
-  <%= link_to favorites_create_path(post), method: :post, remote: true do %>
-    <!--どの投稿に対していいねを外したのかをidを付与し、判別-->
-    <span id="favorite_<%= post.id %>" class="text-dark">
-      <i class="far fa-heart"></i>
-      <%= post.favorites.count %>
-    </span>
+  <!--現ユーザーが投稿のfavoritesテーブル内に存在する(いいね済)場合-->
+  <% if post.favorited_by?(current_member) %>
+    <%= link_to favorites_create_path(post), method: :delete, remote: true do %>
+      <!--どの投稿に対していいねしたのかをidを付与し、判別-->
+      <span id="favorite_<%= post.id %>" class="text-danger">
+        <i class="fas fa-heart"></i>
+        <%= post.favorites.count %>
+      </span>
+    <% end %>
+  <!--現ユーザーが投稿のfavoritesテーブル内に存在しない(いいね未)場合-->
+  <% else %>
+    <%= link_to favorites_create_path(post), method: :post, remote: true do %>
+      <!--どの投稿に対していいねを外したのかをidを付与し、判別-->
+      <span id="favorite_<%= post.id %>" class="text-dark">
+        <i class="far fa-heart"></i>
+        <%= post.favorites.count %>
+      </span>
+    <% end %>
   <% end %>
 <% end %>

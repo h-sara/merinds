@@ -66,22 +66,7 @@
                     </div>
                     <div class="col-2">
                       <!--いいねのアイコン・いいね数-->
-                      <% if @post_show.favorited_by?(current_member) %>
-                      <!--現ユーザーが投稿のfavoritesテーブル内に存在する(いいね済)場合-->
-                        <%= link_to favorites_create_path(@post_show), method: :delete do %>
-                          <span class="text-danger">
-                            <i class="fas fa-heart"></i>
-                            <%= @post_show.favorites.count %>
-                          </span>
-                        <% end %>
-                      <% else %>
-                        <%= link_to favorites_create_path(@post_show), method: :post do %>
-                          <span class="text-dark">
-                            <i class="far fa-heart"></i>
-                            <%= @post_show.favorites.count %>
-                          </span>
-                        <% end %>
-                      <% end %>
+                      <%= render "public/favorites/favorites_icon", post: @post_show %>
                     </div>
                   </div>
                 </div>
