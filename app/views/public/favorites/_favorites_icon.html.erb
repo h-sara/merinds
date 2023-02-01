@@ -1,14 +1,17 @@
 <% if post.favorited_by?(current_member) %>
 <!--現ユーザーが投稿のfavoritesテーブル内に存在する(いいね済)場合-->
-  <%= link_to favorites_create_path(post), method: :delete do %>
-    <span class="text-danger">
+  <%= link_to favorites_create_path(post), method: :delete, remote: true do %>
+    <!--どの投稿に対していいねしたのかをidを付与し、判別-->
+    <span id="favorite_<%= post.id %>" class="text-danger">
       <i class="fas fa-heart"></i>
       <%= post.favorites.count %>
     </span>
   <% end %>
 <% else %>
-  <%= link_to favorites_create_path(post), method: :post do %>
-    <span class="text-dark">
+<!--現ユーザーが投稿のfavoritesテーブル内に存在しない(いいね未)場合-->
+  <%= link_to favorites_create_path(post), method: :post, remote: true do %>
+    <!--どの投稿に対していいねを外したのかをidを付与し、判別-->
+    <span id="favorite_<%= post.id %>" class="text-dark">
       <i class="far fa-heart"></i>
       <%= post.favorites.count %>
     </span>
