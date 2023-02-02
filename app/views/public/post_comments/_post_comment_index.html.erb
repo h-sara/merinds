@@ -1,0 +1,85 @@
+<!--コメントが存在する場合-->
+<% if post.post_comments.exists? %>
+  <% post.post_comments.each do |post_comment| %>
+    <div class="row border-top py-3">
+      <div class="col">
+        <div class="row pl-4 d-flex align-items-center">
+          <!--コメント作成者のアイコン-->
+          <span class="mr-3">
+            <!--現メンバーがゲストメンバーの場合-->
+            <% if current_member.nickname == "merindsゲスト" %>
+              <%= image_tag post_comment.member.get_member_image(40,40), class: "rounded-circle" %>
+            <!--現メンバーがコメント作成者の場合-->
+            <% elsif current_member.id == post_comment.member_id %>
+              <%= image_tag post_comment.member.get_member_image(40,40), class: "rounded-circle" %>
+            <!--現メンバーがコメント作成者でない場合-->
+            <% else %>
+              <%= link_to your_page_path(post_comment.member.nickname) do %>
+                <%= image_tag post_comment.member.get_member_image(40,40), class: "rounded-circle" %>
+              <% end %>
+            <% end %>
+          </span>
+          <!--コメント作成者のニックネーム-->
+          <b class="mr-3">
+            <!--現メンバーがゲストメンバーの場合-->
+            <% if current_member.nickname == "merindsゲスト" %>
+              <%= post_comment.member.nickname %>
+            <!--現メンバーがコメント作成者の場合-->
+            <% elsif current_member.id == post_comment.member_id %>
+              <%= post_comment.member.nickname %>
+            <!--現メンバーがコメント作成者でない場合-->
+            <% else %>
+              <%= link_to your_page_path(post_comment.member.nickname) do%>
+                <span class="text-dark"><%= post_comment.member.nickname %></span>
+              <% end %>
+            <% end %>
+          </b>
+          <!--コメントの作成日時-->
+          <span class="mr-4"><%= post_comment.created_at.strftime('%Y/%m/%d %H:%M') %></span>
+          <span>
+            <!--現メンバーがコメント作成者の場合-->
+            <% if current_member.id == post_comment.member_id %>
+              <!--コメント削除ボタン-->
+              <%= link_to post_comments_destroy_path(post_comment.post_id, post_comment.id), method: :delete, remote: true, data: {confirm: "コメント削除してもよろしいですか？"}, class: "btn btn-danger btn-sm" do %>
+                <i class="fas fa-trash-alt"></i>
+              <% end %>
+            <% end %>
+          </span>
+        </div>
+        <div class="row pl-4">
+          <!--コメント文-->
+          <span class="ml-5 mb-2">
+            <%= safe_join(post_comment.comment.split("\n"),tag(:br)) %>
+          </span>
+        </div>
+        <div class="row pr-4 justify-content-end">
+          <!--コメントに対するリアクション-->
+          <%#= form_with model: post_comment do |f| %>
+            <%#= f.select :reaction, %>
+          <%# end %>
+          <!--<div class="btn-group">-->
+          <!--  <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+          <!--    <i class="far fa-smile"></i>-->
+          <!--  </button>-->
+          <!--  <div class="dropdown-menu">-->
+          <!--    <a class="dropdown-item text-danger h4" href="#"><i class="fas fa-laugh-squint"></i>ありがとう</a>-->
+          <!--    <a class="dropdown-item text-danger h4" href="#"><i class="fas fa-grin-hearts"></i>最高</i></a>-->
+          <!--    <a class="dropdown-item text-danger h4" href="#"><i class="fas fa-grin-stars"></i>すごい</a>-->
+          <!--    <a class="dropdown-item text-danger h4" href="#"><i class="fas fa-grin-wink"></i>いいね</a>-->
+          <!--    <a class="dropdown-item text-danger h4" href="#"><i class="fas fa-sad-cry"></i>まじか</a>-->
+          <!--    <a class="dropdown-item text-danger h4" href="#"><i class="fas fa-dizzy"></i>oh no</a>-->
+          <!--  </div>-->
+          <!--</div>-->
+          
+        </div>
+      </div>
+    </div>
+  <% end %>
+<!--コメントが存在しない場合-->
+<% else %>
+  <div class="row border-top p-2">
+    <div class="col">
+      コメントはありません。
+    </div>
+  </div>
+<% end %>

@@ -16,7 +16,8 @@ class Public::PostCommentsController < ApplicationController
     @post_comment.post_id = @post_show.id
     if @post_comment.save
       flash[:notice] = "コメントの投稿に成功しました"
-      redirect_to my_post_path(@post_show)
+      # render先にjsファイルを指定
+      render :post_comment
     else
       flash[:notice] = "コメントの投稿に失敗しました"
       render "public/posts/show"
@@ -34,7 +35,8 @@ class Public::PostCommentsController < ApplicationController
     # 投稿idをコメントのpost_idに格納
     @post_comment.post_id = @post_show.id
     if @post_comment.save
-      redirect_to your_post_path(@post_show)
+      # render先にjsファイルを指定
+      render :post_comment
     else
       render "public/posts/show_your"
     end
@@ -43,12 +45,10 @@ class Public::PostCommentsController < ApplicationController
   def destroy
     comment = PostComment.find(params[:id])
     comment.destroy
-    # 投稿が現メンバーのものかどうかで遷移先を変更する
-    if comment.post.member_id == current_member.id
-      redirect_to my_post_path(comment.post_id)
-    else
-      redirect_to your_post_path(comment.post_id)
-    end
+    # renderした際に使用
+    @post_show = Post.find(params[:post_id])
+    # render先にjsファイルを指定
+    render :post_comment
   end
 
   private
