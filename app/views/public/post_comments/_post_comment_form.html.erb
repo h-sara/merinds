@@ -1,0 +1,21 @@
+<%= form_with model: [post_comment], url: post_comments_create_path(post), local: false do |f| %>
+  <%= f.text_area :comment, class: "p-2 rounded", style: "width:100%; height:100px", placeholder: "コメントをここに入力してください\n※300文字まで" %>
+  <div class="row justify-content-end">
+    <div class="col-9">
+      <div id="comments_error">
+        <!--コメントフォームに対してのエラー文-->
+        <%= render "public/shared/error", contents: post_comment %>
+      </div>
+    </div>
+    <div class="col-3 text-right mt-1">
+      <!--現メンバーがゲストメンバーの場合-->
+      <% if current_member.nickname == "merindsゲスト" %>
+        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#post_commentModal" style="width:100px">
+          投稿
+        </button>
+      <% else %>
+        <%= f.submit '投稿', class: "btn btn-info", style: "width:60px" %>
+      <% end %>
+    </div>
+  </div>
+<% end %>
