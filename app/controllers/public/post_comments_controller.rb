@@ -17,28 +17,10 @@ class Public::PostCommentsController < ApplicationController
     if @post_comment.save
       flash[:notice] = "コメントの投稿に成功しました"
       # render先にjsファイルを指定
-      render :post_comment
+      render "public/post_comments/post_comments"
     else
       flash[:notice] = "コメントの投稿に失敗しました"
       render "public/posts/show"
-    end
-  end
-
-  def create_your
-    #includeしたインスタンスメソッドを使用
-    left_screen_variables
-    repeat_variables
-    # コメントの作成
-    @post_comment = PostComment.new
-    @post_show = Post.find(params[:post_id])
-    @post_comment = PostComment.new(post_comment_params)
-    # 投稿idをコメントのpost_idに格納
-    @post_comment.post_id = @post_show.id
-    if @post_comment.save
-      # render先にjsファイルを指定
-      render :post_comment
-    else
-      render "public/posts/show_your"
     end
   end
 
@@ -48,7 +30,7 @@ class Public::PostCommentsController < ApplicationController
     # renderした際に使用
     @post_show = Post.find(params[:post_id])
     # render先にjsファイルを指定
-    render :post_comment
+    render "public/post_comments/post_comments"
   end
 
   private
