@@ -15,18 +15,20 @@ class Public::PostCommentsController < ApplicationController
     # 投稿idをコメントのpost_idに格納
     @post_comment.post_id = @post_show.id
     if @post_comment.save
-      flash[:notice] = "コメントの投稿に成功しました"
+      flash.now[:notice] = "コメントの投稿に成功しました"
       # render先にjsファイルを指定
       render "public/post_comments/post_comments"
     else
-      flash[:notice] = "コメントの投稿に失敗しました"
-      render "public/posts/show"
+      flash.now[:notice] = "コメントの投稿に失敗しました"
+      # render先にjsファイルを指定
+      render "public/post_comments/error"
     end
   end
 
   def destroy
     comment = PostComment.find(params[:id])
     comment.destroy
+    flash.now[:notice] = "コメントの削除を実行しました"
     # renderした際に使用
     @post_show = Post.find(params[:post_id])
     # render先にjsファイルを指定
