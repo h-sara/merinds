@@ -14,55 +14,58 @@
               <!--投稿情報-->
               <div class="row p-2 rounded border">
                 <div class="col">
-                  <div class="row d-flex align-items-center">
-                    <span class="mr-3">
-                      <!--投稿者のアイコン-->
-                      <%= image_tag @member.get_member_image(50,50), class: "rounded-circle" %>
-                    </span>
-                    <b class="mr-3">
-                      <!--投稿者のニックネーム-->
-                      <%= @post_show.member.nickname %>
-                    </b>
-                    <!--投稿作成日時-->
-                    <span class="mr-3"><%= @post_show.created_at.strftime('%Y/%m/%d %H:%M') %></span>
-                    <span class="mr-3">
-                      <!--投稿の編集した場合（編集済み）を記述-->
-                      <% if @post_show.is_edited == true %>
-                        （編集済み）
-                      <% end %>
-                    </span>
-                    <span class="mr-4">
-                      <%= link_to posts_edit_path(@post_show.id), class: "btn btn-success" do %>
-                        <i class="fas fa-edit"></i>
-                      <% end %>
-                    </span>
-                    <span class="mr-4">
-                      <%= link_to posts_destroy_path(@post_show), method: :delete, data: {confirm: "投稿を削除してもよろしいですか？"}, class: "btn btn-danger" do %>
-                        <i class="fas fa-trash-alt"></i>
-                      <% end %>
-                    </span>
-                  </div>
-                  <div class="row ml-5">
-                    <div class="col">
-                      <div class="row text-dark">
-                        <!--投稿の文章を改行込みで表示-->
-                        <%= safe_join(@post_show.sentence.split("\n"),tag(:br)) %>
+                  <div class="row">
+                    <div class="col-1 mr-3">
+                      <div class="row">
+                        <!--投稿者のアイコン-->
+                        <%= render "public/posts/post_member_icon", post: @post_show %>
+                      </div>
+                    </div>
+                    <div class="col-10">
+                      <div class="row d-flex align-items-center">
+                        <b class="mr-4">
+                          <!--投稿者のニックネーム-->
+                          <%= render "public/posts/post_member_nickname", post: @post_show %>
+                        </b>
+                        <!--投稿日時-->
+                        <span><%= @post_show.created_at.strftime('%Y/%m/%d %H:%M') %></span>
+                        <span>
+                          <!--投稿の編集した場合（編集済み）を記述-->
+                          <% if @post_show.is_edited == true %>
+                            （編集済み）
+                          <% end %>
+                        </span>
+                        <span class="mr-4">
+                          <%= link_to posts_edit_path(@post_show.id), class: "btn btn-success" do %>
+                            <i class="fas fa-edit"></i>
+                          <% end %>
+                        </span>
+                        <span class="mr-4">
+                          <%= link_to posts_destroy_path(@post_show), method: :delete, data: {confirm: "投稿を削除してもよろしいですか？"}, class: "btn btn-danger" do %>
+                            <i class="fas fa-trash-alt"></i>
+                          <% end %>
+                        </span>
                       </div>
                       <div class="row">
-                        <!--投稿に画像がある場合は表示-->
-                        <% if @post_show.image_id.attached? %>
-                          <%= image_tag @post_show.image_id, class: "img-fluid" %>
-                        <% end %>
+                        <div class="col">
+                          <div class="row text-dark">
+                            <!--投稿の文章を改行込みで表示-->
+                            <%= safe_join(@post_show.sentence.split("\n"),tag(:br)) %>
+                          </div>
+                          <div class="row">
+                            <!--投稿に画像がある場合は表示させる-->
+                            <% if @post_show.image_id.attached? %>
+                              <%= image_tag @post_show.image_id, class: "img-fluid" %>
+                            <% end %>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
                   <div class="row mt-2">
                     <div class="col-2 offset-1">
                       <!--コメントのアイコン・コメント数-->
-                      <span class="text-muted">
-                        <i class="far fa-comment-alt"></i>
-                        <%= @post_show.post_comments.count %>
-                      </span>
+                      <%= render "public/post_comments/post_comment_icon", post: @post_show %>
                     </div>
                     <div class="col-2">
                       <!--いいねのアイコン・いいね数-->
@@ -72,72 +75,8 @@
                 </div>
               </div>
               <!--/投稿情報-->
-              <div class="row">
-                <div class="col">
-                  <div class="row">
-                    <h4 class="mt-4" style="background-color: rgba(169, 169, 169, 0.5)">
-                      コメント
-                    </h4>
-                  </div>
-                  <% @post_show.post_comments.each do |post_comment| %>
-                    <div class="row border p-2 mb-3">
-                      <div class="col">
-                        <div class="row d-flex align-items-center">
-                          <span class="mr-3">
-                            <% if current_member.id == post_comment.member_id %>
-                            <!--現メンバーがコメント作成者の場合-->
-                              <!--コメント作成者のアイコン-->
-                              <%= image_tag post_comment.member.get_member_image(50,50), class: "rounded-circle" %>
-                            <% else %>
-                            <!--現メンバーがコメント作成者でない場合-->
-                              <%= link_to your_page_path(post_comment.member.nickname) do%>
-                                <%= image_tag post_comment.member.get_member_image(50,50), class: "rounded-circle" %>
-                              <% end %>
-                            <% end %>
-                          </span>
-                          <b class="mr-3">
-                            <% if current_member.id == post_comment.member_id %>
-                            <!--現メンバーがコメント作成者の場合-->
-                              <!--コメント作成者のニックネーム-->
-                              <%= post_comment.member.nickname %>
-                            <% else %>
-                            <!--現メンバーがコメント作成者でない場合-->
-                              <%= link_to your_page_path(post_comment.member.nickname) do%>
-                                <span class="text-dark"><%= post_comment.member.nickname %></span>
-                              <% end %>
-                            <% end %>
-                          </b>
-                          <span class="mr-4"><%= post_comment.created_at.strftime('%Y/%m/%d %H:%M') %></span>
-                          <span>
-                            <!--現メンバーがコメント作成者であれば削除できるようにする-->
-                            <% if current_member.id == post_comment.member_id %>
-                              <!--コメント削除ボタン-->
-                              <%= link_to post_comments_destroy_path(post_comment.post_id, post_comment.id), method: :delete, data: {confirm: "コメント削除してもよろしいですか？"}, class: "btn btn-danger btn-sm" do %>
-                                <i class="fas fa-trash-alt"></i>
-                              <% end %>
-                            <% end %>
-                          </span>
-                        </div>
-                        <div class="row ml-4">
-                          <!--コメント文-->
-                          <span class="ml-4"><%= safe_join(post_comment.comment.split("\n"),tag(:br)) %></span>
-                        </div>
-                      </div>
-                    </div>
-                  <% end %>
-                  <%= render "public/shared/error", contents: @post_comment %>
-                  <div class="row mb-3">
-                    <div class="col">
-                      <%= form_with model: [@post_comment], url: post_comments_create_path(@post_show) do |f| %>
-                        <%= f.text_area :comment, style: "width:100%; height:100px", placeholder: "コメントをここに入力してください" %><br>
-                      <div class="text-right mt-2">
-                        <%= f.submit '投稿', class: "btn btn-info", style: "width:100px" %>
-                      </div>
-                      <% end %>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <!--コメント一覧・コメント投稿フォーム-->
+              <%= render "public/post_comments/post_comment", post: @post_show, post_comment: @post_comment %>
             </div>
           </div>
         </div>
