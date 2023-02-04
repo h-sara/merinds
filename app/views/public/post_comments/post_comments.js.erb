@@ -1,3 +1,4 @@
+<!--投稿詳細のコメント数を更新-->
 $("#comments_cnt").html("<%= @post_show.post_comments.count %>");
 <!--id="comments_index"をrenderで指定した部分テンプレートに更新-->
 $("#comments_index").html("<%= j(render 'public/post_comments/post_comment_index', post: @post_show, post_comment: @post_comment) %>");
