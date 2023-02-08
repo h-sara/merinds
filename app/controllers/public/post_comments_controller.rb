@@ -1,5 +1,6 @@
 class Public::PostCommentsController < ApplicationController
   before_action :ensure_guest_user
+  before_action :is_matching_login_member, only: [:destroy]
 
   #モジュールをincludeする
   include CommonActions
@@ -47,6 +48,16 @@ class Public::PostCommentsController < ApplicationController
     if current_member.nickname == "merindsゲスト"
       flash[:notice] = "そのページには遷移できません。"
       redirect_to your_posts_path
+    end
+  end
+
+  # 現メンバーとコメント投稿者が一致するかを判断する
+  def is_matching_login_member
+    comment = PostComment.find(params[:id])
+    # 投稿者と現メンバーが一致しない場合
+    unless comment.member_id == current_member.id
+      flash.now[:notice] = "他ユーザーのコメントは削除できません。"
+      redirect_back(fallback_location: root_path)
     end
   end
 end
