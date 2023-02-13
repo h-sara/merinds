@@ -7,22 +7,8 @@
           <div class="col">
             <div class="row px-4 pt-4 mt-2">
               <span class="mr-4">
-                <% if post_show.favorited_by?(current_member) %>
-                <!--現ユーザーが投稿のfavoritesテーブル内に存在する(いいね済)場合-->
-                  <%= link_to favorites_create_path(post_show), method: :delete do %>
-                    <span class="text-danger">
-                      <i class="fas fa-heart"></i>
-                      <%= post_show.favorites.count %>
-                    </span>
-                  <% end %>
-                <% else %>
-                  <%= link_to favorites_create_path(post_show), method: :post do %>
-                    <span class="text-muted">
-                      <i class="far fa-heart"></i>
-                      <%= post_show.favorites.count %>
-                    </span>
-                  <% end %>
-                <% end %>
+                <!--いいねのアイコン・いいね数-->
+                <%= render "public/favorites/favorites_icon", post: post_show %>
               </span>
               <span class="mr-4">
                 <span class="text-muted">

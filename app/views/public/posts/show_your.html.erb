@@ -1,9 +1,9 @@
 <div class="container-fluid">
   <div class="row">
-    <div class="col-4">
+    <div class="col-3">
       <%= render "public/shared/left_screen", member: @member_for_left, post: @post, favorite_post: @favorite_post, member_posts: @member_posts %>
     </div>
-    <div class="col-8 pr-5">
+    <div class="col-9">
       <div class="row mt-2 mr-2">
         <div class="col">
           <div class="row">
@@ -27,10 +27,10 @@
                           <!--投稿者のニックネーム-->
                           <%= render "public/posts/post_member_nickname", post: @post_show %>
                         </b>
-                        <span class="mr-4">
+                        <!--<span class="mr-4">-->
                           <!--フォローボタン-->
-                          <%= render "public/relationships/follow", member: @post_show.member %>
-                        </span>
+                        <!--  <%#= render "public/relationships/follow", member: @post_show.member %>-->
+                        <!--</span>-->
                         <!--投稿作成日時-->
                         <span><%= @post_show.created_at.strftime('%Y/%m/%d %H:%M') %></span>
                         <span>
@@ -58,82 +58,18 @@
                   <div class="row mt-2">
                     <div class="col-2 offset-1">
                       <!--コメントのアイコン・コメント数-->
-                      <span class="text-muted">
-                        <i class="far fa-comment-alt"></i>
-                        <%= @post_show.post_comments.count %>
-                      </span>
+                      <%= render "public/post_comments/post_comment_icon", post: @post_show %>
                     </div>
                     <div class="col-2">
                       <!--いいねのアイコン・いいね数-->
-                      <% if current_member.nickname == "merindsゲスト" %>
-                        <a href="#" class="text-dark" data-toggle="modal" data-target="#favoriteModal">
-                          <i class="far fa-heart"></i>
-                          <%= @post_show.favorites.count %>
-                        </a>
-                      <% else%>
-                        <%= render "public/favorites/favorites_icon", post: @post_show %>
-                      <% end %>
+                      <%= render "public/favorites/favorites_icon", post: @post_show %>
                     </div>
                   </div>
                 </div>
               </div>
               <!--/投稿情報-->
-              <div class="row">
-                <div class="col">
-                  <div class="row">
-                    <h4 class="mt-4" style="background-color: rgba(169, 169, 169, 0.5)">
-                      コメント
-                    </h4>
-                  </div>
-                  <% @post_show.post_comments.each do |post_comment| %>
-                    <div class="row border p-2 mb-3">
-                      <div class="col">
-                        <div class="row d-flex align-items-center">
-                          <span class="mr-3">
-                            <!--コメント作成者のアイコン-->
-                            <%= render "public/post_comments/post_comment_member_icon", post_comment: post_comment %>
-                          </span>
-                          <b class="mr-3">
-                            <!--コメント作成者のニックネーム-->
-                            <%= render "public/post_comments/post_comment_member_nickname", post_comment: post_comment %>
-                          </b>
-                          <span class="mr-4"><%= post_comment.created_at.strftime('%Y/%m/%d %H:%M') %></span>
-                          <span>
-                            <!--現メンバーがコメント作成者であれば削除できるようにする-->
-                            <% if current_member.id == post_comment.member_id %>
-                              <!--コメント削除ボタン-->
-                              <%= link_to post_comments_destroy_path(post_comment.post_id, post_comment.id), method: :delete, data: {confirm: "コメント削除してもよろしいですか？"}, class: "btn btn-danger btn-sm" do %>
-                                <i class="fas fa-trash-alt"></i>
-                              <% end %>
-                            <% end %>
-                          </span>
-                        </div>
-                        <div class="row ml-4">
-                          <!--コメント文-->
-                          <span class="ml-4"><%= safe_join(post_comment.comment.split("\n"),tag(:br)) %></span>
-                        </div>
-                      </div>
-                    </div>
-                  <% end %>
-                  <%= render "public/shared/error", contents: @post_comment %>
-                  <div class="row my-3">
-                    <div class="col">
-                      <%= form_with model: [@post_comment], url: post_comments_create_your_path(@post_show) do |f| %>
-                        <%= f.text_area :comment, style: "width:100%; height:100px", placeholder: "コメントをここに入力してください" %><br>
-                      <div class="text-right mt-2">
-                        <!--現メンバーがゲストメンバーの場合-->
-                        <% if current_member.nickname == "merindsゲスト" %>
-                          <button type="button" class="btn btn-info" data-toggle="modal" data-target="#post_commentModal" style="width:100px">
-                            投稿
-                          </button>
-                        <% else %>
-                          <%= f.submit '投稿', class: "btn btn-info", style: "width:100px" %>
-                        <% end %>
-                      </div>
-                      <% end %>
-                  </div>
-                </div>
-              </div>
+              <!--コメント一覧・コメント投稿フォーム-->
+              <%= render "public/post_comments/post_comment", post: @post_show, post_comment: @post_comment %>
             </div>
           </div>
         </div>

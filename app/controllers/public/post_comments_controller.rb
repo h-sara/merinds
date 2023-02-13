@@ -1,5 +1,6 @@
 class Public::PostCommentsController < ApplicationController
   before_action :ensure_guest_user
+  before_action :is_matching_login_member, only: [:destroy]
 
   #モジュールをincludeする
   include CommonActions
@@ -15,40 +16,24 @@ class Public::PostCommentsController < ApplicationController
     # 投稿idをコメントのpost_idに格納
     @post_comment.post_id = @post_show.id
     if @post_comment.save
-      flash[:notice] = "コメントの投稿に成功しました"
-      redirect_to my_post_path(@post_show)
+      flash.now[:notice] = "コメントの投稿に成功しました"
+      # render先にjsファイルを指定
+      render "public/post_comments/post_comments"
     else
-      flash[:notice] = "コメントの投稿に失敗しました"
-      render "public/posts/show"
-    end
-  end
-
-  def create_your
-    #includeしたインスタンスメソッドを使用
-    left_screen_variables
-    repeat_variables
-    # コメントの作成
-    @post_comment = PostComment.new
-    @post_show = Post.find(params[:post_id])
-    @post_comment = PostComment.new(post_comment_params)
-    # 投稿idをコメントのpost_idに格納
-    @post_comment.post_id = @post_show.id
-    if @post_comment.save
-      redirect_to your_post_path(@post_show)
-    else
-      render "public/posts/show_your"
+      flash.now[:notice] = "コメントの投稿に失敗しました"
+      # render先にjsファイルを指定
+      render "public/post_comments/error"
     end
   end
 
   def destroy
     comment = PostComment.find(params[:id])
     comment.destroy
-    # 投稿が現メンバーのものかどうかで遷移先を変更する
-    if comment.post.member_id == current_member.id
-      redirect_to my_post_path(comment.post_id)
-    else
-      redirect_to your_post_path(comment.post_id)
-    end
+    flash.now[:notice] = "コメントの削除を実行しました"
+    # renderした際に使用
+    @post_show = Post.find(params[:post_id])
+    # render先にjsファイルを指定
+    render "public/post_comments/post_comments"
   end
 
   private
@@ -63,6 +48,16 @@ class Public::PostCommentsController < ApplicationController
     if current_member.nickname == "merindsゲスト"
       flash[:notice] = "そのページには遷移できません。"
       redirect_to your_posts_path
+    end
+  end
+
+  # 現メンバーとコメント投稿者が一致するかを判断する
+  def is_matching_login_member
+    comment = PostComment.find(params[:id])
+    # 投稿者と現メンバーが一致しない場合
+    unless comment.member_id == current_member.id
+      flash.now[:notice] = "他ユーザーのコメントは削除できません。"
+      redirect_back(fallback_location: root_path)
     end
   end
 end
