@@ -1,16 +1,21 @@
-<!--現メンバーがゲストメンバーの場合-->
-<% if current_member.nickname == "merindsゲスト" %>
-  <%= image_tag post.member.get_member_image(50,50), class: "rounded-circle" %>
-<% elsif current_member.id == post.member_id %>
-<!--投稿者が現メンバーの場合-->
-  <%= link_to my_page_path do %>
-    <!--投稿者のアイコン-->
-    <%= image_tag post.member.get_member_image(50,50), class: "rounded-circle" %>
-  <% end %>
+<!--投稿者が退会済みの場合-->
+<% if post.member.is_deleted == true %>
+  <%= image_tag 'withdrawal_icon.jpg', size: "50x50" %>
 <% else %>
-  <!--投稿者が現メンバーではない場合-->
-  <%= link_to your_page_path(post.member.nickname) do %>
-    <!--投稿者のアイコン-->
+  <!--現メンバーがゲストメンバーの場合-->
+  <% if current_member.nickname == "merindsゲスト" %>
     <%= image_tag post.member.get_member_image(50,50), class: "rounded-circle" %>
+  <% elsif current_member.id == post.member_id %>
+  <!--投稿者が現メンバーの場合-->
+    <%= link_to my_page_path do %>
+      <!--投稿者のアイコン-->
+      <%= image_tag post.member.get_member_image(50,50), class: "rounded-circle" %>
+    <% end %>
+  <% else %>
+    <!--投稿者が現メンバーではない場合-->
+    <%= link_to your_page_path(post.member.nickname) do %>
+      <!--投稿者のアイコン-->
+      <%= image_tag post.member.get_member_image(50,50), class: "rounded-circle" %>
+    <% end %>
   <% end %>
 <% end %>
