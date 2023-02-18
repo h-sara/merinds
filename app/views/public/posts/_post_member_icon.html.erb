@@ -1,6 +1,6 @@
 <!--投稿者が退会済みの場合-->
 <% if post.member.is_deleted == true %>
-  <%= image_tag 'withdrawal_icon.jpg', size: "50x50" %>
+  <%= image_tag 'withdrawal_icon.jpg', size: "50x50", class: "rounded-circle" %>
 <% else %>
   <!--現メンバーがゲストメンバーの場合-->
   <% if current_member.nickname == "merindsゲスト" %>
