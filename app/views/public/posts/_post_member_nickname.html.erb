@@ -1,15 +1,20 @@
-<!--現メンバーがゲストメンバーの場合-->
-<% if current_member.nickname == "merindsゲスト" %>
-  <%= post.member.nickname %>
-<% elsif current_member.id == post.member_id %>
-<!--投稿者が現メンバーの場合-->
-  <%= link_to my_page_path, class: "text-dark" do %>
-    <!--投稿者のアイコン-->
-    <%= post.member.nickname %>
-  <% end %>
+<!--投稿者が退会済みの場合-->
+<% if post.member.is_deleted == true %>
+  退会済みメンバー
 <% else %>
-  <!--投稿者が現メンバーではない場合-->
-  <%= link_to your_page_path(post.member.nickname), class: "text-dark" do %>
+  <!--現メンバーがゲストメンバーの場合-->
+  <% if current_member.nickname == "merindsゲスト" %>
     <%= post.member.nickname %>
+  <% elsif current_member.id == post.member_id %>
+  <!--投稿者が現メンバーの場合-->
+    <%= link_to my_page_path, class: "text-dark" do %>
+      <!--投稿者のアイコン-->
+      <%= post.member.nickname %>
+    <% end %>
+  <% else %>
+    <!--投稿者が現メンバーではない場合-->
+    <%= link_to your_page_path(post.member.nickname), class: "text-dark" do %>
+      <%= post.member.nickname %>
+    <% end %>
   <% end %>
 <% end %>
